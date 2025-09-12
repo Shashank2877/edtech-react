@@ -4,3 +4,8 @@
 
 html { scroll-behavior: smooth; }
 body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial; }
+
+/* Root theming helpers */
+.theme-transition {
+  transition: background-color 200ms, color 200ms, border-color 200ms, fill 200ms;
+}
