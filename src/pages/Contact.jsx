@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { motion } from 'framer-motion'
+import ContactForm from '../components/ContactForm'
 
 export default function Contact(){
-  const [status, setStatus] = useState('')
-
   // Default Contact page to dark if no preference saved yet
   useEffect(() => {
     const stored = localStorage.getItem('theme')
@@ -13,10 +12,9 @@ export default function Contact(){
     }
   }, [])
 
-  const handleSubmit = (e)=>{
-    e.preventDefault()
-    setStatus('Thanks! We will get back to you soon.')
-    e.currentTarget.reset()
+  const handleFormSubmit = (formData) => {
+    console.log('Form submitted:', formData)
+    // Here you would typically send the data to your backend
   }
 
   return (
@@ -28,36 +26,7 @@ export default function Contact(){
 
       <div className="grid md:grid-cols-2 gap-8 items-start">
         {/* Form */}
-        <motion.form
-          onSubmit={handleSubmit}
-          className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm"
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          <div className="grid sm:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm mb-1 text-gray-700 dark:text-gray-300">Name</label>
-              <input required name="name" className="w-full p-3 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Your name" />
-            </div>
-            <div>
-              <label className="block text-sm mb-1 text-gray-700 dark:text-gray-300">Email</label>
-              <input required type="email" name="email" className="w-full p-3 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="you@example.com" />
-            </div>
-          </div>
-          <div className="mt-4">
-            <label className="block text-sm mb-1 text-gray-700 dark:text-gray-300">Subject</label>
-            <input name="subject" className="w-full p-3 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="What is it about?" />
-          </div>
-          <div className="mt-4">
-            <label className="block text-sm mb-1 text-gray-700 dark:text-gray-300">Message</label>
-            <textarea required name="message" rows="5" className="w-full p-3 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="How can we help?" />
-          </div>
-          <div className="mt-6 flex items-center justify-between">
-            <button type="submit" className="px-5 py-3 bg-indigo-600 text-white rounded-md shadow hover:bg-indigo-700 transition">Send</button>
-            {status && <span className="text-sm text-green-600 dark:text-green-400">{status}</span>}
-          </div>
-        </motion.form>
+        <ContactForm onSubmit={handleFormSubmit} />
 
         {/* Info */}
         <motion.div

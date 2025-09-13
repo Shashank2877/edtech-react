@@ -30,7 +30,23 @@ export default function Navbar(){
   return (
     <header className="backdrop-blur supports-[backdrop-filter]:bg-white/70 bg-white/90 dark:supports-[backdrop-filter]:bg-gray-900/60 dark:bg-gray-900/80 dark:text-gray-100 shadow-md sticky top-0 z-50 theme-transition">
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-        <Link to="/" className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">EdTech</Link>
+        <div className="flex items-center gap-4">
+          {/* Mobile menu button - top-left */}
+          <button
+            className="md:hidden p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle mobile menu"
+          >
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              {mobileMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
+          <Link to="/" className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">EdTech</Link>
+        </div>
         <nav className="space-x-6 hidden md:block">
           <NavItem to="/" onClick={(e)=>{
             if (window.location.pathname === '/'){
@@ -55,21 +71,6 @@ export default function Navbar(){
           <NavItem to="/about">About</NavItem>
           <NavItem to="/contact">Contact</NavItem>
         </nav>
-
-        {/* Mobile menu button */}
-        <button
-          className="md:hidden p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle mobile menu"
-        >
-          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            {mobileMenuOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
-        </button>
         <button
           aria-label="Toggle dark mode"
           className="ml-4 relative inline-flex items-center h-9 w-16 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 theme-transition"
@@ -93,34 +94,32 @@ export default function Navbar(){
         </button>
       </div>
 
-      {/* Mobile drawer */}
-      <div className={`md:hidden ${mobileMenuOpen ? 'block' : 'hidden'}`}>
-        <div className="px-4 py-2 space-y-1 border-t border-gray-200 dark:border-gray-800 bg-white/95 dark:bg-gray-900/95 backdrop-blur">
-          <NavItem to="/" onClick={(e)=>{
-            if (window.location.pathname === '/'){
-              e.preventDefault();
-              document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-            }
-            setMobileMenuOpen(false)
-          }}>Home</NavItem>
-          <NavItem to="/" onClick={(e)=>{
-            if (window.location.pathname === '/'){
-              e.preventDefault();
-              document.getElementById('features')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-            }
-            setMobileMenuOpen(false)
-          }}>Features</NavItem>
-          <NavItem to="/" onClick={(e)=>{
-            if (window.location.pathname === '/'){
-              e.preventDefault();
-              document.getElementById('testimonials')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-            }
-            setMobileMenuOpen(false)
-          }}>Testimonials</NavItem>
-          <NavItem to="/blogs" onClick={() => setMobileMenuOpen(false)}>Blogs</NavItem>
-          <NavItem to="/courses" onClick={() => setMobileMenuOpen(false)}>Courses</NavItem>
-          <NavItem to="/about" onClick={() => setMobileMenuOpen(false)}>About</NavItem>
-          <NavItem to="/contact" onClick={() => setMobileMenuOpen(false)}>Contact</NavItem>
+      {/* Mobile dropdown menu */}
+      <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${mobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+        <div className="mx-4 mb-4 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-lg backdrop-blur-sm">
+          <div className="px-4 py-4 space-y-3">
+            <div className="block">
+              <NavItem to="/" onClick={(e)=>{
+                if (window.location.pathname === '/'){
+                  e.preventDefault();
+                  document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                }
+                setMobileMenuOpen(false)
+              }}>Home</NavItem>
+            </div>
+            <div className="block">
+              <NavItem to="/about" onClick={() => setMobileMenuOpen(false)}>About</NavItem>
+            </div>
+            <div className="block">
+              <NavItem to="/courses" onClick={() => setMobileMenuOpen(false)}>Courses</NavItem>
+            </div>
+            <div className="block">
+              <NavItem to="/blogs" onClick={() => setMobileMenuOpen(false)}>Blogs</NavItem>
+            </div>
+            <div className="block">
+              <NavItem to="/contact" onClick={() => setMobileMenuOpen(false)}>Contact</NavItem>
+            </div>
+          </div>
         </div>
       </div>
     </header>
