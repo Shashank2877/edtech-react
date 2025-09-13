@@ -11,6 +11,7 @@ const NavItem = ({to, children, onClick})=>{
 
 export default function Navbar(){
   const [theme, setTheme] = useState('light')
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     const stored = localStorage.getItem('theme')
@@ -54,6 +55,21 @@ export default function Navbar(){
           <NavItem to="/about">About</NavItem>
           <NavItem to="/contact">Contact</NavItem>
         </nav>
+
+        {/* Mobile menu button */}
+        <button
+          className="md:hidden p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle mobile menu"
+        >
+          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            {mobileMenuOpen ? (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            )}
+          </svg>
+        </button>
         <button
           aria-label="Toggle dark mode"
           className="ml-4 relative inline-flex items-center h-9 w-16 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 theme-transition"
@@ -75,6 +91,37 @@ export default function Navbar(){
             className={`absolute inline-block h-7 w-7 rounded-full bg-white dark:bg-gray-700 shadow transform transition-all duration-200 ${theme === 'dark' ? 'translate-x-8' : 'translate-x-1'}`}
           />
         </button>
+      </div>
+
+      {/* Mobile drawer */}
+      <div className={`md:hidden ${mobileMenuOpen ? 'block' : 'hidden'}`}>
+        <div className="px-4 py-2 space-y-1 border-t border-gray-200 dark:border-gray-800 bg-white/95 dark:bg-gray-900/95 backdrop-blur">
+          <NavItem to="/" onClick={(e)=>{
+            if (window.location.pathname === '/'){
+              e.preventDefault();
+              document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            }
+            setMobileMenuOpen(false)
+          }}>Home</NavItem>
+          <NavItem to="/" onClick={(e)=>{
+            if (window.location.pathname === '/'){
+              e.preventDefault();
+              document.getElementById('features')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            }
+            setMobileMenuOpen(false)
+          }}>Features</NavItem>
+          <NavItem to="/" onClick={(e)=>{
+            if (window.location.pathname === '/'){
+              e.preventDefault();
+              document.getElementById('testimonials')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            }
+            setMobileMenuOpen(false)
+          }}>Testimonials</NavItem>
+          <NavItem to="/blogs" onClick={() => setMobileMenuOpen(false)}>Blogs</NavItem>
+          <NavItem to="/courses" onClick={() => setMobileMenuOpen(false)}>Courses</NavItem>
+          <NavItem to="/about" onClick={() => setMobileMenuOpen(false)}>About</NavItem>
+          <NavItem to="/contact" onClick={() => setMobileMenuOpen(false)}>Contact</NavItem>
+        </div>
       </div>
     </header>
   )
