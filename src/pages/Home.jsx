@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import anime from 'animejs/lib/anime.es.js'
@@ -6,6 +6,7 @@ import anime from 'animejs/lib/anime.es.js'
 export default function Home(){
   const [openIndex, setOpenIndex] = useState(null)
   const [introVisible, setIntroVisible] = useState(true)
+  const touchStartYRef = useRef(null)
 
   useEffect(() => {
     if (!introVisible) return
@@ -77,6 +78,19 @@ export default function Home(){
             onWheel={() => {
               setIntroVisible(false)
               setTimeout(() => document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50)
+            }}
+            onTouchStart={(e) => {
+              touchStartYRef.current = e.touches[0].clientY
+            }}
+            onTouchMove={(e) => {
+              if (touchStartYRef.current == null) return
+              const dy = e.touches[0].clientY - touchStartYRef.current
+              // Only upward swipe (negative dy) triggers dismissal
+              if (dy < -24) {
+                setIntroVisible(false)
+                setTimeout(() => document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50)
+                touchStartYRef.current = null
+              }
             }}
           >
             {/* Split background */}
