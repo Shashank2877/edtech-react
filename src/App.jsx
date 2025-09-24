@@ -6,18 +6,25 @@ import Footer from './components/Footer'
 import Home from './pages/Home'
 import About from './pages/About'
 import Contact from './pages/Contact'
-import Courses from './pages/Courses'
-import Blogs from './pages/Blogs'
+import Services from './pages/Services'
+import Career from './pages/Career'
 
 export default function App(){
   const location = useLocation()
   return (
-    <div className="min-h-screen flex flex-col bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100 theme-transition relative">
-      {/* Gradient Background Layer */}
+    <div className="min-h-screen flex flex-col bg-transparent text-gray-900 dark:text-gray-100 theme-transition relative">
+      {/* Global Background Video Layer */}
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-gray-950 dark:via-indigo-950 dark:to-purple-950" />
-        <div className="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-pink-400/20 blur-3xl animate-pulse" />
-        <div className="absolute -bottom-24 -right-24 h-80 w-80 rounded-full bg-indigo-400/20 blur-3xl animate-pulse" />
+        <video
+          className="h-full w-full object-cover"
+          src="/12884743_1920_1080_30fps.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
+        {/* Subtle dark overlay for readability */}
+        <div className="absolute inset-0 bg-black/40 dark:bg-black/50" />
       </div>
       <Navbar />
       <main className="flex-1">
@@ -33,8 +40,8 @@ export default function App(){
               <Route path="/" element={<Home/>} />
               <Route path="/about" element={<About/>} />
               <Route path="/contact" element={<Contact/>} />
-              <Route path="/courses" element={<Courses/>} />
-              <Route path="/blogs" element={<Blogs/>} />
+              <Route path="/services" element={<Services/>} />
+              <Route path="/career" element={<Career/>} />
             </Routes>
           </motion.div>
         </AnimatePresence>

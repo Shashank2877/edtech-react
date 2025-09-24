@@ -10,21 +10,16 @@ const NavItem = ({to, children, onClick})=>{
 }
 
 export default function Navbar(){
-  const [theme, setTheme] = useState('light')
+  const [theme, setTheme] = useState('dark')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   useEffect(() => {
-    const stored = localStorage.getItem('theme')
-    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-    const initial = stored || (prefersDark ? 'dark' : 'light')
-    setTheme(initial)
+    setTheme('dark')
   }, [])
 
   useEffect(() => {
     const root = document.documentElement
-    if (theme === 'dark') root.classList.add('dark')
-    else root.classList.remove('dark')
-    localStorage.setItem('theme', theme)
+    root.classList.add('dark')
   }, [theme])
 
   return (
@@ -45,53 +40,17 @@ export default function Navbar(){
               )}
             </svg>
           </button>
-          <Link to="/" className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">EdTech</Link>
+          <Link to="/" className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">NAMMA WEB</Link>
         </div>
         <nav className="space-x-6 hidden md:block">
-          <NavItem to="/" onClick={(e)=>{
-            if (window.location.pathname === '/'){
-              e.preventDefault();
-              document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-            }
-          }}>Home</NavItem>
-          <NavItem to="/" onClick={(e)=>{
-            if (window.location.pathname === '/'){
-              e.preventDefault();
-              document.getElementById('features')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-            }
-          }}>Features</NavItem>
-          <NavItem to="/" onClick={(e)=>{
-            if (window.location.pathname === '/'){
-              e.preventDefault();
-              document.getElementById('testimonials')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-            }
-          }}>Testimonials</NavItem>
-          <NavItem to="/blogs">Blogs</NavItem>
-          <NavItem to="/courses">Courses</NavItem>
-          <NavItem to="/about">About</NavItem>
-          <NavItem to="/contact">Contact</NavItem>
+          <NavItem to="/">HOME</NavItem>
+          <NavItem to="/about">ABOUT</NavItem>
+          <NavItem to="/services">SERVICES</NavItem>
+          <NavItem to="/career">CAREER</NavItem>
+          <NavItem to="/contact">CONTACT</NavItem>
+          <a href="https://wa.me/" target="_blank" rel="noreferrer" className="inline-block px-3 py-1.5 rounded-md bg-green-600 text-white font-semibold align-middle">GET A QUOTE</a>
         </nav>
-        <button
-          aria-label="Toggle dark mode"
-          className="ml-4 relative inline-flex items-center h-9 w-16 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 theme-transition"
-          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-        >
-          {/* Track icons */}
-          <span className="absolute left-1 text-yellow-400">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M6.76 4.84l-1.8-1.79L3.17 4.84l1.79 1.79 1.8-1.79zM1 13h3v-2H1v2zm10 10h2v-3h-2v3zM4.84 19.24l1.79 1.8 1.79-1.8-1.79-1.79-1.79 1.79zM20 11v2h3v-2h-3zm-2.76-6.16l1.8-1.79-1.42-1.42-1.79 1.8 1.41 1.41zM11 1h2v3h-2V1zm7.36 18.36l1.79 1.79 1.42-1.42-1.8-1.79-1.41 1.42z" />
-            </svg>
-          </span>
-          <span className="absolute right-1 text-indigo-300">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M21.64 13a9 9 0 11-10.63-10.6 7 7 0 1010.63 10.6z" />
-            </svg>
-          </span>
-          {/* Thumb */}
-          <span
-            className={`absolute inline-block h-7 w-7 rounded-full bg-white dark:bg-gray-700 shadow transform transition-all duration-200 ${theme === 'dark' ? 'translate-x-8' : 'translate-x-1'}`}
-          />
-        </button>
+        {/* Dark-only mode; toggle removed */}
       </div>
 
       {/* Mobile dropdown menu */}
@@ -105,19 +64,22 @@ export default function Navbar(){
                   document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
                 }
                 setMobileMenuOpen(false)
-              }}>Home</NavItem>
+              }}>HOME</NavItem>
             </div>
             <div className="block">
-              <NavItem to="/about" onClick={() => setMobileMenuOpen(false)}>About</NavItem>
+              <NavItem to="/about" onClick={() => setMobileMenuOpen(false)}>ABOUT</NavItem>
             </div>
             <div className="block">
-              <NavItem to="/courses" onClick={() => setMobileMenuOpen(false)}>Courses</NavItem>
+              <NavItem to="/services" onClick={() => setMobileMenuOpen(false)}>SERVICES</NavItem>
             </div>
             <div className="block">
-              <NavItem to="/blogs" onClick={() => setMobileMenuOpen(false)}>Blogs</NavItem>
+              <NavItem to="/career" onClick={() => setMobileMenuOpen(false)}>CAREER</NavItem>
             </div>
             <div className="block">
-              <NavItem to="/contact" onClick={() => setMobileMenuOpen(false)}>Contact</NavItem>
+              <NavItem to="/contact" onClick={() => setMobileMenuOpen(false)}>CONTACT</NavItem>
+            </div>
+            <div className="block">
+              <a href="https://wa.me/" target="_blank" rel="noreferrer" className="inline-block w-full text-center px-4 py-2 rounded-md bg-green-600 text-white font-semibold" onClick={()=> setMobileMenuOpen(false)}>GET A QUOTE</a>
             </div>
           </div>
         </div>

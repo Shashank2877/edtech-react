@@ -8,24 +8,24 @@ const Logo = ()=> (
       <path d="M54 32L36 14l-8 8 18 18 8-8z" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
       <path d="M26 48l12-12" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
     </svg>
-    <span className="font-semibold text-lg tracking-tight">Nammaweb</span>
+    <span className="font-semibold text-lg tracking-tight">NAMMA WEB</span>
   </div>
 )
 
 export default function Footer({ 
-  companyName = "Nammaweb",
-  description = "Learning platform by Nammaweb — practical courses, projects, and supportive community.",
+  companyName = "NAMMA WEB",
+  description = "Namma Web ensures professional design, seamless functionality, and optimal performance.",
   links = [
-    { to: "/", label: "Home" },
-    { to: "/courses", label: "Courses" },
-    { to: "/blogs", label: "Blogs" },
-    { to: "/about", label: "About" },
-    { to: "/contact", label: "Contact" }
+    { to: "/", label: "HOME" },
+    { to: "/", label: "ABOUT", hash: "about" },
+    { to: "/", label: "SERVICE", hash: "services" },
+    { to: "/contact", label: "CONTACT" }
   ],
   socialLinks = [
-    { href: "#", label: "Twitter", icon: "twitter" },
-    { href: "#", label: "GitHub", icon: "github" },
-    { href: "#", label: "LinkedIn", icon: "linkedin" }
+    { href: "https://youtube.com", label: "YouTube", icon: "youtube" },
+    { href: "https://linkedin.com", label: "LinkedIn", icon: "linkedin" },
+    { href: "https://instagram.com", label: "Instagram", icon: "instagram" },
+    { href: "https://wa.me/", label: "WhatsApp", icon: "whatsapp" }
   ],
   className = ""
 }) {
@@ -33,8 +33,9 @@ export default function Footer({
 
   const getSocialIcon = (iconName) => {
     const icons = {
-      twitter: <path d="M22 5.92c-.77.35-1.6.58-2.47.69.89-.53 1.57-1.37 1.89-2.37-.83.5-1.75.86-2.73 1.06A4.12 4.12 0 0015.3 4c-2.28 0-4.13 1.89-4.13 4.22 0 .33.03.65.1.96-3.43-.18-6.47-1.88-8.5-4.47-.36.64-.56 1.37-.56 2.15 0 1.48.73 2.79 1.84 3.55-.67-.02-1.31-.21-1.86-.52v.05c0 2.06 1.43 3.78 3.33 4.17-.35.1-.72.15-1.1.15-.27 0-.53-.03-.78-.08.53 1.72 2.08 2.98 3.92 3.01A8.23 8.23 0 012 19.54 11.6 11.6 0 008.29 21c7.55 0 11.68-6.4 11.68-11.95 0-.18 0-.35-.01-.53.8-.59 1.49-1.32 2.04-2.16z"/>,
-      github: <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.51 2.87 8.33 6.84 9.68.5.1.68-.22.68-.5v-1.86c-2.78.62-3.37-1.22-3.37-1.22-.46-1.2-1.12-1.52-1.12-1.52-.92-.65.07-.64.07-.64 1.01.07 1.54 1.06 1.54 1.06.9 1.58 2.35 1.12 2.92.86.09-.67.35-1.12.64-1.38-2.22-.26-4.55-1.15-4.55-5.13 0-1.13.39-2.06 1.03-2.78-.1-.26-.45-1.31.1-2.73 0 0 .84-.27 2.76 1.06a9.26 9.26 0 015.02 0c1.92-1.33 2.76-1.06 2.76-1.06.55 1.42.2 2.47.1 2.73.64.72 1.02 1.65 1.02 2.78 0 3.99-2.33 4.86-4.55 5.12.36.32.69.95.69 1.92v2.85c0 .29.18.61.69.5A10.06 10.06 0 0022 12.26C22 6.58 17.52 2 12 2z"/>,
+      youtube: <path d="M23.5 6.2s-.23-1.64-.95-2.36c-.91-.95-1.93-.96-2.4-1.02C16.8 2.5 12 2.5 12 2.5h-.01s-4.8 0-8.14.32c-.47.06-1.49.07-2.4 1.02C.73 4.56.5 6.2.5 6.2S.25 8.2.25 10.19v1.6c0 2 .25 4 .25 4s.23 1.64.95 2.36c.91.95 2.1.92 2.64 1.02C6.2 19.5 12 19.5 12 19.5s4.8 0 8.14-.32c.47-.06 1.49-.07 2.4-1.02.72-.72.95-2.36.95-2.36s.25-2 .25-4v-1.6c0-2-.25-4-.25-4zM9.75 14.5V7.5l6.5 3.5-6.5 3.5z"/>,
+      instagram: <path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm8 2H9a3 3 0 00-3 3v6a3 3 0 003 3h6a3 3 0 003-3V7a3 3 0 00-3-3zm3.5 1.75a1.25 1.25 0 11-2.5 0 1.25 1.25 0 012.5 0zM12 8.5A3.5 3.5 0 1012 15.5 3.5 3.5 0 0012 8.5z"/>,
+      whatsapp: <path d="M20.52 3.48A10 10 0 101.48 22.52 10 10 0 0020.52 3.48zM12 20.2a8.2 8.2 0 118.2-8.2 8.2 8.2 0 01-8.2 8.2zm4.58-6.14c-.25-.13-1.47-.72-1.7-.8-.23-.09-.4-.13-.56.12-.16.25-.64.8-.78.96-.14.16-.29.18-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.66-1.25-1.47-1.4-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.36-.43.12-.14.16-.25.25-.41.08-.16.04-.3-.02-.43-.06-.13-.56-1.34-.77-1.83-.2-.48-.41-.42-.56-.42-.14 0-.3 0-.46 0-.16 0-.43.06-.65.3-.22.25-.85.83-.85 2.02s.88 2.35 1 2.51c.11.16 1.72 2.63 4.16 3.69.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.16-.48-.29z"/>,
       linkedin: <path d="M6.94 6.5A1.94 1.94 0 115 4.56 1.94 1.94 0 016.94 6.5zM5.5 8.5h2.9v9.94H5.5V8.5zm5.12 0h2.77v1.36h.04c.39-.7 1.35-1.44 2.79-1.44 2.98 0 3.53 1.98 3.53 4.55v5.97h-2.9v-5.3c0-1.26-.02-2.88-1.76-2.88-1.76 0-2.03 1.37-2.03 2.79v5.39H10.6V8.5z"/>
     }
     return icons[iconName] || icons.twitter
@@ -48,17 +49,17 @@ export default function Footer({
           <p className="mt-3 text-sm text-gray-600 dark:text-gray-400 max-w-sm">{description}</p>
         </div>
         <div>
-          <h4 className="font-semibold mb-3">Quick links</h4>
+          <h4 className="font-semibold mb-3">Pages</h4>
           <nav className="grid gap-2 text-sm text-gray-700 dark:text-gray-300">
             {links.map(link => (
-              <Link key={link.to} to={link.to} className="hover:text-indigo-600 dark:hover:text-indigo-400">
+              <a key={link.label} href={link.hash ? `/#${link.hash}` : link.to} className="hover:text-indigo-600 dark:hover:text-indigo-400">
                 {link.label}
-              </Link>
+              </a>
             ))}
           </nav>
         </div>
         <div>
-          <h4 className="font-semibold mb-3">Follow</h4>
+          <h4 className="font-semibold mb-3">Follow Us</h4>
           <div className="flex items-center gap-3">
             {socialLinks.map(social => (
               <a 
@@ -77,8 +78,12 @@ export default function Footer({
       </div>
       <div className="border-t border-gray-200/60 dark:border-gray-800/80">
         <div className="max-w-6xl mx-auto px-4 py-4 text-xs text-gray-600 dark:text-gray-400 flex items-center justify-between">
-          <span>© {year} {companyName}. All rights reserved.</span>
-          <span className="hidden sm:inline">Built with React, Tailwind CSS, and Vite.</span>
+          <span>©2024 {companyName} | All Rights Reserved</span>
+          <div className="flex items-center gap-4">
+            <a href="#" className="hover:text-indigo-600 dark:hover:text-indigo-400">Terms & Condition</a>
+            <a href="#" className="hover:text-indigo-600 dark:hover:text-indigo-400">Privacy Policy</a>
+            <span className="opacity-80">AI Saraswathi</span>
+          </div>
         </div>
       </div>
     </footer>
