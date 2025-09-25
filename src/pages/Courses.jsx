@@ -1,11 +1,37 @@
-import React, { useMemo, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import React, { useState, useEffect, useRef } from 'react'
+import { motion, AnimatePresence, useAnimation, useInView } from 'framer-motion'
 import GlassCard from '../components/GlassCard'
+import GlassSection from '../components/GlassSection'
+import VideoBackground from '../components/VideoBackground'
 import { sampleCourses } from './data'
 
-export default function Courses(){
-  const [level, setLevel] = useState('All')
-  const [selected, setSelected] = useState(null)
+import React, { useState, useEffect, useRef, useMemo } from 'react'
+import { motion, AnimatePresence, useAnimation, useInView } from 'framer-motion'
+import GlassCard from '../components/GlassCard'
+import GlassSection from '../components/GlassSection'
+import VideoBackground from '../components/VideoBackground'
+import { sampleCourses } from './data'
+
+export default function Courses() {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const controls = useAnimation();
+  const ref = useRef(null);
+  const isInView = useInView(ref);
+  const [level, setLevel] = useState('All');
+  const [selected, setSelected] = useState(null);
+
+  // Handle mouse movement for parallax effect
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePosition({
+        x: e.clientX / window.innerWidth - 0.5,
+        y: e.clientY / window.innerHeight - 0.5,
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
   const levels = ['All', 'Beginner', 'Intermediate', 'Advanced']
   const levelIcons = {
@@ -21,13 +47,90 @@ export default function Courses(){
   }, [level])
 
   return (
-    <section className="max-w-6xl mx-auto px-4 py-16">
-      {/* Page header */}
+    <div className="min-h-screen relative">
+      <VideoBackground />
+      
+      {/* Hero Section */}
       <motion.div 
-        className="mb-10 text-center"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+        className="relative z-10 pt-24 pb-12 px-4"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
       >
+        <GlassSection className="max-w-7xl mx-auto rounded-2xl p-8">
+          <motion.div
+            className="text-center mb-12"
+            style={{
+              transform: `translate(${mousePosition.x * 20}px, ${mousePosition.y * 20}px)`,
+            }}
+          >
+            <motion.h1 
+              className="text-4xl md:text-6xl font-bold mb-4 text-white"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              Future-Ready Coding Education
+            </motion.h1>
+            <motion.p 
+              className="text-xl md:text-2xl text-gray-300 mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              For Grades 1-12
+            </motion.p>
+          </motion.div>
+
+          {/* Main Features */}
+          <div className="grid md:grid-cols-2 gap-8 mb-12">
+            <GlassCard className="p-6 rounded-xl hover:scale-105 transition-transform duration-300">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.6 }}
+              >
+                <h3 className="text-2xl font-bold mb-4 text-white">Web Academy</h3>
+                <p className="text-gray-300 mb-4">Learn, Create, and Certify with our AI-Powered Learning Tools</p>
+                <div className="bg-white/10 p-4 rounded-lg">
+                  <p className="text-yellow-300 font-semibold mb-2">Coming soon</p>
+                </div>
+              </motion.div>
+            </GlassCard>
+
+            <GlassCard className="p-6 rounded-xl hover:scale-105 transition-transform duration-300">
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.8 }}
+              >
+                <h3 className="text-2xl font-bold mb-4 text-white">Project-Based Learning</h3>
+                <p className="text-gray-300">
+                  Students learn by building real projects, from simple websites to complex applications, ensuring practical skills.
+                </p>
+              </motion.div>
+            </GlassCard>
+          </div>
+
+          {/* AI Assistant Section */}
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1 }}
+          >
+            <GlassCard className="p-8 rounded-xl inline-block">
+              <div className="flex items-center justify-center mb-4">
+                <div className="w-16 h-16 rounded-full overflow-hidden">
+                  <img src="/startup-cert.png" alt="AI Saraswathi" className="w-full h-full object-cover" />
+                </div>
+              </div>
+              <h3 className="text-2xl font-bold mb-4 text-white">AI-Powered Assistance</h3>
+              <p className="text-gray-300">
+                Our intelligent tutoring system provides personalized help and instant feedback to accelerate learning.
+              </p>
+            </GlassCard>
+          </motion.div>
         <motion.h1 
           className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-600"
           animate={{ 

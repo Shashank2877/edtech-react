@@ -1,12 +1,12 @@
 // src/pages/data.jsx
 
 export const sampleCourses = [
-  { 
-    id: 1, 
-    title: 'React for Beginners', 
-    description: 'Learn the fundamentals of React, build components, and create interactive web apps.', 
+  {
+    id: 1,
+    title: 'Introduction to Web Development',
+    description: 'Perfect for young beginners! Learn HTML, CSS basics and create your first website.',
     level: 'Beginner',
-    duration: '8 weeks',
+    duration: '6 weeks',
     price: 49.99,
     icon: '⚛️',
     image: 'https://images.unsplash.com/photo-1587620962725-abab7fe55159?q=80&w=1200&auto=format&fit=crop'

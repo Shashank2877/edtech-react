@@ -65,7 +65,8 @@ export default function Services() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#080B1A]">
+    <div className="min-h-screen relative">
+      <VideoBackground />
       {/* Video background positioned behind everything */}
       <div className="fixed inset-0 z-0">
         <VideoBackground />

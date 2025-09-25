@@ -71,7 +71,8 @@ export default function About() {
   ]
 
   return (
-    <div className="min-h-screen bg-[#080B1A] relative">
+    <div className="min-h-screen relative">
+      <VideoBackground />
       {/* Video Background */}
       <div className="fixed inset-0 z-0">
         <VideoBackground />

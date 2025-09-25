@@ -1,6 +1,58 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import VideoBackground from '../components/VideoBackground'
+
+// Scroll Indicator Component
+const ScrollIndicator = () => {
+  const [isVisible, setIsVisible] = React.useState(true);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <motion.div
+      className="fixed bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer z-[100]"
+      initial={{ opacity: 0 }}
+      animate={{ 
+        opacity: isVisible ? [1, 0.5, 1] : 0,
+        y: isVisible ? [0, 12, 0] : 20
+      }}
+      transition={{ 
+        duration: 2,
+        repeat: isVisible ? Infinity : 0,
+        ease: "easeInOut"
+      }}
+      style={{
+        filter: "drop-shadow(0 0 8px rgba(128, 90, 213, 0.5))"
+      }}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="32"
+        height="32"
+        viewBox="0 0 24 24"
+        fill="#805AD5"
+        stroke="#805AD5"
+        strokeWidth="1"
+        className="opacity-80"
+      >
+        <path d="M12 2A4.5 4.5 0 0 0 7.5 6.5v5A4.5 4.5 0 0 0 12 16a4.5 4.5 0 0 0 4.5-4.5v-5A4.5 4.5 0 0 0 12 2zm0 2a2.5 2.5 0 0 1 2.5 2.5v5a2.5 2.5 0 0 1-5 0v-5A2.5 2.5 0 0 1 12 4z"/>
+        <path d="M12 7v3"/>
+      </svg>
+    </motion.div>
+  );
+}
 
 // Glass Card Component
 const GlassCard = ({ children, className = "" }) => (
@@ -26,7 +78,9 @@ export default function Home() {
   ]
 
   return (
-    <div className="min-h-screen bg-[#0F0A1F] text-white">
+    <div className="min-h-screen text-white relative">
+      <VideoBackground />
+      <ScrollIndicator />
       {/* Hero Section */}
       <div className="min-h-screen flex items-center justify-center">
         <motion.div
