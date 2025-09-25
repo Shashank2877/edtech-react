@@ -1,7 +1,14 @@
 import React from 'react'
+import { motion } from 'framer-motion'
+import VideoBackground from '../components/VideoBackground'
+import GlassSection from '../components/GlassSection'
 
 export default function Career(){
-  const card = "p-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover-zoom"
+  const fadeIn = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.5 }
+  }
 
   const roles = [
     {
@@ -76,51 +83,132 @@ export default function Career(){
   ]
 
   return (
-    <section className="max-w-6xl mx-auto px-4 py-12">
-      {/* Header */}
-      <h1 className="text-3xl font-bold">Join Hands With Us</h1>
-      <p className="mt-2 text-gray-700 dark:text-gray-300">WEB DEVELOPMENT STUDENT PROGRAM WITH INTERNSHIP — a 2‑month program combining learning + real projects, culminating in a certification and career boost.</p>
-
-      {/* Open Roles */}
-      <div className="mt-8 grid md:grid-cols-2 gap-6">
-        {roles.map((r)=> (
-          <div key={r.title} className={card}>
-            <h2 className="text-xl font-semibold">{r.title}</h2>
-            <div className="mt-3">
-              <h3 className="font-medium">Key Responsibilities</h3>
-              <ul className="list-disc ml-5 text-sm text-gray-700 dark:text-gray-300 space-y-1">
-                {r.responsibilities.map((it)=> <li key={it}>{it}</li>)}
-              </ul>
-            </div>
-            <div className="mt-3">
-              <h3 className="font-medium">Qualifications</h3>
-              <ul className="list-disc ml-5 text-sm text-gray-700 dark:text-gray-300 space-y-1">
-                {r.qualifications.map((it)=> <li key={it}>{it}</li>)}
-              </ul>
-            </div>
-          </div>
-        ))}
+    <div className="min-h-screen bg-[#080B1A] relative">
+      {/* Video Background */}
+      <div className="fixed inset-0 z-0">
+        <VideoBackground />
+        <div className="absolute inset-0 bg-[#080B1A]/80 pointer-events-none" />
       </div>
 
-      {/* Program Info */}
-      <div className="mt-10 grid lg:grid-cols-2 gap-6 items-start">
-        <div className={card}>
-          <h2 className="text-xl font-semibold mb-2">Student Program — Summary</h2>
-          <p className="text-gray-700 dark:text-gray-300">2‑month hands‑on program with real projects. Completing the program earns a certification and provides a solid career boost.</p>
-          <a href="https://forms.gle/" target="_blank" rel="noreferrer" className="mt-4 inline-block px-5 py-2 rounded-md bg-indigo-600 text-white hover:bg-indigo-700">Apply Now</a>
-        </div>
-        <div className={card}>
-          <h3 className="font-semibold mb-2">Why join?</h3>
-          <ul className="list-disc ml-5 text-gray-700 dark:text-gray-300 text-sm space-y-1">
-            <li>Real projects with mentorship</li>
-            <li>Certification on completion</li>
-            <li>Portfolio development and career guidance</li>
-          </ul>
+      {/* Content */}
+      <div className="relative z-10">
+        {/* Hero Section */}
+        <motion.div 
+          className="max-w-7xl mx-auto px-4 pt-16 pb-12 text-center"
+          initial={fadeIn.initial}
+          animate={fadeIn.animate}
+          transition={fadeIn.transition}
+        >
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-[#B4A5FF]">
+            Join Hands With Us
+          </h1>
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            Launch your career with our WEB DEVELOPMENT STUDENT PROGRAM. 
+            A 2-month immersive journey combining hands-on learning with real projects, 
+            leading to certification and career advancement.
+          </p>
+        </motion.div>
+
+        {/* Open Roles */}
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          <motion.div 
+            className="grid md:grid-cols-2 gap-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            {roles.map((role, index) => (
+              <motion.div
+                key={role.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <GlassSection>
+                  <div className="p-6">
+                    <h2 className="text-2xl font-semibold text-[#B4A5FF] mb-4">{role.title}</h2>
+                    <div className="space-y-4">
+                      <div>
+                        <h3 className="text-indigo-400 font-medium mb-2">Key Responsibilities</h3>
+                        <ul className="space-y-2">
+                          {role.responsibilities.map((item) => (
+                            <li key={item} className="text-gray-300 text-sm flex items-start">
+                              <span className="text-indigo-400 mr-2">•</span>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h3 className="text-indigo-400 font-medium mb-2">Qualifications</h3>
+                        <ul className="space-y-2">
+                          {role.qualifications.map((item) => (
+                            <li key={item} className="text-gray-300 text-sm flex items-start">
+                              <span className="text-indigo-400 mr-2">•</span>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </GlassSection>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Program Info */}
+          <motion.div 
+            className="mt-12 grid lg:grid-cols-2 gap-6 items-start"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            <GlassSection>
+              <div className="p-6">
+                <h2 className="text-2xl font-semibold text-[#B4A5FF] mb-4">
+                  Student Program — Summary
+                </h2>
+                <p className="text-gray-300 mb-6">
+                  2-month hands-on program with real projects. Completing the program earns 
+                  a certification and provides a solid career boost.
+                </p>
+                <motion.a
+                  href="https://forms.gle/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-block px-6 py-3 rounded-lg bg-[#B4A5FF] text-gray-900 font-semibold 
+                    hover:bg-indigo-400 transition-colors duration-300"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Apply Now
+                </motion.a>
+              </div>
+            </GlassSection>
+
+            <GlassSection>
+              <div className="p-6">
+                <h3 className="text-2xl font-semibold text-[#B4A5FF] mb-4">Why join?</h3>
+                <ul className="space-y-3">
+                  <li className="text-gray-300 text-sm flex items-start">
+                    <span className="text-indigo-400 mr-2">•</span>
+                    Real projects with mentorship
+                  </li>
+                  <li className="text-gray-300 text-sm flex items-start">
+                    <span className="text-indigo-400 mr-2">•</span>
+                    Certification on completion
+                  </li>
+                  <li className="text-gray-300 text-sm flex items-start">
+                    <span className="text-indigo-400 mr-2">•</span>
+                    Portfolio development and career guidance
+                  </li>
+                </ul>
+              </div>
+            </GlassSection>
+          </motion.div>
         </div>
       </div>
-    </section>
+    </div>
   )
 }
-
-
-

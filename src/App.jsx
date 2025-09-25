@@ -17,7 +17,7 @@ export default function App(){
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
         <video
           className="h-full w-full object-cover"
-          src="/12884743_1920_1080_30fps.mp4"
+          src="/5453622-uhd_3840_2160_24fps.mp4"
           autoPlay
           muted
           loop

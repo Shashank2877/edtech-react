@@ -40,7 +40,15 @@ export default function Navbar(){
               )}
             </svg>
           </button>
-          <Link to="/" className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">NAMMA WEB</Link>
+          <Link to="/" className="flex items-center gap-2">
+            <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-teal-400">
+              <path d="M8 20L14 14L20 20L14 26L8 20Z" fill="currentColor" />
+              <path d="M14 14L20 8L26 14L20 20L14 14Z" fill="currentColor" />
+              <path d="M20 20L26 14L32 20L26 26L20 20Z" fill="currentColor" />
+              <path d="M14 26L20 20L26 26L20 32L14 26Z" fill="currentColor" />
+            </svg>
+            <span className="text-xl font-bold text-blue-500">NAMMA WEB</span>
+          </Link>
         </div>
         <nav className="space-x-6 hidden md:block">
           <NavItem to="/">HOME</NavItem>

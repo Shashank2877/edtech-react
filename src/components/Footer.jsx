@@ -3,12 +3,29 @@ import { Link } from 'react-router-dom'
 
 const Logo = ()=> (
   <div className="flex items-center gap-2">
-    <svg width="28" height="28" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-teal-400">
-      <path d="M10 32l18-18 8 8-18 18-8-8z" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M54 32L36 14l-8 8 18 18 8-8z" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M26 48l12-12" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
+    <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-teal-400">
+      {/* First diamond */}
+      <path 
+        d="M8 20L14 14L20 20L14 26L8 20Z" 
+        fill="currentColor"
+      />
+      {/* Second diamond */}
+      <path 
+        d="M14 14L20 8L26 14L20 20L14 14Z" 
+        fill="currentColor"
+      />
+      {/* Third diamond */}
+      <path 
+        d="M20 20L26 14L32 20L26 26L20 20Z" 
+        fill="currentColor"
+      />
+      {/* Fourth diamond */}
+      <path 
+        d="M14 26L20 20L26 26L20 32L14 26Z" 
+        fill="currentColor"
+      />
     </svg>
-    <span className="font-semibold text-lg tracking-tight">NAMMA WEB</span>
+    <span className="font-semibold text-lg tracking-tight text-blue-500">NAMMA WEB</span>
   </div>
 )
 
@@ -17,8 +34,9 @@ export default function Footer({
   description = "Namma Web ensures professional design, seamless functionality, and optimal performance.",
   links = [
     { to: "/", label: "HOME" },
-    { to: "/", label: "ABOUT", hash: "about" },
-    { to: "/", label: "SERVICE", hash: "services" },
+    { to: "/about", label: "ABOUT" },
+    { to: "/services", label: "SERVICE" },
+    { to: "/career", label: "CAREER" },
     { to: "/contact", label: "CONTACT" }
   ],
   socialLinks = [
@@ -52,9 +70,13 @@ export default function Footer({
           <h4 className="font-semibold mb-3">Pages</h4>
           <nav className="grid gap-2 text-sm text-gray-700 dark:text-gray-300">
             {links.map(link => (
-              <a key={link.label} href={link.hash ? `/#${link.hash}` : link.to} className="hover:text-indigo-600 dark:hover:text-indigo-400">
+              <Link 
+                key={link.label} 
+                to={link.to} 
+                className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+              >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </nav>
         </div>

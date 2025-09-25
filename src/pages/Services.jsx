@@ -1,148 +1,129 @@
 import React from 'react'
+import { motion } from 'framer-motion'
+import GlassSection from '../components/GlassSection'
+import VideoBackground from '../components/VideoBackground'
 
-export default function Services(){
-  const card = "p-6 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 hover-zoom"
-
-  const aiCourses = [
-    'Web Development using AI',
-    'AI Automation & Manual Testing',
-    'Machine Learning using AI',
-    'AI in App Development',
-    'AI in Cloud Computing',
-    'AutoCAD using AI',
-    'Digital Marketing using AI',
-    'Finance & Accounting using AI',
-    'HR using AI',
-    'AI Animation',
-    'Building AI Agents',
-    'AI in Construction Planning',
-    'AI Graphic Design',
-    'AI for Research',
-    'AI Data & Automation',
-    'Data Science using AI',
-    'AI in Supply Chain',
-    'AI for Business Leadership',
-    'Tools / Entrepreneurship 101',
-    'Stock Market using AI'
-  ]
+export default function Services() {
+  const services = [
+    {
+      title: "Web Development & Design",
+      icon: "💻",
+      items: [
+        "Build user-friendly, responsive, custom websites optimized for all devices",
+        "Seamless browsing experience with modern design principles",
+        "Website revamp and redesign services",
+        "Conversion-focused experiences"
+      ]
+    },
+    {
+      title: "E-commerce Solutions",
+      icon: "🛍️",
+      items: [
+        "Creation of engaging e-commerce websites",
+        "SEO optimization for product/category pages",
+        "Smooth shopping UX: cart, checkout, payments",
+        "Maximize conversions and increase profit"
+      ]
+    },
+    {
+      title: "Website Maintenance",
+      icon: "🔧",
+      items: [
+        "Ongoing updates, security, performance monitoring",
+        "SEO audits, publishing blog posts",
+        "Handling customer inquiries",
+        "Regular content updates and optimizations"
+      ]
+    },
+    {
+      title: "Advertising Solutions",
+      icon: "📢",
+      items: [
+        "Plan and execute strategies to enhance brand visibility",
+        "Create promotional materials (online & offline)",
+        "Manage ads on Google, Facebook, and other platforms"
+      ]
+    },
+    {
+      title: "Data Security",
+      icon: "🔒",
+      items: [
+        "Secure hosting and encrypted communications",
+        "Vulnerability assessments",
+        "Compliance (GDPR, ISO 27001)"
+      ]
+    },
+    {
+      title: "Branding & Design",
+      icon: "🎨",
+      items: [
+        "Logo design, graphics, multimedia",
+        "End-to-end brand identity systems",
+        "Visual asset creation and management"
+      ]
+    }
+  ];
 
   return (
-    <section className="max-w-6xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold mb-2">Our Services</h1>
-      <p className="text-gray-600 dark:text-gray-400 mb-8">Solutions that help you launch, grow, and maintain your digital presence.</p>
-
-      {/* Web Development & Design */}
-      <div className="grid md:grid-cols-2 gap-6">
-        <div className={card}>
-          <h2 className="text-xl font-semibold mb-2">Web Development & Design</h2>
-          <p className="text-gray-600 dark:text-gray-400">We build user‑friendly, responsive, custom websites optimized for desktop and mobile with a seamless browsing experience.</p>
-        </div>
-        <div className={card}>
-          <h2 className="text-xl font-semibold mb-2">Website Revamp</h2>
-          <p className="text-gray-600 dark:text-gray-400">Redesign and upgrade outdated websites into fresh, accessible, and conversion‑focused experiences.</p>
-        </div>
+    <div className="min-h-screen bg-[#080B1A]">
+      {/* Video background positioned behind everything */}
+      <div className="fixed inset-0 z-0">
+        <VideoBackground />
+        <div className="absolute inset-0 bg-[#080B1A]/80 pointer-events-none" />
       </div>
+      
+      {/* Services Content */}
+      <div className="relative z-10">
+        <div className="max-w-7xl mx-auto px-4 py-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-16"
+          >
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-[#B4A5FF]">
+              Our Services
+            </h1>
+            <p className="text-xl text-gray-300">
+              Solutions that help you launch, grow, and maintain your digital presence
+            </p>
+          </motion.div>
 
-      {/* Ecommerce */}
-      <div className="mt-6 grid md:grid-cols-2 gap-6">
-        <div className={card}>
-          <h2 className="text-xl font-semibold mb-2">E‑commerce Solutions</h2>
-          <ul className="list-disc ml-5 text-gray-700 dark:text-gray-300 space-y-1 text-sm">
-            <li>Creation of engaging e‑commerce websites</li>
-            <li>SEO optimization for product/category pages</li>
-            <li>Smooth shopping UX: cart, checkout, payments</li>
-            <li>Goal: maximize conversions and increase profit</li>
-          </ul>
-        </div>
-        <div className={card}>
-          <h2 className="text-xl font-semibold mb-2">Website Maintenance</h2>
-          <ul className="list-disc ml-5 text-gray-700 dark:text-gray-300 space-y-1 text-sm">
-            <li>Ongoing updates, security, performance monitoring</li>
-            <li>SEO audits, publishing blog posts</li>
-            <li>Handling customer inquiries and minor content edits</li>
-          </ul>
-        </div>
-      </div>
-
-      {/* Advertising & Outsourcing */}
-      <div className="mt-6 grid md:grid-cols-2 gap-6">
-        <div className={card}>
-          <h2 className="text-xl font-semibold mb-2">Advertising Solutions</h2>
-          <ul className="list-disc ml-5 text-gray-700 dark:text-gray-300 space-y-1 text-sm">
-            <li>Plan and execute strategies to enhance brand visibility</li>
-            <li>Create promotional materials (online & offline)</li>
-            <li>Manage ads on Google, Facebook, and other platforms</li>
-          </ul>
-        </div>
-        <div className={card}>
-          <h2 className="text-xl font-semibold mb-2">Outsourcing Corporate Services</h2>
-          <ul className="list-disc ml-5 text-gray-700 dark:text-gray-300 space-y-1 text-sm">
-            <li>Website maintenance & software development</li>
-            <li>Content management</li>
-            <li>General IT outsourcing for businesses</li>
-          </ul>
-        </div>
-      </div>
-
-      {/* Data Security & Branding */}
-      <div className="mt-6 grid md:grid-cols-2 gap-6">
-        <div className={card}>
-          <h2 className="text-xl font-semibold mb-2">Data Security</h2>
-          <ul className="list-disc ml-5 text-gray-700 dark:text-gray-300 space-y-1 text-sm">
-            <li>Secure hosting and encrypted communications</li>
-            <li>Vulnerability assessments</li>
-            <li>Compliance (GDPR, ISO 27001)</li>
-          </ul>
-        </div>
-        <div className={card}>
-          <h2 className="text-xl font-semibold mb-2">Branding & Design</h2>
-          <ul className="list-disc ml-5 text-gray-700 dark:text-gray-300 space-y-1 text-sm">
-            <li>Logo design, graphics, multimedia</li>
-            <li>End‑to‑end brand identity systems</li>
-          </ul>
-        </div>
-      </div>
-
-      {/* Internships & Education */}
-      <div className="mt-10">
-        <h2 className="text-2xl font-semibold mb-3">Internships & Education</h2>
-        <div className={card}>
-          <p className="text-gray-700 dark:text-gray-300">Get industrial experience with real‑time projects, a certificate, and hands‑on mentorship.</p>
-          <div className="mt-4 grid sm:grid-cols-3 gap-4">
-            <div className="p-4 rounded-lg bg-gray-50 dark:bg-gray-800/60">
-              <div className="text-sm text-gray-600 dark:text-gray-400">Fees</div>
-              <div className="font-semibold">₹7,500 & ₹11,999</div>
-            </div>
-            <div className="p-4 rounded-lg bg-gray-50 dark:bg-gray-800/60">
-              <div className="text-sm text-gray-600 dark:text-gray-400">Duration</div>
-              <div className="font-semibold">2 months</div>
-            </div>
-            <div className="p-4 rounded-lg bg-gray-50 dark:bg-gray-800/60">
-              <div className="text-sm text-gray-600 dark:text-gray-400">Benefits</div>
-              <div className="font-semibold">Projects • Certificate • Experience</div>
-            </div>
-          </div>
-          <div className="mt-6">
-            <h3 className="font-semibold mb-2">Courses / Fields</h3>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2">
-              {aiCourses.map((c) => (
-                <span key={c} className="text-sm px-3 py-1 rounded-md border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">{c}</span>
-              ))}
-            </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {services.map((service, index) => (
+              <motion.div
+                key={service.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <GlassSection className="h-full">
+                  <div className="p-6 h-full flex flex-col">
+                    <div className="text-3xl mb-4 text-[#B4A5FF]">{service.icon}</div>
+                    <h2 className="text-xl font-semibold mb-4 text-[#B4A5FF]">
+                      {service.title}
+                    </h2>
+                    <ul className="space-y-2 flex-grow">
+                      {service.items.map((item, i) => (
+                        <motion.li
+                          key={i}
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: (index * 0.1) + (i * 0.05) }}
+                          className="text-[#8B8FA7] text-sm flex items-start leading-relaxed"
+                        >
+                          <span className="text-[#B4A5FF] mr-2">•</span>
+                          {item}
+                        </motion.li>
+                      ))}
+                    </ul>
+                  </div>
+                </GlassSection>
+              </motion.div>
+            ))}
           </div>
         </div>
       </div>
-
-      {/* Web Academy Coming Soon */}
-      <div className="mt-10">
-        <div className={card}>
-          <h2 className="text-xl font-semibold mb-2">Web Academy — Coming Soon</h2>
-          <p className="text-gray-700 dark:text-gray-300">Learn, Create, and Certify with our AI‑Powered Learning Tools. Project‑based learning, AI assistance and personalized help, industry certifications.</p>
-        </div>
-      </div>
-    </section>
+    </div>
   )
 }
-
-
-

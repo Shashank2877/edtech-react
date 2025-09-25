@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Link } from 'react-router-dom'
-import CourseCard from '../components/CourseCard'
+import GlassCard from '../components/GlassCard'
 import { sampleCourses } from './data'
 
 export default function Courses(){
@@ -9,6 +8,12 @@ export default function Courses(){
   const [selected, setSelected] = useState(null)
 
   const levels = ['All', 'Beginner', 'Intermediate', 'Advanced']
+  const levelIcons = {
+    All: '🎯',
+    Beginner: '🌱',
+    Intermediate: '⚡',
+    Advanced: '🚀'
+  }
 
   const filtered = useMemo(() => {
     if (level === 'All') return sampleCourses
@@ -18,29 +23,95 @@ export default function Courses(){
   return (
     <section className="max-w-6xl mx-auto px-4 py-16">
       {/* Page header */}
-      <div className="mb-6" data-aos="fade-up">
-        <h1 className="text-3xl font-bold">Our Courses</h1>
-        <p className="text-gray-700 dark:text-gray-300 mt-1">Learn new skills with our interactive courses.</p>
-      </div>
+      <motion.div 
+        className="mb-10 text-center"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <motion.h1 
+          className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-600"
+          animate={{ 
+            backgroundPosition: ["0%", "100%"],
+            transition: { duration: 8, repeat: Infinity, repeatType: "reverse" }
+          }}
+        >
+          Explore Our Courses
+        </motion.h1>
+        <motion.p 
+          className="text-xl text-gray-300 mt-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+        >
+          Transform your skills with our interactive learning experiences
+        </motion.p>
+      </motion.div>
 
       {/* Filters */}
-      <div className="mb-8 flex flex-wrap gap-3" data-aos="fade-up">
-        {levels.map(l => (
-          <button
+      <motion.div 
+        className="mb-12 flex flex-wrap justify-center gap-4"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+      >
+        {levels.map((l, i) => (
+          <motion.button
             key={l}
             onClick={() => setLevel(l)}
-            className={(level === l
-              ? 'bg-indigo-600 text-white '
-              : 'border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 ') +
-              'px-4 py-2 rounded-md theme-transition'}
+            className={`px-6 py-3 rounded-xl backdrop-blur-lg transition-all duration-300 flex items-center gap-2 ${
+              level === l
+                ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-500/25'
+                : 'border border-white/10 bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white'
+            }\`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.1 }}
           >
+            <span className="text-xl">{levelIcons[l]}</span>
             {l}
-          </button>
+          </motion.button>
         ))}
-      </div>
+      </motion.div>
 
-      {/* Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-stretch">
+      {/* Course Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <AnimatePresence mode="popLayout">
+          {filtered.map((course, i) => (
+            <GlassCard
+              key={course.id}
+              icon={course.icon || '📚'}
+              title={course.title}
+              delay={i * 0.1}
+            >
+              <p className="text-gray-300 mb-4">{course.description}</p>
+              <div className="flex items-center gap-4 mb-4">
+                <span className="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-sm">
+                  {course.level}
+                </span>
+                <span className="px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 text-sm">
+                  {course.duration}
+                </span>
+              </div>
+              <div className="flex justify-between items-center">
+                <div className="text-2xl font-bold text-indigo-400">
+                  ${course.price}
+                </div>
+                <motion.button
+                  className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg text-white"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Enroll Now
+                </motion.button>
+              </div>
+            </GlassCard>
+          ))}
+        </AnimatePresence>
+      </div>
+    </section>
+  )
         <AnimatePresence mode="popLayout">
           {filtered.map(c => (
             <motion.div
