@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import ContactForm from '../components/ContactForm'
+import VideoBackground from '../components/VideoBackground'
 
 export default function Contact(){
   // Default Contact page to dark if no preference saved yet
@@ -18,7 +19,16 @@ export default function Contact(){
   }
 
   return (
-    <section className="max-w-6xl mx-auto px-4 py-16">
+    <div className="min-h-screen relative">
+      {/* Video Background */}
+      <div className="fixed inset-0 z-0">
+        <VideoBackground />
+        <div className="absolute inset-0 bg-[#080B1A]/40 pointer-events-none" />
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10">
+        <section className="max-w-6xl mx-auto px-4 py-16">
       <div className="mb-6" data-aos="fade-up">
         <h1 className="text-3xl font-bold">Contact Us</h1>
         <p className="text-gray-700 dark:text-gray-300 mt-1">Fill the form and we'll get back to you.</p>
@@ -49,5 +59,7 @@ export default function Contact(){
         </motion.div>
       </div>
     </section>
+      </div>
+    </div>
   )
 }

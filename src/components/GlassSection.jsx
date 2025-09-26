@@ -5,7 +5,7 @@ export default function GlassSection({ children, className = "" }) {
   return (
     <motion.div
       className={`relative group rounded-xl border border-[#2A2F52]/50
-        bg-[#0F1333] shadow-lg 
+        bg-[#0F1333]/60 backdrop-blur-sm shadow-lg 
         hover:border-[#2A2F52]
         transition-all duration-300 ${className}`}
       initial={{ opacity: 0, y: 20 }}

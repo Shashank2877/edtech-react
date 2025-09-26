@@ -3,29 +3,8 @@ import { Link } from 'react-router-dom'
 
 const Logo = ()=> (
   <div className="flex items-center gap-2">
-    <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-teal-400">
-      {/* First diamond */}
-      <path 
-        d="M8 20L14 14L20 20L14 26L8 20Z" 
-        fill="currentColor"
-      />
-      {/* Second diamond */}
-      <path 
-        d="M14 14L20 8L26 14L20 20L14 14Z" 
-        fill="currentColor"
-      />
-      {/* Third diamond */}
-      <path 
-        d="M20 20L26 14L32 20L26 26L20 20Z" 
-        fill="currentColor"
-      />
-      {/* Fourth diamond */}
-      <path 
-        d="M14 26L20 20L26 26L20 32L14 26Z" 
-        fill="currentColor"
-      />
-    </svg>
-    <span className="font-semibold text-lg tracking-tight text-blue-500">NAMMA WEB</span>
+    <img src="/download.png" alt="Company Logo" width="28" height="28" className="mr-1" />
+    <span className="font-semibold text-lg tracking-tight text-indigo-600 dark:text-indigo-400">NAMMA WEB</span>
   </div>
 )
 
@@ -36,6 +15,7 @@ export default function Footer({
     { to: "/", label: "HOME" },
     { to: "/about", label: "ABOUT" },
     { to: "/services", label: "SERVICE" },
+    { to: "/courses", label: "COURSES" },
     { to: "/career", label: "CAREER" },
     { to: "/contact", label: "CONTACT" }
   ],

@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import VideoBackground from '../components/VideoBackground'
 import GlassSection from '../components/GlassSection'
+import ApplicationForm from '../components/ApplicationForm'
 
 export default function Career(){
+  const [showApplicationForm, setShowApplicationForm] = useState(false)
+  const [selectedJob, setSelectedJob] = useState('')
+
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
@@ -40,44 +44,73 @@ export default function Career(){
       ]
     },
     {
-      title: 'Back‑end Developer',
+      title: 'SDE Intern',
       responsibilities: [
-        'Develop server‑side logic, APIs, and databases',
-        'Integrate front‑end and back‑end components',
-        'Optimize performance for speed and scalability',
-        'Test, troubleshoot, and maintain core systems'
+        'Assist in developing web applications and software solutions',
+        'Write clean, maintainable code under senior developer guidance',
+        'Participate in code reviews and learn best practices',
+        'Help with testing and debugging applications'
       ],
       qualifications: [
-        'Basics in PHP/Node.js/Python/Ruby etc.',
-        'Familiarity with MySQL/MongoDB/PostgreSQL',
-        'Strong problem solving; willingness to learn'
+        'Basic knowledge of programming languages (Python, Java, JavaScript)',
+        'Understanding of data structures and algorithms',
+        'Currently pursuing Computer Science or related degree'
       ]
     },
     {
-      title: 'Front‑end Developer',
+      title: 'Automation Intern',
       responsibilities: [
-        'Build responsive sites using HTML, CSS, JavaScript',
-        'Implement UI from UX mockups/designs',
-        'Ensure cross‑browser/device compatibility',
-        'Collaborate with back‑end developers for integration'
+        'Develop automated testing scripts and frameworks',
+        'Assist in setting up CI/CD pipelines',
+        'Create automation tools for repetitive tasks',
+        'Support quality assurance processes'
       ],
       qualifications: [
-        'Solid HTML, CSS, JavaScript',
-        'Exposure to React/Vue/Angular is a plus',
-        'Keen attention to detail'
+        'Basic knowledge of automation tools (Selenium, Cypress)',
+        'Understanding of testing methodologies',
+        'Familiarity with scripting languages (Python, JavaScript)'
       ]
     },
     {
-      title: 'Full‑stack Developer',
+      title: 'HR Intern',
       responsibilities: [
-        'Own both front‑end and back‑end (end‑to‑end)',
-        'Combine client & server functionality; assist architecture',
-        'Collaborate across teams to meet requirements'
+        'Assist with recruitment and candidate screening',
+        'Support employee onboarding and training programs',
+        'Help maintain employee records and documentation',
+        'Participate in organizing team events and activities'
       ],
       qualifications: [
-        'Understanding of FE/BE tech (HTML/CSS/JS + Node/PHP/Python etc.)',
-        'Knowledge of databases and Git',
-        'Strong learning attitude'
+        'Strong interpersonal and communication skills',
+        'Currently pursuing HR, Psychology, or related degree',
+        'Interest in talent acquisition and employee relations'
+      ]
+    },
+    {
+      title: 'Sales/Ops Intern',
+      responsibilities: [
+        'Support sales team with lead generation and follow-ups',
+        'Assist in client presentations and proposals',
+        'Help with operational processes and workflow optimization',
+        'Maintain CRM systems and sales databases'
+      ],
+      qualifications: [
+        'Excellent communication and presentation skills',
+        'Basic understanding of sales processes',
+        'Currently pursuing Business, Marketing, or related degree'
+      ]
+    },
+    {
+      title: 'AI Analytics Intern',
+      responsibilities: [
+        'Assist in data collection, cleaning, and analysis',
+        'Support machine learning model development',
+        'Create data visualizations and reports',
+        'Help with AI research and implementation projects'
+      ],
+      qualifications: [
+        'Basic knowledge of Python, R, or similar data tools',
+        'Understanding of statistics and data analysis',
+        'Currently pursuing Data Science, AI, or related degree'
       ]
     }
   ]
@@ -88,7 +121,7 @@ export default function Career(){
       {/* Video Background */}
       <div className="fixed inset-0 z-0">
         <VideoBackground />
-        <div className="absolute inset-0 bg-[#080B1A]/80 pointer-events-none" />
+        <div className="absolute inset-0 bg-[#080B1A]/40 pointer-events-none" />
       </div>
 
       {/* Content */}
@@ -152,6 +185,19 @@ export default function Career(){
                         </ul>
                       </div>
                     </div>
+                    <div className="px-6 pb-6 mt-3">
+                      <motion.button
+                        className="inline-block px-6 py-3 rounded-lg bg-[#B4A5FF] text-gray-900 font-semibold hover:bg-indigo-400 transition-colors duration-300"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => {
+                          setSelectedJob(role.title)
+                          setShowApplicationForm(true)
+                        }}
+                      >
+                        Apply Now
+                      </motion.button>
+                    </div>
                   </div>
                 </GlassSection>
               </motion.div>
@@ -210,6 +256,14 @@ export default function Career(){
           </motion.div>
         </div>
       </div>
+
+      {/* Application Form Modal */}
+      {showApplicationForm && (
+        <ApplicationForm
+          jobTitle={selectedJob}
+          onClose={() => setShowApplicationForm(false)}
+        />
+      )}
     </div>
   )
 }

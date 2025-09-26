@@ -22,34 +22,47 @@ const ScrollIndicator = () => {
 
   return (
     <motion.div
-      className="fixed bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer z-[100]"
+      className="fixed bottom-8 cursor-pointer z-[100] flex justify-center items-center"
+      style={{ 
+        left: '50%', 
+        transform: 'translateX(calc(-50% - 16px))'
+      }}
       initial={{ opacity: 0 }}
       animate={{ 
-        opacity: isVisible ? [1, 0.5, 1] : 0,
-        y: isVisible ? [0, 12, 0] : 20
+        opacity: isVisible ? [1, 0.6, 1] : 0,
+        y: isVisible ? [0, 10, 0] : 20
       }}
       transition={{ 
-        duration: 2,
+        duration: 1.5,
         repeat: isVisible ? Infinity : 0,
         ease: "easeInOut"
       }}
-      style={{
-        filter: "drop-shadow(0 0 8px rgba(128, 90, 213, 0.5))"
+      onClick={() => {
+        window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
       }}
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="32"
-        height="32"
-        viewBox="0 0 24 24"
-        fill="#805AD5"
-        stroke="#805AD5"
-        strokeWidth="1"
-        className="opacity-80"
-      >
-        <path d="M12 2A4.5 4.5 0 0 0 7.5 6.5v5A4.5 4.5 0 0 0 12 16a4.5 4.5 0 0 0 4.5-4.5v-5A4.5 4.5 0 0 0 12 2zm0 2a2.5 2.5 0 0 1 2.5 2.5v5a2.5 2.5 0 0 1-5 0v-5A2.5 2.5 0 0 1 12 4z"/>
-        <path d="M12 7v3"/>
-      </svg>
+      <div className="flex flex-col items-center gap-2">
+        <span className="text-indigo-400 font-semibold text-lg tracking-wider">
+          Scroll
+        </span>
+        <motion.div
+          animate={isVisible ? { y: [0, 8, 0] } : { y: 0 }}
+          transition={{
+            duration: 1,
+            repeat: isVisible ? Infinity : 0,
+            ease: "easeInOut"
+          }}
+        >
+          <svg
+            className="w-6 h-6 text-indigo-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+        </motion.div>
+      </div>
     </motion.div>
   );
 }
@@ -89,7 +102,7 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45 }}
         >
-          <h1 className="text-4xl md:text-6xl font-bold text-[#00FFB2] mb-4">
+          <h1 className="text-4xl md:text-6xl font-bold text-indigo-400 mb-4">
             Namma Web — Design, Build, Grow Online
           </h1>
           <p className="text-lg text-white/90 mb-6">
@@ -98,13 +111,13 @@ export default function Home() {
           <div className="flex items-center justify-center gap-4">
             <button
               onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-6 py-3 rounded bg-[#00FFB2] text-black font-medium hover:bg-[#00FFB2]/90 transition-colors"
+              className="px-6 py-3 rounded bg-indigo-500 text-white font-medium hover:bg-indigo-600 transition-colors"
             >
               Explore
             </button>
             <Link 
               to="/contact" 
-              className="px-6 py-3 rounded border border-[#00FFB2] text-[#00FFB2] hover:bg-[#00FFB2]/10 transition-colors"
+              className="px-6 py-3 rounded border border-indigo-400 text-indigo-400 hover:bg-indigo-400/10 transition-colors"
             >
               Contact
             </Link>
@@ -126,7 +139,7 @@ export default function Home() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <GlassCard className="py-6 text-center rounded-xl bg-white/5 hover:bg-white/10 transition-colors duration-300">
-                  <div className="text-3xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+                  <div className="text-3xl font-bold bg-gradient-to-r from-indigo-400 to-indigo-600 bg-clip-text text-transparent">
                     {stat.number}
                   </div>
                   <div className="text-white/70 mt-1">{stat.label}</div>
@@ -217,144 +230,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Packages */}
-        <section className="relative mt-24">
-          <GlassSection className="py-16 overflow-hidden">
-            <motion.div
-              className="absolute -left-32 top-0 w-96 h-96 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 rounded-full blur-3xl"
-              animate={{
-                x: [-20, 20, -20],
-                y: [-20, 20, -20],
-                scale: [1, 1.2, 1],
-              }}
-              transition={{
-                duration: 10,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
-            <motion.div
-              className="absolute -right-32 bottom-0 w-96 h-96 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-3xl"
-              animate={{
-                x: [20, -20, 20],
-                y: [20, -20, 20],
-                scale: [1, 1.2, 1],
-              }}
-              transition={{
-                duration: 10,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1
-              }}
-            />
 
-            <div className="relative max-w-6xl mx-auto px-6">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="text-center mb-12"
-              >
-                <h2 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">
-                  Choose Your Plan
-                </h2>
-                <p className="mt-4 text-lg text-white/70">
-                  Select the perfect package for your business needs
-                </p>
-              </motion.div>
-
-              <div className="grid md:grid-cols-3 gap-8">
-                {[
-                  {
-                    title: "Starter",
-                    price: "₹5999",
-                    billing: "One Time",
-                    note: "Excluding Hosting & Domain",
-                    features: ["Landing page", "On Page SEO", "User Friendly & Attractive", "2 Month Support"],
-                    cta: "Let's Start",
-                    isPopular: false
-                  },
-                  {
-                    title: "Startup",
-                    price: "₹16999",
-                    billing: "One Time",
-                    note: "Excluding Hosting & Domain",
-                    features: ["5–7 Pages", "On Page SEO & Branding Support", "Premium Design", "5 Month Support"],
-                    cta: "Let's Start",
-                    isPopular: true
-                  },
-                  {
-                    title: "Enterprise",
-                    price: "Contact",
-                    billing: "Billed Yearly",
-                    note: "Includes Hosting & Domain",
-                    features: ["Unlimited Pages", "Branding & Marketing", "Premium Design", "1 Year Support"],
-                    cta: "Contact Us",
-                    isPopular: false
-                  }
-                ].map((plan, index) => (
-                  <motion.div
-                    key={plan.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                  >
-                    <GlassCard className={`relative h-full p-8 rounded-xl backdrop-blur-lg ${plan.isPopular ? 'bg-white/10' : 'bg-white/5'} transition-all duration-300 group hover:bg-white/15`}>
-                      {plan.isPopular && (
-                        <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                          <div className="px-4 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-emerald-600 to-teal-500 text-white shadow-lg">
-                            Popular Choice
-                          </div>
-                        </div>
-                      )}
-
-                      <div className="text-center mb-6">
-                        <h3 className="text-2xl font-bold text-white mb-2">
-                          {plan.title}
-                        </h3>
-                        <div className="flex items-baseline justify-center gap-1">
-                          <span className="text-3xl font-bold text-white">
-                            {plan.price}
-                          </span>
-                          <span className="text-white/70">
-                            • {plan.billing}
-                          </span>
-                        </div>
-                        <p className="mt-1 text-sm text-white/50">
-                          {plan.note}
-                        </p>
-                      </div>
-
-                      <ul className="space-y-4 mb-8">
-                        {plan.features.map(feature => (
-                          <li key={feature} className="flex items-center gap-3 text-white/80">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-emerald-400" viewBox="0 0 20 20" fill="currentColor">
-                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                            </svg>
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-
-                      <motion.button
-                        className={`w-full py-3 px-6 rounded-full text-white ${plan.isPopular
-                          ? 'bg-gradient-to-r from-emerald-600 to-teal-500 hover:shadow-lg hover:shadow-emerald-500/25'
-                          : 'border border-white/20 hover:bg-white/10'
-                        } transition-all duration-300`}
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                      >
-                        {plan.cta}
-                      </motion.button>
-                    </GlassCard>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </GlassSection>
-        </section>
 
         {/* Student Program / Internship */}
         <section id="student-program" className="mt-16 p-6 rounded-xl border border-gray-800 bg-gradient-to-br from-indigo-900/50 to-gray-900 hover:scale-105 transition-transform duration-300">

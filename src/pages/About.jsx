@@ -76,7 +76,7 @@ export default function About() {
       {/* Video Background */}
       <div className="fixed inset-0 z-0">
         <VideoBackground />
-        <div className="absolute inset-0 bg-[#080B1A]/80 pointer-events-none" />
+        <div className="absolute inset-0 bg-[#080B1A]/40 pointer-events-none" />
       </div>
 
       {/* Content */}

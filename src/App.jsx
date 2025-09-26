@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Contact from './pages/Contact'
 import Services from './pages/Services'
+import Courses from './pages/Courses'
 import Career from './pages/Career'
 
 export default function App(){
@@ -41,6 +42,7 @@ export default function App(){
               <Route path="/about" element={<About/>} />
               <Route path="/contact" element={<Contact/>} />
               <Route path="/services" element={<Services/>} />
+              <Route path="/courses" element={<Courses/>} />
               <Route path="/career" element={<Career/>} />
             </Routes>
           </motion.div>
