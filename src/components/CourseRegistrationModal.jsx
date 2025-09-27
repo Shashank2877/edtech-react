@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export default function CourseRegistrationModal({ course, onClose }) {
   const [formData, setFormData] = useState({
@@ -13,6 +13,72 @@ export default function CourseRegistrationModal({ course, onClose }) {
   })
 
   const [selectedPrice, setSelectedPrice] = useState(0)
+  const [showTierModal, setShowTierModal] = useState(false)
+  const [selectedTierInfo, setSelectedTierInfo] = useState(null)
+
+  // Tier information data
+  const tierDetails = {
+    Basic: {
+      title: 'Basic',
+      color: 'from-green-500 to-emerald-600',
+      features: [
+        'Simple video sessions covering core fundamentals.',
+        'Digital notes and quizzes for quick recall.',
+        'Live mentor guidance for clearing doubts.',
+        'Small tasks to build confidence.'
+      ]
+    },
+    Foundation: {
+      title: 'Foundation',
+      color: 'from-blue-500 to-cyan-600',
+      features: [
+        'Gamified learning with badges and progress tracking.',
+        'Interactive quizzes and peer discussions.',
+        'Real-life case examples shared by mentors.',
+        'Course completion certificate.',
+        '45 days of internship program.',
+        'Internship completion certificate.'
+      ]
+    },
+    Advanced: {
+      title: 'Advanced',
+      color: 'from-purple-500 to-indigo-600',
+      features: [
+        'Networking with Industrial Leaders.',
+        'In-depth case studies with critical analysis.',
+        'Personalized feedback and improvement plans.',
+        '2 months of internship program.',
+        '6 months placement support.',
+        'Internship completion certificate.',
+        'Course completion certificate.'
+      ]
+    },
+    Pro: {
+      title: 'Pro',
+      color: 'from-orange-500 to-red-600',
+      features: [
+        'Capstone projects integrating multiple skills.',
+        'Research-driven learning with advanced tools.',
+        'Industry guest lectures and networking sessions.',
+        'Career guidance, mock interviews, and placement support.',
+        '1:1 mentorship programmes.',
+        'Live + Recorded classes access.',
+        '1 Year placement support.',
+        '3 months unpaid internship.',
+        'Certificate of course completion.',
+        'Certificate of internship completion.'
+      ]
+    }
+  }
+
+  // Handle tier info modal
+  const handleTierInfoClick = (tierName, price) => {
+    setSelectedTierInfo({
+      ...tierDetails[tierName],
+      price: price
+    })
+    setShowTierModal(true)
+  }
 
   // Update the selected course when the course prop changes
   useEffect(() => {
@@ -236,7 +302,7 @@ export default function CourseRegistrationModal({ course, onClose }) {
                 required
                 value={formData.selectedCourse}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 bg-gradient-to-r from-indigo-900/30 to-purple-900/30 border border-indigo-600 rounded-lg text-white font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
+                className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
                 readOnly
               />
               <div className="absolute right-3 top-2.5 text-indigo-400">
@@ -253,39 +319,34 @@ export default function CourseRegistrationModal({ course, onClose }) {
               Select Pricing Tier*
             </label>
             <div className="grid grid-cols-2 gap-2">
-              {course?.pricing && Object.entries(course.pricing).map(([tier, price]) => (
-                <motion.label
-                  key={tier}
-                  className={`cursor-pointer p-3 rounded-lg border-2 transition-all duration-200 ${
-                    formData.selectedPricingTier === tier.charAt(0).toUpperCase() + tier.slice(1)
-                      ? 'border-indigo-500 bg-indigo-900/30 text-white'
-                      : 'border-gray-600 bg-gray-800 text-gray-300 hover:border-gray-500'
-                  }`}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <input
-                    type="radio"
-                    name="selectedPricingTier"
-                    value={tier.charAt(0).toUpperCase() + tier.slice(1)}
-                    checked={formData.selectedPricingTier === tier.charAt(0).toUpperCase() + tier.slice(1)}
-                    onChange={handleInputChange}
-                    className="sr-only"
-                    required
-                  />
-                  <div className="text-center">
-                    <div className="font-semibold text-sm">
-                      {tier.charAt(0).toUpperCase() + tier.slice(1)}
+              {course?.pricing && Object.entries(course.pricing).map(([tier, price]) => {
+                const tierName = tier.charAt(0).toUpperCase() + tier.slice(1)
+                const isSelected = formData.selectedPricingTier === tierName
+                return (
+                  <motion.div
+                    key={tier}
+                    onClick={() => handleTierInfoClick(tierName, price)}
+                    className={`cursor-pointer p-3 rounded-lg border-2 transition-all duration-200 ${
+                      isSelected
+                        ? 'border-indigo-500 bg-indigo-900/30 text-white'
+                        : 'border-gray-600 bg-gray-800 text-gray-300 hover:border-gray-500'
+                    }`}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <div className="text-center">
+                      <div className="font-semibold text-sm">
+                        {tierName}
+                      </div>
+                      <div className="text-lg font-bold mt-1">
+                        ₹{price.toLocaleString()}
+                      </div>
                     </div>
-                    <div className="text-lg font-bold mt-1">
-                      ₹{price.toLocaleString()}
-                    </div>
-                  </div>
-                </motion.label>
-              ))}
+                  </motion.div>
+                )
+              })}
             </div>
             <p className="text-xs text-gray-400 mt-2">
-              All tiers include course materials and certificate upon completion<br/>
               <span className="text-red-400">* Non-refundable</span>
             </p>
           </div>
@@ -351,6 +412,117 @@ export default function CourseRegistrationModal({ course, onClose }) {
           </motion.button>
         </motion.form>
       </motion.div>
+
+      {/* Tier Information Modal - Nested Modal */}
+      <AnimatePresence>
+        {showTierModal && selectedTierInfo && (
+          <motion.div
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[60] p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowTierModal(false)}
+          >
+            <motion.div
+              className="bg-gray-900 border border-gray-700 rounded-xl p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto shadow-2xl"
+              initial={{ scale: 0.8, y: 50, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.8, y: 50, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close Button */}
+              <motion.button
+                onClick={() => setShowTierModal(false)}
+                className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white text-xl transition-all duration-200"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                ×
+              </motion.button>
+
+              {/* Header */}
+              <div className="text-center mb-6">
+                <motion.h3 
+                  className={`text-3xl font-bold bg-gradient-to-r ${selectedTierInfo.color} bg-clip-text text-transparent mb-2`}
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                >
+                  {selectedTierInfo.title} Plan
+                </motion.h3>
+                <motion.div 
+                  className="text-4xl font-bold text-indigo-400 mb-4"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  ₹{selectedTierInfo.price?.toLocaleString()}
+                </motion.div>
+                <motion.p 
+                  className="text-gray-400"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  Complete feature breakdown for {selectedTierInfo.title} tier
+                </motion.p>
+              </div>
+
+              {/* Features List */}
+              <div className="space-y-4 mb-8">
+                {selectedTierInfo.features.map((feature, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 * index + 0.4 }}
+                    className="flex items-start gap-3 p-4 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-gray-700/50"
+                  >
+                    <div className={`w-3 h-3 rounded-full bg-gradient-to-r ${selectedTierInfo.color} mt-1.5 flex-shrink-0`}></div>
+                    <span className="text-gray-300 leading-relaxed">{feature}</span>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <motion.button
+                  onClick={() => {
+                    // Select this tier and close modal
+                    handleInputChange({
+                      target: {
+                        name: 'selectedPricingTier',
+                        value: selectedTierInfo.title
+                      }
+                    })
+                    setShowTierModal(false)
+                  }}
+                  className={`flex-1 px-6 py-3 rounded-lg bg-gradient-to-r ${selectedTierInfo.color} text-white font-semibold hover:shadow-lg transition-all duration-300`}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6 }}
+                >
+                  Select {selectedTierInfo.title} Plan
+                </motion.button>
+                <motion.button
+                  onClick={() => setShowTierModal(false)}
+                  className="flex-1 px-6 py-3 rounded-lg border border-gray-600 text-gray-300 hover:bg-gray-800 transition-colors"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.7 }}
+                >
+                  Close
+                </motion.button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

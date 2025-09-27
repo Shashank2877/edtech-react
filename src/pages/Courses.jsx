@@ -7,6 +7,7 @@ import VideoBackground from '../components/VideoBackground'
 import CourseRegistrationModal from '../components/CourseRegistrationModal'
 import { sampleCourses } from './data'
 
+
 // CourseCard component
 const CourseCard = ({ course }) => (
   <GlassCard className="p-6 rounded-xl hover:scale-105 transition-transform duration-300">
