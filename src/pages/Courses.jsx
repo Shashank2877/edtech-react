@@ -241,28 +241,7 @@ export default function Courses() {
             </AnimatePresence>
           </div>
 
-          {/* CTA */}
-          <motion.div 
-            className="mt-12 text-center" 
-            initial={{ opacity: 0, y: 8 }} 
-            whileInView={{ opacity: 1, y: 0 }} 
-            viewport={{ once: true }}
-          >
-            <motion.a 
-              href="https://www.nammaweb.com/p/NW%20Course%20Content.pdf" 
-              download="NW-Course-Content.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => {
-                console.log('📄 Course brochure download initiated');
-              }}
-            >
-              📄 Download Course Brochure
-            </motion.a>
-          </motion.div>
+
         </section>
       </div>
 

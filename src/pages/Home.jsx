@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import VideoBackground from '../components/VideoBackground'
 
 // Scroll Indicator Component
@@ -82,6 +82,16 @@ const GlassSection = ({ children, className = "" }) => (
 )
 
 export default function Home() {
+  // State for registration modal
+  const [showRegistrationModal, setShowRegistrationModal] = React.useState(false)
+  const [formData, setFormData] = React.useState({
+    name: '',
+    email: '',
+    phone: '',
+    education: '',
+    experience: ''
+  })
+
   // Stats data
   const stats = [
     { number: "50+", label: "Projects Completed" },
@@ -89,6 +99,31 @@ export default function Home() {
     { number: "24/7", label: "Support Available" },
     { number: "2+", label: "Years Experience" }
   ]
+
+  // Handle form input changes
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    // Here you can add your form submission logic
+    console.log('Registration submitted:', formData)
+    alert('Registration submitted successfully! We will contact you soon.')
+    setShowRegistrationModal(false)
+    // Reset form
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      education: '',
+      experience: ''
+    })
+  }
 
   return (
     <div className="min-h-screen text-white relative">
@@ -239,14 +274,12 @@ export default function Home() {
             The Web Development Student Program with Internship in 2-month that combines learning with real-world projects. Complete the program to gain practical skills and earn a certification. And boost your career!
           </p>
           <div className="flex flex-wrap items-center gap-3">
-            <a 
-              href="https://forms.gle/" 
-              target="_blank" 
-              rel="noreferrer" 
+            <button 
+              onClick={() => setShowRegistrationModal(true)}
               className="px-4 py-2 rounded-md bg-indigo-600 text-white hover:bg-indigo-700 transition-colors"
             >
               Join Now
-            </a>
+            </button>
             <span className="text-gray-500">or</span>
             <Link 
               to="/contact" 
@@ -260,6 +293,137 @@ export default function Home() {
           </p>
         </section>
       </div>
+
+      {/* Registration Modal */}
+      <AnimatePresence>
+        {showRegistrationModal && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowRegistrationModal(false)}
+          >
+            <motion.div
+              className="bg-gray-900 rounded-xl p-6 w-full max-w-md border border-gray-700"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-semibold text-white">Join Web Development Program</h3>
+                <button
+                  onClick={() => setShowRegistrationModal(false)}
+                  className="text-gray-400 hover:text-white text-2xl"
+                >
+                  ×
+                </button>
+              </div>
+              
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
+                    Full Name *
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    required
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    placeholder="Enter your full name"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
+                    Email Address *
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    placeholder="Enter your email"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
+                    Phone Number *
+                  </label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    required
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    placeholder="Enter your phone number"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
+                    Education Background
+                  </label>
+                  <select
+                    name="education"
+                    value={formData.education}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  >
+                    <option value="">Select your education level</option>
+                    <option value="high-school">High School</option>
+                    <option value="diploma">Diploma</option>
+                    <option value="bachelors">Bachelor's Degree</option>
+                    <option value="masters">Master's Degree</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
+                    Programming Experience
+                  </label>
+                  <select
+                    name="experience"
+                    value={formData.experience}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  >
+                    <option value="">Select your experience level</option>
+                    <option value="beginner">Complete Beginner</option>
+                    <option value="some-knowledge">Some Basic Knowledge</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                  </select>
+                </div>
+
+                <div className="flex gap-3 mt-6">
+                  <button
+                    type="button"
+                    onClick={() => setShowRegistrationModal(false)}
+                    className="flex-1 px-4 py-2 border border-gray-600 text-gray-300 rounded-md hover:bg-gray-800 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="flex-1 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
+                  >
+                    Submit Registration
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

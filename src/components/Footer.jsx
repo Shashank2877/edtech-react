@@ -84,7 +84,6 @@ export default function Footer({
           <div className="flex items-center gap-4">
             <a href="#" className="hover:text-indigo-600 dark:hover:text-indigo-400">Terms & Condition</a>
             <a href="#" className="hover:text-indigo-600 dark:hover:text-indigo-400">Privacy Policy</a>
-            <span className="opacity-80">AI Saraswathi</span>
           </div>
         </div>
       </div>

@@ -48,8 +48,9 @@ export default function Contact(){
           <h2 className="text-xl font-semibold">Get in touch</h2>
           <p className="text-gray-700 dark:text-gray-300 mt-2">Prefer email? Reach us anytime.</p>
           <div className="mt-4 space-y-2 text-sm text-gray-700 dark:text-gray-300">
-            <div><span className="font-medium">Email:</span> hello@nammaweb.example</div>
-            <div><span className="font-medium">Location:</span> Remote / Worldwide</div>
+            <div><span className="font-medium">Email:</span> hr.recruitment.nammaweb@outlook.in</div>
+            <div><span className="font-medium">Phone:</span> +91 92415 27429</div>
+            <div><span className="font-medium">Location:</span> Onsite or Hybrid</div>
           </div>
           <div className="mt-6 flex gap-3">
             <a href="#" className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800">T</a>

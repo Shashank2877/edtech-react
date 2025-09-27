@@ -1,135 +1,125 @@
-// src/pages/data.jsx
+﻿// src/pages/data.jsx
 
 export const sampleCourses = [
   {
     id: 1,
-    title: 'Frontend Development',
-    description: 'Master modern frontend technologies including HTML, CSS, JavaScript, React, and responsive design principles.',
-    level: 'Beginner',
-    duration: '12 weeks',
-    price: 15999,
-    icon: '💻',
-    image: 'https://images.unsplash.com/photo-1593720213428-28a5b9e94613?q=80&w=1200&auto=format&fit=crop'
-  },
-  { 
-    id: 2, 
-    title: 'Backend Development', 
-    description: 'Learn server-side programming with Node.js, databases, APIs, and cloud deployment strategies.', 
-    level: 'Intermediate',
-    duration: '14 weeks',
-    price: 18999,
-    icon: '⚙️',
-    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1200&auto=format&fit=crop'
-  },
-  { 
-    id: 3, 
-    title: 'Fullstack Development', 
-    description: 'Comprehensive course covering both frontend and backend development to build complete web applications.', 
-    level: 'Advanced',
-    duration: '20 weeks',
-    price: 24999,
-    icon: '�',
-    image: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1200&auto=format&fit=crop'
-  },
-  { 
-    id: 4, 
-    title: 'Web Designing', 
-    description: 'Create visually appealing and user-friendly websites using modern design tools and principles.', 
+    title: 'AI for Competitive Exams',
+    description: 'Master AI tools and techniques to excel in competitive examinations with personalized study plans and intelligent practice systems.',
     level: 'Beginner',
     duration: '8 weeks',
     price: 12999,
-    icon: '🎨',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1200&auto=format&fit=crop'
+    icon: '🎯',
+    image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=1200&auto=format&fit=crop'
   },
   { 
-    id: 5, 
-    title: 'UI/UX', 
-    description: 'Design exceptional user interfaces and experiences with industry-standard tools and methodologies.', 
+    id: 2, 
+    title: 'AI Marketing', 
+    description: 'Leverage artificial intelligence for advanced marketing strategies, customer insights, and automated campaign optimization.', 
     level: 'Intermediate',
     duration: '10 weeks',
     price: 16999,
-    icon: '🎯',
-    image: 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=1200&auto=format&fit=crop'
-  },
-  { 
-    id: 6,
-    title: 'Graphic Designing',
-    description: 'Master visual communication through logo design, branding, and digital artwork creation.',
-    level: 'Beginner',
-    duration: '8 weeks',
-    price: 11999,
-    icon: '🎨',
-    image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=1200&auto=format&fit=crop'
-  },
-  { 
-    id: 7,
-    title: 'Software Manual and Automation Testing',
-    description: 'Learn comprehensive testing methodologies including manual testing and automation frameworks.',
-    level: 'Intermediate',
-    duration: '12 weeks',
-    price: 19999,
-    icon: '🧪',
-    image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop'
-  },
-  { 
-    id: 8,
-    title: 'DevOps',
-    description: 'Master DevOps practices including CI/CD, containerization, and cloud infrastructure management.',
-    level: 'Advanced',
-    duration: '16 weeks',
-    price: 29999,
-    icon: '🔧',
-    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1200&auto=format&fit=crop'
-  },
-  { 
-    id: 9,
-    title: 'L1/L2 Desktop Support',
-    description: 'Provide technical support, troubleshoot hardware/software issues, and maintain IT systems.',
-    level: 'Beginner',
-    duration: '6 weeks',
-    price: 9999,
-    icon: '🖥️',
-    image: 'https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=1200&auto=format&fit=crop'
-  },
-  { 
-    id: 10,
-    title: 'Basics of Computer and Tally',
-    description: 'Fundamental computer skills and Tally accounting software for business operations.',
-    level: 'Beginner',
-    duration: '4 weeks',
-    price: 6999,
-    icon: '💼',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop'
-  },
-  { 
-    id: 11,
-    title: 'Sales and Marketing',
-    description: 'Develop effective sales strategies and modern marketing techniques for business growth.',
-    level: 'Beginner',
-    duration: '8 weeks',
-    price: 8999,
-    icon: '📈',
+    icon: '🤖',
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop'
   },
   { 
-    id: 12,
-    title: 'Social Media Handling',
-    description: 'Master social media management, content creation, and digital marketing strategies.',
+    id: 3, 
+    title: 'Digital Marketing', 
+    description: 'Comprehensive digital marketing course covering SEO, social media, content marketing, and analytics.', 
     level: 'Beginner',
-    duration: '6 weeks',
-    price: 7999,
+    duration: '12 weeks',
+    price: 14999,
     icon: '📱',
     image: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?q=80&w=1200&auto=format&fit=crop'
   },
   { 
-    id: 13,
-    title: 'Content Writing',
-    description: 'Develop professional writing skills for web content, blogs, and digital marketing.',
+    id: 4, 
+    title: 'Generative AI', 
+    description: 'Explore cutting-edge generative AI technologies including ChatGPT, DALL-E, and custom AI model development.', 
+    level: 'Advanced',
+    duration: '14 weeks',
+    price: 22999,
+    icon: '✨',
+    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1200&auto=format&fit=crop'
+  },
+  { 
+    id: 5, 
+    title: 'Agentic AI', 
+    description: 'Build autonomous AI agents that can perform complex tasks, make decisions, and interact with various systems.', 
+    level: 'Advanced',
+    duration: '16 weeks',
+    price: 26999,
+    icon: '🧠',
+    image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1200&auto=format&fit=crop'
+  },
+  { 
+    id: 6,
+    title: 'AI in Web Development',
+    description: 'Integrate AI capabilities into web applications using modern frameworks, APIs, and machine learning models.',
+    level: 'Intermediate',
+    duration: '12 weeks',
+    price: 18999,
+    icon: '💻',
+    image: 'https://images.unsplash.com/photo-1593720213428-28a5b9e94613?q=80&w=1200&auto=format&fit=crop'
+  },
+  { 
+    id: 7,
+    title: 'AI in App Development',
+    description: 'Create intelligent mobile applications with AI features like computer vision, NLP, and predictive analytics.',
+    level: 'Intermediate',
+    duration: '14 weeks',
+    price: 19999,
+    icon: '📲',
+    image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1200&auto=format&fit=crop'
+  },
+  { 
+    id: 8,
+    title: 'AI in Stock Market Analysis and Trading',
+    description: 'Apply machine learning and AI algorithms for market analysis, algorithmic trading, and financial predictions.',
+    level: 'Advanced',
+    duration: '16 weeks',
+    price: 29999,
+    icon: '📊',
+    image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=1200&auto=format&fit=crop'
+  },
+  { 
+    id: 9,
+    title: 'AI for Business Leadership',
+    description: 'Strategic implementation of AI in business operations, decision-making processes, and organizational transformation.',
+    level: 'Intermediate',
+    duration: '10 weeks',
+    price: 21999,
+    icon: '🏢',
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1200&auto=format&fit=crop'
+  },
+  { 
+    id: 10,
+    title: 'AI for Journalism',
+    description: 'Revolutionary journalism techniques using AI for content creation, fact-checking, and automated reporting.',
     level: 'Beginner',
     duration: '8 weeks',
-    price: 8999,
-    icon: '✍️',
-    image: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1200&auto=format&fit=crop'
+    price: 13999,
+    icon: '📝',
+    image: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=1200&auto=format&fit=crop'
+  },
+  { 
+    id: 11,
+    title: 'AI for Accounting and Finance',
+    description: 'Automate financial processes, enhance accuracy, and gain insights using AI in accounting and finance operations.',
+    level: 'Intermediate',
+    duration: '12 weeks',
+    price: 17999,
+    icon: '💳',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop'
+  },
+  { 
+    id: 12,
+    title: 'AI for Human Resources',
+    description: 'Transform HR operations with AI-powered recruitment, employee analytics, and workforce optimization strategies.',
+    level: 'Beginner',
+    duration: '10 weeks',
+    price: 15999,
+    icon: '👥',
+    image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1200&auto=format&fit=crop'
   }
 ];
 
