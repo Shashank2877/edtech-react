@@ -9,7 +9,10 @@ export default function CourseRegistrationModal({ course, onClose }) {
     highestQualification: '',
     selectedCourse: course?.title || '',
     selectedMode: '',
+    selectedPricingTier: '',
   })
+
+  const [selectedPrice, setSelectedPrice] = useState(0)
 
   // Update the selected course when the course prop changes
   useEffect(() => {
@@ -40,14 +43,9 @@ export default function CourseRegistrationModal({ course, onClose }) {
     'Other'
   ]
 
-  const modes = [
-    'Online',
-    'Offline',
-    'Hybrid (Online + Offline)',
-    'Weekend Classes',
-    'Evening Classes',
-    'Self-Paced Online'
-  ]
+  const modes = course?.offlineAvailable 
+    ? ['Online', 'Offline']
+    : ['Online']
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -55,13 +53,37 @@ export default function CourseRegistrationModal({ course, onClose }) {
       ...prev,
       [name]: value
     }))
+
+    // Update price when pricing tier changes
+    if (name === 'selectedPricingTier' && course?.pricing) {
+      const tierPrices = {
+        'Basic': course.pricing.basic,
+        'Foundation': course.pricing.foundation,
+        'Advanced': course.pricing.advanced,
+        'Pro': course.pricing.pro
+      }
+      setSelectedPrice(tierPrices[value] || 0)
+    }
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    // Validate that pricing tier is selected
+    if (!formData.selectedPricingTier) {
+      alert('Please select a pricing tier')
+      return
+    }
+    
+    const registrationData = {
+      ...formData,
+      selectedPrice: selectedPrice,
+      courseName: course?.title,
+      offlineAvailable: course?.offlineAvailable
+    }
+    
     // For now, just show an alert with the form data
-    alert('Registration submitted! (This is just UI - no backend integration yet)')
-    console.log('Form Data:', formData)
+    alert(`Registration submitted for ${formData.selectedPricingTier} tier! (This is just UI - no backend integration yet)`)
+    console.log('Registration Data:', registrationData)
     onClose()
   }
 
@@ -114,7 +136,17 @@ export default function CourseRegistrationModal({ course, onClose }) {
           >
             <h3 className="font-semibold text-indigo-300 mb-1">{course.title}</h3>
             <p className="text-indigo-200 text-sm mb-2">{course.level} • {course.duration}</p>
-            <p className="text-2xl font-bold text-white">{course.price}</p>
+            {course.offlineAvailable && (
+              <div className="flex items-center text-green-400 text-sm mb-2">
+                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                Offline classes available
+              </div>
+            )}
+            <p className="text-2xl font-bold text-white">
+              {selectedPrice > 0 ? `₹${selectedPrice.toLocaleString()}` : 'Select pricing tier'}
+            </p>
           </motion.div>
         )}
 
@@ -215,6 +247,49 @@ export default function CourseRegistrationModal({ course, onClose }) {
             </div>
           </div>
 
+          {/* Select Pricing Tier */}
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">
+              Select Pricing Tier*
+            </label>
+            <div className="grid grid-cols-2 gap-2">
+              {course?.pricing && Object.entries(course.pricing).map(([tier, price]) => (
+                <motion.label
+                  key={tier}
+                  className={`cursor-pointer p-3 rounded-lg border-2 transition-all duration-200 ${
+                    formData.selectedPricingTier === tier.charAt(0).toUpperCase() + tier.slice(1)
+                      ? 'border-indigo-500 bg-indigo-900/30 text-white'
+                      : 'border-gray-600 bg-gray-800 text-gray-300 hover:border-gray-500'
+                  }`}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <input
+                    type="radio"
+                    name="selectedPricingTier"
+                    value={tier.charAt(0).toUpperCase() + tier.slice(1)}
+                    checked={formData.selectedPricingTier === tier.charAt(0).toUpperCase() + tier.slice(1)}
+                    onChange={handleInputChange}
+                    className="sr-only"
+                    required
+                  />
+                  <div className="text-center">
+                    <div className="font-semibold text-sm">
+                      {tier.charAt(0).toUpperCase() + tier.slice(1)}
+                    </div>
+                    <div className="text-lg font-bold mt-1">
+                      ₹{price.toLocaleString()}
+                    </div>
+                  </div>
+                </motion.label>
+              ))}
+            </div>
+            <p className="text-xs text-gray-400 mt-2">
+              All tiers include course materials and certificate upon completion<br/>
+              <span className="text-red-400">* Non-refundable</span>
+            </p>
+          </div>
+
           {/* Select Mode */}
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1">
@@ -242,17 +317,24 @@ export default function CourseRegistrationModal({ course, onClose }) {
             transition={{ delay: 0.6, duration: 0.3 }}
           >
             <span className="text-green-300 font-semibold text-lg">
-              Total Amount: ₹{course?.price ? course.price.toLocaleString() : '0'}
+              Total Amount: ₹{selectedPrice > 0 ? selectedPrice.toLocaleString() : '0'}
             </span>
-            <p className="text-xs text-green-400 mt-1">Pay offline and get additional support</p>
+            <p className="text-xs text-green-400 mt-1">
+              {course?.offlineAvailable ? 'Offline classes available' : 'Online learning with lifetime access'}
+            </p>
           </motion.div>
 
           {/* Submit Button */}
           <motion.button
             type="submit"
-            className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl"
-            whileHover={{ scale: 1.02, y: -2 }}
-            whileTap={{ scale: 0.98 }}
+            disabled={!formData.selectedPricingTier}
+            className={`w-full py-3 rounded-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl ${
+              formData.selectedPricingTier
+                ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700'
+                : 'bg-gray-700 text-gray-400 cursor-not-allowed'
+            }`}
+            whileHover={formData.selectedPricingTier ? { scale: 1.02, y: -2 } : {}}
+            whileTap={formData.selectedPricingTier ? { scale: 0.98 } : {}}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7, duration: 0.3 }}
@@ -261,7 +343,10 @@ export default function CourseRegistrationModal({ course, onClose }) {
               <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
-              Proceed to Payment
+              {selectedPrice > 0 
+                ? `Proceed to Payment - ₹${selectedPrice.toLocaleString()}`
+                : 'Select Pricing Tier First'
+              }
             </span>
           </motion.button>
         </motion.form>

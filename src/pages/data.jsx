@@ -9,17 +9,31 @@ export const sampleCourses = [
     duration: '8 weeks',
     price: 12999,
     icon: '🎯',
-    image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=1200&auto=format&fit=crop'
+    image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=1200&auto=format&fit=crop',
+    pricing: {
+      basic: 7500,
+      foundation: 11999,
+      advanced: 24999,
+      pro: 61999
+    },
+    offlineAvailable: true
   },
   { 
     id: 2, 
-    title: 'AI Marketing', 
+    title: 'AI for Marketing', 
     description: 'Leverage artificial intelligence for advanced marketing strategies, customer insights, and automated campaign optimization.', 
     level: 'Intermediate',
     duration: '10 weeks',
     price: 16999,
     icon: '🤖',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop'
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop',
+    pricing: {
+      basic: 7500,
+      foundation: 11999,
+      advanced: 24999,
+      pro: 61999
+    },
+    offlineAvailable: true
   },
   { 
     id: 3, 
@@ -29,7 +43,14 @@ export const sampleCourses = [
     duration: '12 weeks',
     price: 14999,
     icon: '📱',
-    image: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?q=80&w=1200&auto=format&fit=crop'
+    image: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?q=80&w=1200&auto=format&fit=crop',
+    pricing: {
+      basic: 7500,
+      foundation: 11999,
+      advanced: 24999,
+      pro: 61999
+    },
+    offlineAvailable: true
   },
   { 
     id: 4, 
@@ -39,7 +60,14 @@ export const sampleCourses = [
     duration: '14 weeks',
     price: 22999,
     icon: '✨',
-    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1200&auto=format&fit=crop'
+    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1200&auto=format&fit=crop',
+    pricing: {
+      basic: 7500,
+      foundation: 11999,
+      advanced: 24999,
+      pro: 61999
+    },
+    offlineAvailable: true
   },
   { 
     id: 5, 
@@ -49,7 +77,14 @@ export const sampleCourses = [
     duration: '16 weeks',
     price: 26999,
     icon: '🧠',
-    image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1200&auto=format&fit=crop'
+    image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1200&auto=format&fit=crop',
+    pricing: {
+      basic: 7500,
+      foundation: 11999,
+      advanced: 24999,
+      pro: 61999
+    },
+    offlineAvailable: true
   },
   { 
     id: 6,
@@ -59,7 +94,14 @@ export const sampleCourses = [
     duration: '12 weeks',
     price: 18999,
     icon: '💻',
-    image: 'https://images.unsplash.com/photo-1593720213428-28a5b9e94613?q=80&w=1200&auto=format&fit=crop'
+    image: 'https://images.unsplash.com/photo-1593720213428-28a5b9e94613?q=80&w=1200&auto=format&fit=crop',
+    pricing: {
+      basic: 7500,
+      foundation: 11999,
+      advanced: 24999,
+      pro: 61999
+    },
+    offlineAvailable: true
   },
   { 
     id: 7,
@@ -69,17 +111,31 @@ export const sampleCourses = [
     duration: '14 weeks',
     price: 19999,
     icon: '📲',
-    image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1200&auto=format&fit=crop'
+    image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1200&auto=format&fit=crop',
+    pricing: {
+      basic: 7500,
+      foundation: 11999,
+      advanced: 24999,
+      pro: 61999
+    },
+    offlineAvailable: true
   },
   { 
     id: 8,
-    title: 'AI in Stock Market Analysis and Trading',
+    title: 'AI in Stock Market',
     description: 'Apply machine learning and AI algorithms for market analysis, algorithmic trading, and financial predictions.',
     level: 'Advanced',
     duration: '16 weeks',
     price: 29999,
     icon: '📊',
-    image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=1200&auto=format&fit=crop'
+    image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=1200&auto=format&fit=crop',
+    pricing: {
+      basic: 7500,
+      foundation: 11999,
+      advanced: 24999,
+      pro: 61999
+    },
+    offlineAvailable: true
   },
   { 
     id: 9,
@@ -89,7 +145,14 @@ export const sampleCourses = [
     duration: '10 weeks',
     price: 21999,
     icon: '🏢',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1200&auto=format&fit=crop'
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1200&auto=format&fit=crop',
+    pricing: {
+      basic: 7500,
+      foundation: 11999,
+      advanced: 24999,
+      pro: 61999
+    },
+    offlineAvailable: true
   },
   { 
     id: 10,
@@ -99,7 +162,14 @@ export const sampleCourses = [
     duration: '8 weeks',
     price: 13999,
     icon: '📝',
-    image: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=1200&auto=format&fit=crop'
+    image: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=1200&auto=format&fit=crop',
+    pricing: {
+      basic: 7500,
+      foundation: 11999,
+      advanced: 24999,
+      pro: 61999
+    },
+    offlineAvailable: true
   },
   { 
     id: 11,
@@ -109,7 +179,14 @@ export const sampleCourses = [
     duration: '12 weeks',
     price: 17999,
     icon: '💳',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop'
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop',
+    pricing: {
+      basic: 7500,
+      foundation: 11999,
+      advanced: 24999,
+      pro: 61999
+    },
+    offlineAvailable: true
   },
   { 
     id: 12,
@@ -119,7 +196,14 @@ export const sampleCourses = [
     duration: '10 weeks',
     price: 15999,
     icon: '👥',
-    image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1200&auto=format&fit=crop'
+    image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1200&auto=format&fit=crop',
+    pricing: {
+      basic: 7500,
+      foundation: 11999,
+      advanced: 24999,
+      pro: 61999
+    },
+    offlineAvailable: true
   }
 ];
 
