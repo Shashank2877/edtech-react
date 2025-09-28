@@ -140,9 +140,14 @@ export default function CourseRegistrationModal({ course, onClose }) {
       return
     }
     
+    const consultationCharge = 499
+    const totalAmount = selectedPrice + consultationCharge
+    
     const registrationData = {
       ...formData,
       selectedPrice: selectedPrice,
+      consultationCharge: consultationCharge,
+      totalAmount: totalAmount,
       courseName: course?.title,
       offlineAvailable: course?.offlineAvailable
     }
@@ -372,15 +377,28 @@ export default function CourseRegistrationModal({ course, onClose }) {
 
           {/* Total Amount */}
           <motion.div 
-            className="bg-gradient-to-r from-green-900/30 to-emerald-900/30 border border-green-600/50 rounded-lg p-4 text-center"
+            className="bg-gradient-to-r from-green-900/30 to-emerald-900/30 border border-green-600/50 rounded-lg p-4"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.3 }}
           >
-            <span className="text-green-300 font-semibold text-lg">
-              Total Amount: ₹{selectedPrice > 0 ? selectedPrice.toLocaleString() : '0'}
-            </span>
-            <p className="text-xs text-green-400 mt-1">
+            <div className="space-y-2 text-sm text-green-300">
+              <div className="flex justify-between">
+                <span>Course Fee:</span>
+                <span>₹{selectedPrice > 0 ? selectedPrice.toLocaleString() : '0'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Consultation Charge:</span>
+                <span>₹499</span>
+              </div>
+              <div className="border-t border-green-600/50 pt-2">
+                <div className="flex justify-between font-semibold text-lg text-green-300">
+                  <span>Total Amount:</span>
+                  <span>₹{selectedPrice > 0 ? (selectedPrice + 499).toLocaleString() : '499'}</span>
+                </div>
+              </div>
+            </div>
+            <p className="text-xs text-green-400 mt-2 text-center">
               {course?.offlineAvailable ? 'Offline classes available' : 'Online learning with lifetime access'}
             </p>
           </motion.div>
@@ -405,7 +423,7 @@ export default function CourseRegistrationModal({ course, onClose }) {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
               {selectedPrice > 0 
-                ? `Proceed to Payment - ₹${selectedPrice.toLocaleString()}`
+                ? `Proceed to Payment - ₹${(selectedPrice + 499).toLocaleString()}`
                 : 'Select Pricing Tier First'
               }
             </span>

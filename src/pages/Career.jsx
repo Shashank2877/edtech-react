@@ -2,10 +2,9 @@ import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import VideoBackground from '../components/VideoBackground'
 import GlassSection from '../components/GlassSection'
-import ApplicationForm from '../components/ApplicationForm'
 
 export default function Career(){
-  const [showApplicationForm, setShowApplicationForm] = useState(false)
+  const [showHREmailModal, setShowHREmailModal] = useState(false)
   const [selectedJob, setSelectedJob] = useState('')
   
   // State for student program registration modal
@@ -227,7 +226,7 @@ export default function Career(){
                         whileTap={{ scale: 0.95 }}
                         onClick={() => {
                           setSelectedJob(role.title)
-                          setShowApplicationForm(true)
+                          setShowHREmailModal(true)
                         }}
                       >
                         Apply Now
@@ -290,13 +289,69 @@ export default function Career(){
         </div>
       </div>
 
-      {/* Application Form Modal */}
-      {showApplicationForm && (
-        <ApplicationForm
-          jobTitle={selectedJob}
-          onClose={() => setShowApplicationForm(false)}
-        />
-      )}
+      {/* HR Email Modal */}
+      <AnimatePresence>
+        {showHREmailModal && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowHREmailModal(false)}
+          >
+            <motion.div
+              className="bg-gray-900 rounded-xl p-6 w-full max-w-md border border-gray-700"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-semibold text-white">Apply for {selectedJob}</h3>
+                <button
+                  onClick={() => setShowHREmailModal(false)}
+                  className="text-gray-400 hover:text-white text-2xl"
+                >
+                  ×
+                </button>
+              </div>
+              
+              <div className="text-center space-y-4">
+                <p className="text-gray-300">
+                  Please send your resume and cover letter to our HR team:
+                </p>
+                
+                <div className="bg-gray-800 rounded-lg p-4 border border-gray-600">
+                  <p className="text-sm text-gray-400 mb-2">HR Email:</p>
+                  <p className="text-lg text-[#B4A5FF] font-mono break-all">
+                    hr.recruitment.nammaweb@outlook.in
+                  </p>
+                </div>
+                
+                <motion.button
+                  onClick={() => {
+                    const subject = encodeURIComponent(`Job Application: ${selectedJob}`)
+                    const body = encodeURIComponent(`Hi,\n\nI am interested in applying for the ${selectedJob} position at your company.\n\nPlease find my resume attached.\n\nThank you for your consideration.\n\nBest regards,`)
+                    window.open(`mailto:hr.recruitment.nammaweb@outlook.in?subject=${subject}&body=${body}`, '_blank')
+                  }}
+                  className="w-full px-4 py-2 bg-[#B4A5FF] text-gray-900 font-semibold rounded-lg hover:bg-indigo-400 transition-colors"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Send Email
+                </motion.button>
+                
+                <button
+                  onClick={() => setShowHREmailModal(false)}
+                  className="w-full px-4 py-2 border border-gray-600 text-gray-300 rounded-lg hover:bg-gray-800 transition-colors"
+                >
+                  Close
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Student Program Registration Modal */}
       <AnimatePresence>
