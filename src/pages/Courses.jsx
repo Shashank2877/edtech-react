@@ -45,6 +45,7 @@ export default function Courses() {
   const [selected, setSelected] = useState(null);
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
   const [selectedCourseForRegistration, setSelectedCourseForRegistration] = useState(null);
+  const [showNotDevelopedModal, setShowNotDevelopedModal] = useState(false);
 
   // Handle mouse movement for parallax effect
   useEffect(() => {
@@ -296,8 +297,7 @@ export default function Courses() {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => {
-                    setSelectedCourseForRegistration(selected);
-                    setShowRegistrationModal(true);
+                    setShowNotDevelopedModal(true);
                     setSelected(null);
                   }}
                 >
@@ -319,6 +319,61 @@ export default function Courses() {
           }}
         />
       )}
+
+      {/* Not Developed Yet Modal */}
+      <AnimatePresence>
+        {showNotDevelopedModal && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowNotDevelopedModal(false)}
+          >
+            <motion.div
+              className="bg-gray-900 rounded-xl p-6 w-full max-w-md border border-gray-700"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-semibold text-white">Course Enrollment</h3>
+                <button
+                  onClick={() => setShowNotDevelopedModal(false)}
+                  className="text-gray-400 hover:text-white text-2xl"
+                >
+                  ×
+                </button>
+              </div>
+              
+              <div className="text-center space-y-4">
+                <div className="text-6xl mb-4">🚧</div>
+                <p className="text-lg text-gray-300">
+                  This feature is not developed yet.
+                </p>
+                <p className="text-sm text-gray-400">
+                  Please check back later for course enrollment functionality.
+                </p>
+                
+                <div className="bg-gray-800 rounded-lg p-4 border border-gray-600 mt-4">
+                  <p className="text-sm text-gray-400 mb-2">For inquiries, contact us:</p>
+                  <p className="text-lg text-[#B4A5FF] font-mono">
+                    Phone: +91 92415 27429
+                  </p>
+                </div>
+                
+                <button
+                  onClick={() => setShowNotDevelopedModal(false)}
+                  className="w-full px-4 py-2 bg-[#B4A5FF] text-gray-900 font-semibold rounded-lg hover:bg-indigo-400 transition-colors"
+                >
+                  Got it
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

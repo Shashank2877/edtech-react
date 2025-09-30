@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { motion, useAnimation, useInView } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import VideoBackground from '../components/VideoBackground'
 import GlassSection from '../components/GlassSection'
 
@@ -338,15 +339,18 @@ export default function About() {
             whileInView={{opacity: 1, y: 0}} 
             viewport={{once: true}}
           >
-            <motion.a 
-              href="/courses" 
-              className="inline-block px-8 py-4 rounded-lg bg-[#B4A5FF] text-gray-900 font-semibold 
-                hover:bg-indigo-400 transition-colors duration-300 shadow-lg"
+            <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Explore Our Courses
-            </motion.a>
+              <Link 
+                to="/courses" 
+                className="inline-block px-8 py-4 rounded-lg bg-[#B4A5FF] text-gray-900 font-semibold 
+                  hover:bg-indigo-400 transition-colors duration-300 shadow-lg"
+              >
+                Explore Our Courses
+              </Link>
+            </motion.div>
           </motion.div>
         </section>
       </div>
