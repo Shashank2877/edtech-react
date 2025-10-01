@@ -2,6 +2,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import GlassSection from '../components/GlassSection'
 import VideoBackground from '../components/VideoBackground'
+import Footer from '../components/Footer'
 
 export default function Services() {
   const services = [
@@ -125,6 +126,7 @@ export default function Services() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

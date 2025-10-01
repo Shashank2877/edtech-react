@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import VideoBackground from '../components/VideoBackground'
 import GlassSection from '../components/GlassSection'
+import Footer from '../components/Footer'
 
 export default function Career(){
   const [showHREmailModal, setShowHREmailModal] = useState(false)
@@ -483,6 +484,7 @@ export default function Career(){
           </motion.div>
         )}
       </AnimatePresence>
+      <Footer />
     </div>
   )
 }

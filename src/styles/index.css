@@ -2,6 +2,216 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom properties for dynamic geometric background */
+:root {
+  --navbar-height: 4rem;
+  --navbar-height-lg: 5rem;
+  --navbar-bg-opacity: 0.6;
+  --navbar-bg-opacity-scrolled: 0.8;
+  --geometric-primary: #4f46e5;
+  --geometric-secondary: #8b5cf6;
+  --geometric-accent: #a855f7;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced background for geometric animations */
+.geometric-canvas-container {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+  overflow: hidden;
+}
+
+/* Performance optimization for geometric shapes */
+.geometric-shape {
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+
+/* Backdrop filter enhancement */
+.glass-effect {
+  backdrop-filter: blur(16px) saturate(180%) brightness(1.2);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Navbar specific styles */
+.navbar-glass {
+  backdrop-filter: blur(20px) saturate(180%) brightness(1.1);
+  -webkit-backdrop-filter: blur(20px) saturate(180%) brightness(1.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced navbar when scrolled */
+.navbar-scrolled {
+  background: rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* GET A QUOTE button enhancements */
+.cta-button {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #2563eb 100%);
+  box-shadow: 
+    0 4px 15px rgba(79, 70, 229, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.cta-button:hover::before {
+  left: 100%;
+}
+
+/* Navigation item enhancements */
+.nav-item {
+  position: relative;
+  backdrop-filter: blur(10px);
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.nav-item:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.1);
+}
+
+.nav-item.active {
+  background: rgba(79, 70, 229, 0.1);
+  border-color: rgba(79, 70, 229, 0.2);
+  box-shadow: 0 2px 12px rgba(79, 70, 229, 0.2);
+}
+
+/* Focus styles for accessibility */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900;
+}
+
+/* Enhanced button hover effects */
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-glow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-glow:hover::before {
+  left: 100%;
+}
+
+/* 3D Geometric shapes enhancements */
+.geometric-3d {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  will-change: transform;
+}
+
+.geometric-shape-3d {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  perspective: 800px;
+}
+
+/* Enhanced shadows for 3D depth */
+.shadow-3d-blue {
+  box-shadow: 
+    0 10px 20px rgba(99, 102, 241, 0.2),
+    0 20px 40px rgba(99, 102, 241, 0.1),
+    0 40px 80px rgba(99, 102, 241, 0.05);
+}
+
+.shadow-3d-purple {
+  box-shadow: 
+    0 10px 20px rgba(139, 92, 246, 0.2),
+    0 20px 40px rgba(139, 92, 246, 0.1),
+    0 40px 80px rgba(139, 92, 246, 0.05);
+}
+
+.shadow-3d-pink {
+  box-shadow: 
+    0 8px 16px rgba(244, 114, 182, 0.2),
+    0 16px 32px rgba(244, 114, 182, 0.1),
+    0 32px 64px rgba(244, 114, 182, 0.05);
+}
+
+/* Geometric animation keyframes */
+@keyframes geometricFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+@keyframes geometricPulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+@keyframes geometricRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes geometric3DRotate {
+  0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+  33% { transform: rotateX(120deg) rotateY(120deg) rotateZ(120deg); }
+  66% { transform: rotateX(240deg) rotateY(240deg) rotateZ(240deg); }
+  100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+}
+
+/* Hero section enhancements */
+.hero-geometric {
+  position: relative;
+  isolation: isolate;
+}
+
+.hero-geometric::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 40%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+              radial-gradient(circle at 70% 60%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Content enhancement for dark theme */
+.content-overlay {
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(8px);
+}
+
+/* Loading animation for geometric shapes */
+.geometric-loading {
+  animation: geometricPulse 2s ease-in-out infinite;
+}
+
 @keyframes bgShift {
   0% { filter: hue-rotate(0deg) saturate(1); }
   50% { filter: hue-rotate(90deg) saturate(1.1); }

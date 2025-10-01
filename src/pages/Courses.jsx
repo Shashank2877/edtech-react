@@ -5,11 +5,12 @@ import GlassCard from '../components/GlassCard'
 import GlassSection from '../components/GlassSection'
 import VideoBackground from '../components/VideoBackground'
 import CourseRegistrationModal from '../components/CourseRegistrationModal'
+import Footer from '../components/Footer'
 import { sampleCourses } from './data'
 
 
 // CourseCard component
-const CourseCard = ({ course }) => (
+const CourseCard = ({ course, onViewDetails }) => (
   <GlassCard className="p-6 rounded-xl hover:scale-105 transition-transform duration-300">
     <div className="flex items-center gap-3 mb-4">
       <span className="text-3xl">{course.icon || '📚'}</span>
@@ -29,6 +30,7 @@ const CourseCard = ({ course }) => (
         className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg text-white"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
+        onClick={() => onViewDetails(course)}
       >
         View Details
       </motion.button>
@@ -46,6 +48,12 @@ export default function Courses() {
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
   const [selectedCourseForRegistration, setSelectedCourseForRegistration] = useState(null);
   const [showNotDevelopedModal, setShowNotDevelopedModal] = useState(false);
+
+  // Handle View Details button click
+  const handleViewDetails = (course) => {
+    setSelectedCourseForRegistration(course);
+    setShowRegistrationModal(true);
+  };
 
   // Handle mouse movement for parallax effect
   useEffect(() => {
@@ -233,11 +241,11 @@ export default function Courses() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.25, delay: i * 0.1 }}
-                  onClick={() => setSelected(course)}
-                  role="button"
-                  className="cursor-pointer"
                 >
-                  <CourseCard course={course} />
+                  <CourseCard 
+                    course={course} 
+                    onViewDetails={handleViewDetails}
+                  />
                 </motion.div>
               ))}
             </AnimatePresence>
@@ -374,6 +382,7 @@ export default function Courses() {
           </motion.div>
         )}
       </AnimatePresence>
+      <Footer />
     </div>
   )
 }

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import ContactForm from '../components/ContactForm'
 import VideoBackground from '../components/VideoBackground'
+import Footer from '../components/Footer'
 
 export default function Contact(){
   // Default Contact page to dark if no preference saved yet
@@ -61,6 +62,7 @@ export default function Contact(){
       </div>
     </section>
       </div>
+      <Footer />
     </div>
   )
 }
