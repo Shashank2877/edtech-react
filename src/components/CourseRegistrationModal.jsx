@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import PaymentService from '../services/PaymentService'
+import { calculateTotalAmount, formatCurrency, getAvailablePaymentMethods } from '../config/paymentConfig'
 
 export default function CourseRegistrationModal({ course, onClose }) {
   const [formData, setFormData] = useState({
@@ -15,6 +17,10 @@ export default function CourseRegistrationModal({ course, onClose }) {
   const [selectedPrice, setSelectedPrice] = useState(0)
   const [showTierModal, setShowTierModal] = useState(false)
   const [selectedTierInfo, setSelectedTierInfo] = useState(null)
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false)
+  const [paymentStep, setPaymentStep] = useState('form') // 'form', 'payment', 'success'
+  const [paymentMethod, setPaymentMethod] = useState('razorpay')
+  const [totalAmountBreakdown, setTotalAmountBreakdown] = useState(null)
 
   // Tier information data
   const tierDetails = {
@@ -132,7 +138,7 @@ export default function CourseRegistrationModal({ course, onClose }) {
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     // Validate that pricing tier is selected
     if (!formData.selectedPricingTier) {
@@ -140,28 +146,68 @@ export default function CourseRegistrationModal({ course, onClose }) {
       return
     }
     
-    const consultationCharge = 499
-    const totalAmount = selectedPrice + consultationCharge
+    // Calculate total amount with fees and taxes
+    const amountBreakdown = calculateTotalAmount(selectedPrice)
+    setTotalAmountBreakdown(amountBreakdown)
     
-    const registrationData = {
-      ...formData,
-      selectedPrice: selectedPrice,
-      consultationCharge: consultationCharge,
-      totalAmount: totalAmount,
-      courseName: course?.title,
-      offlineAvailable: course?.offlineAvailable
+    // Move to payment step
+    setPaymentStep('payment')
+  }
+
+  const handlePayment = async () => {
+    setIsProcessingPayment(true)
+    
+    try {
+      const paymentData = {
+        amount: totalAmountBreakdown.totalAmount,
+        currency: 'INR',
+        customerName: formData.fullName,
+        customerEmail: formData.emailAddress,
+        customerPhone: formData.phoneNumber,
+        courseName: course?.title,
+        tier: formData.selectedPricingTier,
+        mode: formData.selectedMode,
+        description: `${course?.title} - ${formData.selectedPricingTier} Tier`,
+        gateway: paymentMethod
+      }
+
+      const paymentResult = await PaymentService.processPayment(paymentData)
+      
+      if (paymentResult.success) {
+        // Save enrollment data
+        const enrollmentData = {
+          ...formData,
+          selectedPrice: selectedPrice,
+          totalAmount: totalAmountBreakdown.totalAmount,
+          paymentId: paymentResult.paymentId,
+          orderId: paymentResult.orderId,
+          courseName: course?.title,
+          paymentStatus: 'completed'
+        }
+        
+        await PaymentService.saveEnrollment(enrollmentData)
+        
+        setPaymentStep('success')
+      } else {
+        throw new Error(paymentResult.message || 'Payment failed')
+      }
+    } catch (error) {
+      console.error('Payment error:', error)
+      alert(`Payment failed: ${error.message}. Please try again.`)
+    } finally {
+      setIsProcessingPayment(false)
     }
-    
-    // For now, just show an alert with the form data
-    alert(`Registration submitted for ${formData.selectedPricingTier} tier! (This is just UI - no backend integration yet)`)
-    console.log('Registration Data:', registrationData)
-    onClose()
+  }
+
+  const handleGoBack = () => {
+    setPaymentStep('form')
+    setTotalAmountBreakdown(null)
   }
 
   return (
-    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-2 sm:p-4">
       <motion.div
-        className="relative bg-gray-900 border border-gray-700 rounded-xl p-8 max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl"
+        className="relative bg-gray-900 border border-gray-700 rounded-xl p-4 sm:p-6 lg:p-8 max-w-lg w-full max-h-[95vh] overflow-y-auto shadow-2xl"
         initial={{ opacity: 0, scale: 0.8, y: 50 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.8, y: 50 }}
@@ -170,9 +216,11 @@ export default function CourseRegistrationModal({ course, onClose }) {
         {/* Close Button - Top Right */}
         <motion.button
           onClick={onClose}
-          className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white text-xl transition-all duration-200"
+          className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white text-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          style={{ minHeight: '44px', minWidth: '44px', touchAction: 'manipulation' }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
+          aria-label="Close registration modal"
         >
           ×
         </motion.button>
@@ -193,242 +241,440 @@ export default function CourseRegistrationModal({ course, onClose }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.3 }}
           >
-            Course Registration
+            {paymentStep === 'form' && 'Course Registration'}
+            {paymentStep === 'payment' && 'Payment Details'}
+            {paymentStep === 'success' && 'Registration Successful!'}
           </motion.h2>
         </div>
 
-        {/* Course Info Display */}
-        {course && (
-          <motion.div 
-            className="bg-gradient-to-r from-indigo-900/50 to-purple-900/50 rounded-lg p-4 mb-6 border border-indigo-700/30"
+        {/* Step Indicator */}
+        <div className="flex justify-center mb-6">
+          <div className="flex items-center space-x-4">
+            <div className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-semibold ${
+              paymentStep === 'form' ? 'bg-indigo-600 text-white' : 'bg-green-600 text-white'
+            }`}>
+              1
+            </div>
+            <div className={`h-1 w-8 ${
+              paymentStep === 'form' ? 'bg-gray-600' : 'bg-green-600'
+            }`}></div>
+            <div className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-semibold ${
+              paymentStep === 'form' ? 'bg-gray-600 text-gray-400' : 
+              paymentStep === 'payment' ? 'bg-indigo-600 text-white' : 'bg-green-600 text-white'
+            }`}>
+              2
+            </div>
+            <div className={`h-1 w-8 ${
+              paymentStep === 'success' ? 'bg-green-600' : 'bg-gray-600'
+            }`}></div>
+            <div className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-semibold ${
+              paymentStep === 'success' ? 'bg-green-600 text-white' : 'bg-gray-600 text-gray-400'
+            }`}>
+              3
+            </div>
+          </div>
+        </div>
+
+        {/* Registration Form Step */}
+        {paymentStep === 'form' && (
+          <motion.form
+            onSubmit={handleSubmit}
+            className="space-y-4"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3, duration: 0.3 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.3 }}
           >
-            <h3 className="font-semibold text-indigo-300 mb-1">{course.title}</h3>
-            <p className="text-indigo-200 text-sm mb-2">{course.level} • {course.duration}</p>
-            {course.offlineAvailable && (
-              <div className="flex items-center text-green-400 text-sm mb-2">
-                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                Offline classes available
+            {/* Course Info */}
+            <div className="bg-gradient-to-r from-indigo-900/30 to-purple-900/30 border border-indigo-600/50 rounded-lg p-4 mb-4">
+              <h3 className="text-lg font-semibold text-indigo-300 mb-2">{course?.title}</h3>
+              <div className="flex flex-wrap gap-2 text-sm">
+                <span className="bg-indigo-600/30 text-indigo-300 px-2 py-1 rounded">
+                  {course?.level}
+                </span>
+                <span className="bg-purple-600/30 text-purple-300 px-2 py-1 rounded">
+                  {course?.duration}
+                </span>
+                <span className="bg-green-600/30 text-green-300 px-2 py-1 rounded">
+                  ⭐ {course?.rating}
+                </span>
               </div>
-            )}
-            <p className="text-2xl font-bold text-white">
-              {selectedPrice > 0 ? `₹${selectedPrice.toLocaleString()}` : 'Select pricing tier'}
-            </p>
-          </motion.div>
-        )}
+            </div>
 
-        <motion.form 
-          onSubmit={handleSubmit} 
-          className="space-y-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4, duration: 0.3 }}
-        >
-          {/* Full Name */}
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">
-              Full Name*
-            </label>
-            <input
-              type="text"
-              name="fullName"
-              required
-              value={formData.fullName}
-              onChange={handleInputChange}
-              className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
-              placeholder="Enter your full name"
-            />
-          </div>
-
-          {/* Phone Number */}
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">
-              Phone Number*
-            </label>
-            <input
-              type="tel"
-              name="phoneNumber"
-              required
-              value={formData.phoneNumber}
-              onChange={handleInputChange}
-              className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
-              placeholder="Enter your phone number"
-            />
-          </div>
-
-          {/* Email Address */}
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">
-              Email Address*
-            </label>
-            <input
-              type="email"
-              name="emailAddress"
-              required
-              value={formData.emailAddress}
-              onChange={handleInputChange}
-              className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
-              placeholder="Enter your email address"
-            />
-          </div>
-
-          {/* Highest Qualification */}
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">
-              Highest Qualification*
-            </label>
-            <select
-              name="highestQualification"
-              required
-              value={formData.highestQualification}
-              onChange={handleInputChange}
-              className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
-            >
-              <option value="" className="text-gray-400">Select your qualification</option>
-              {qualifications.map(qual => (
-                <option key={qual} value={qual}>{qual}</option>
-              ))}
-            </select>
-          </div>
-
-          {/* Select Course */}
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">
-              Select a Course*
-            </label>
-            <div className="relative">
+            {/* Form Fields */}
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-1">
+                Full Name*
+              </label>
               <input
                 type="text"
-                name="selectedCourse"
+                name="fullName"
                 required
-                value={formData.selectedCourse}
+                value={formData.fullName}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
-                readOnly
+                className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
+                placeholder="Enter your full name"
               />
-              <div className="absolute right-3 top-2.5 text-indigo-400">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-1">
+                Phone Number*
+              </label>
+              <input
+                type="tel"
+                name="phoneNumber"
+                required
+                value={formData.phoneNumber}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
+                placeholder="Enter your phone number"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-1">
+                Email Address*
+              </label>
+              <input
+                type="email"
+                name="emailAddress"
+                required
+                value={formData.emailAddress}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
+                placeholder="Enter your email address"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-1">
+                Highest Qualification*
+              </label>
+              <select
+                name="highestQualification"
+                required
+                value={formData.highestQualification}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
+              >
+                <option value="" className="text-gray-400">Select your qualification</option>
+                {qualifications.map(qual => (
+                  <option key={qual} value={qual}>{qual}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Pricing Tier Selection */}
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Select Pricing Tier*
+              </label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {Object.entries(course?.pricing || {}).map(([tierName, price]) => {
+                  const tierKey = tierName.charAt(0).toUpperCase() + tierName.slice(1)
+                  const tierInfo = tierDetails[tierKey]
+                  if (!tierInfo) return null
+
+                  return (
+                    <motion.div
+                      key={tierName}
+                      className={`relative border-2 rounded-lg p-3 cursor-pointer transition-all duration-200 ${
+                        formData.selectedPricingTier === tierKey
+                          ? 'border-indigo-500 bg-gradient-to-br from-indigo-900/50 to-purple-900/50'
+                          : 'border-gray-600 bg-gray-800/50 hover:border-gray-500'
+                      }`}
+                      onClick={() => {
+                        setFormData(prev => ({ ...prev, selectedPricingTier: tierKey }))
+                        setSelectedPrice(price)
+                      }}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <div className="text-center">
+                        <h4 className="font-semibold text-white mb-1">{tierKey}</h4>
+                        <div className="text-2xl font-bold text-indigo-400 mb-2">
+                          ₹{price.toLocaleString()}
+                        </div>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            setSelectedTierInfo(tierInfo)
+                            setShowTierModal(true)
+                          }}
+                          className="text-xs text-indigo-300 hover:text-indigo-200 underline"
+                        >
+                          View Details
+                        </button>
+                      </div>
+                    </motion.div>
+                  )
+                })}
               </div>
+              <p className="text-xs text-gray-400 mt-2">
+                <span className="text-red-400">* Non-refundable</span>
+              </p>
             </div>
-          </div>
 
-          {/* Select Pricing Tier */}
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Select Pricing Tier*
-            </label>
-            <div className="grid grid-cols-2 gap-2">
-              {course?.pricing && Object.entries(course.pricing).map(([tier, price]) => {
-                const tierName = tier.charAt(0).toUpperCase() + tier.slice(1)
-                const isSelected = formData.selectedPricingTier === tierName
-                return (
-                  <motion.div
-                    key={tier}
-                    onClick={() => handleTierInfoClick(tierName, price)}
-                    className={`cursor-pointer p-3 rounded-lg border-2 transition-all duration-200 ${
-                      isSelected
-                        ? 'border-indigo-500 bg-indigo-900/30 text-white'
-                        : 'border-gray-600 bg-gray-800 text-gray-300 hover:border-gray-500'
-                    }`}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <div className="text-center">
-                      <div className="font-semibold text-sm">
-                        {tierName}
-                      </div>
-                      <div className="text-lg font-bold mt-1">
-                        ₹{price.toLocaleString()}
-                      </div>
-                    </div>
-                  </motion.div>
-                )
-              })}
+            {/* Select Mode */}
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-1">
+                Select Mode*
+              </label>
+              <select
+                name="selectedMode"
+                required
+                value={formData.selectedMode}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
+              >
+                <option value="" className="text-gray-400">Select learning mode</option>
+                {modes.map(mode => (
+                  <option key={mode} value={mode}>{mode}</option>
+                ))}
+              </select>
             </div>
-            <p className="text-xs text-gray-400 mt-2">
-              <span className="text-red-400">* Non-refundable</span>
-            </p>
-          </div>
 
-          {/* Select Mode */}
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">
-              Select Mode*
-            </label>
-            <select
-              name="selectedMode"
-              required
-              value={formData.selectedMode}
-              onChange={handleInputChange}
-              className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
+            {/* Total Amount */}
+            <motion.div 
+              className="bg-gradient-to-r from-green-900/30 to-emerald-900/30 border border-green-600/50 rounded-lg p-4"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.3 }}
             >
-              <option value="" className="text-gray-400">Select learning mode</option>
-              {modes.map(mode => (
-                <option key={mode} value={mode}>{mode}</option>
-              ))}
-            </select>
-          </div>
+              <div className="space-y-2 text-sm text-green-300">
+                <div className="flex justify-between">
+                  <span>Course Fee:</span>
+                  <span>₹{selectedPrice > 0 ? selectedPrice.toLocaleString() : '0'}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Consultation Charge:</span>
+                  <span>₹499</span>
+                </div>
+                <div className="border-t border-green-600/50 pt-2">
+                  <div className="flex justify-between font-semibold text-lg text-green-300">
+                    <span>Total Amount:</span>
+                    <span>₹{selectedPrice > 0 ? (selectedPrice + 499).toLocaleString() : '499'}</span>
+                  </div>
+                </div>
+              </div>
+              <p className="text-xs text-green-400 mt-2 text-center">
+                {course?.offlineAvailable ? 'Offline classes available' : 'Online learning with lifetime access'}
+              </p>
+            </motion.div>
 
-          {/* Total Amount */}
-          <motion.div 
-            className="bg-gradient-to-r from-green-900/30 to-emerald-900/30 border border-green-600/50 rounded-lg p-4"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.3 }}
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 mt-6">
+              <motion.button
+                type="button"
+                onClick={onClose}
+                className="flex-1 px-6 py-3 rounded-lg border border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white transition-all duration-200 font-semibold"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <span className="flex items-center justify-center">
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                  Close
+                </span>
+              </motion.button>
+
+              <motion.button
+                type="submit"
+                disabled={!formData.selectedPricingTier}
+                className={`flex-1 px-6 py-3 rounded-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl ${
+                  formData.selectedPricingTier
+                    ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700'
+                    : 'bg-gray-700 text-gray-400 cursor-not-allowed'
+                }`}
+                whileHover={formData.selectedPricingTier ? { scale: 1.02 } : {}}
+                whileTap={formData.selectedPricingTier ? { scale: 0.98 } : {}}
+              >
+                <span className="flex items-center justify-center">
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                  {selectedPrice > 0 
+                    ? `Proceed to Payment - ₹${(selectedPrice + 499).toLocaleString()}`
+                    : 'Select Pricing Tier First'
+                  }
+                </span>
+              </motion.button>
+            </div>
+          </motion.form>
+        )}
+
+        {/* Payment Step */}
+        {paymentStep === 'payment' && totalAmountBreakdown && (
+          <motion.div
+            className="space-y-6"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 20 }}
+            transition={{ duration: 0.3 }}
           >
-            <div className="space-y-2 text-sm text-green-300">
-              <div className="flex justify-between">
-                <span>Course Fee:</span>
-                <span>₹{selectedPrice > 0 ? selectedPrice.toLocaleString() : '0'}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Consultation Charge:</span>
-                <span>₹499</span>
-              </div>
-              <div className="border-t border-green-600/50 pt-2">
-                <div className="flex justify-between font-semibold text-lg text-green-300">
-                  <span>Total Amount:</span>
-                  <span>₹{selectedPrice > 0 ? (selectedPrice + 499).toLocaleString() : '499'}</span>
+            {/* Order Summary */}
+            <div className="bg-gradient-to-r from-blue-900/30 to-indigo-900/30 border border-blue-600/50 rounded-lg p-4">
+              <h3 className="text-lg font-semibold text-blue-300 mb-3">Order Summary</h3>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between text-gray-300">
+                  <span>Course: {course?.title}</span>
+                  <span>{formData.selectedPricingTier} Tier</span>
+                </div>
+                <div className="flex justify-between text-gray-300">
+                  <span>Student: {formData.fullName}</span>
+                  <span>{formData.selectedMode}</span>
+                </div>
+                <div className="border-t border-blue-600/50 pt-2 mt-3">
+                  <div className="flex justify-between">
+                    <span>Course Fee:</span>
+                    <span>{formatCurrency(totalAmountBreakdown.baseAmount)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Consultation Fee:</span>
+                    <span>{formatCurrency(totalAmountBreakdown.consultationFee)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>GST (18%):</span>
+                    <span>{formatCurrency(totalAmountBreakdown.gstAmount)}</span>
+                  </div>
+                  <div className="flex justify-between font-semibold text-lg text-blue-300 pt-2 border-t border-blue-600/50">
+                    <span>Total Amount:</span>
+                    <span>{formatCurrency(totalAmountBreakdown.totalAmount)}</span>
+                  </div>
                 </div>
               </div>
             </div>
-            <p className="text-xs text-green-400 mt-2 text-center">
-              {course?.offlineAvailable ? 'Offline classes available' : 'Online learning with lifetime access'}
-            </p>
-          </motion.div>
 
-          {/* Submit Button */}
-          <motion.button
-            type="submit"
-            disabled={!formData.selectedPricingTier}
-            className={`w-full py-3 rounded-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl ${
-              formData.selectedPricingTier
-                ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700'
-                : 'bg-gray-700 text-gray-400 cursor-not-allowed'
-            }`}
-            whileHover={formData.selectedPricingTier ? { scale: 1.02, y: -2 } : {}}
-            whileTap={formData.selectedPricingTier ? { scale: 0.98 } : {}}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.7, duration: 0.3 }}
+            {/* Payment Method Selection */}
+            <div>
+              <h3 className="text-lg font-semibold text-white mb-3">Select Payment Method</h3>
+              <div className="space-y-3">
+                {getAvailablePaymentMethods().map((method) => (
+                  <motion.div
+                    key={method.id}
+                    className={`border-2 rounded-lg p-4 cursor-pointer transition-all duration-200 ${
+                      paymentMethod === method.id
+                        ? 'border-indigo-500 bg-gradient-to-br from-indigo-900/50 to-purple-900/50'
+                        : 'border-gray-600 bg-gray-800/50 hover:border-gray-500'
+                    }`}
+                    onClick={() => setPaymentMethod(method.id)}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <div className="flex items-center space-x-3">
+                      <span className="text-2xl">{method.icon}</span>
+                      <div>
+                        <h4 className="font-semibold text-white">{method.name}</h4>
+                        <p className="text-sm text-gray-400">{method.description}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3">
+              <motion.button
+                type="button"
+                onClick={handleGoBack}
+                className="flex-1 px-6 py-3 rounded-lg border border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white transition-all duration-200 font-semibold"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <span className="flex items-center justify-center">
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                  </svg>
+                  Go Back
+                </span>
+              </motion.button>
+
+              <motion.button
+                type="button"
+                onClick={handlePayment}
+                disabled={isProcessingPayment}
+                className={`flex-1 px-6 py-3 rounded-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl ${
+                  isProcessingPayment
+                    ? 'bg-gray-700 text-gray-400 cursor-not-allowed'
+                    : 'bg-gradient-to-r from-green-600 to-emerald-600 text-white hover:from-green-700 hover:to-emerald-700'
+                }`}
+                whileHover={!isProcessingPayment ? { scale: 1.02 } : {}}
+                whileTap={!isProcessingPayment ? { scale: 0.98 } : {}}
+              >
+                <span className="flex items-center justify-center">
+                  {isProcessingPayment ? (
+                    <>
+                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Processing...
+                    </>
+                  ) : (
+                    <>
+                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                      </svg>
+                      Pay {formatCurrency(totalAmountBreakdown.totalAmount)}
+                    </>
+                  )}
+                </span>
+              </motion.button>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Success Step */}
+        {paymentStep === 'success' && (
+          <motion.div
+            className="text-center space-y-6"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.3 }}
           >
-            <span className="flex items-center justify-center">
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+            <motion.div
+              className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+            >
+              <svg className="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
-              {selectedPrice > 0 
-                ? `Proceed to Payment - ₹${(selectedPrice + 499).toLocaleString()}`
-                : 'Select Pricing Tier First'
-              }
-            </span>
-          </motion.button>
-        </motion.form>
+            </motion.div>
+
+            <div>
+              <h3 className="text-2xl font-bold text-white mb-2">Payment Successful!</h3>
+              <p className="text-gray-300 mb-4">
+                Welcome to {course?.title}! Your enrollment has been confirmed.
+              </p>
+              <div className="bg-gradient-to-r from-green-900/30 to-emerald-900/30 border border-green-600/50 rounded-lg p-4 text-left">
+                <h4 className="font-semibold text-green-300 mb-2">What's Next?</h4>
+                <ul className="text-sm text-gray-300 space-y-1">
+                  <li>• Check your email for course access details</li>
+                  <li>• Join our student community</li>
+                  <li>• Download course materials</li>
+                  <li>• Schedule your first mentoring session</li>
+                </ul>
+              </div>
+            </div>
+
+            <motion.button
+              type="button"
+              onClick={onClose}
+              className="w-full px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-lg font-semibold hover:from-green-700 hover:to-emerald-700 transition-all duration-200"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              Start Learning Now
+            </motion.button>
+          </motion.div>
+        )}
       </motion.div>
 
       {/* Tier Information Modal - Nested Modal */}

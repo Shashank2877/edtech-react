@@ -5,6 +5,7 @@ import GlassCard from '../components/GlassCard'
 import GlassSection from '../components/GlassSection'
 import VideoBackground from '../components/VideoBackground'
 import CourseRegistrationModal from '../components/CourseRegistrationModal'
+import CourseDetailsModal from '../components/CourseDetailsModal'
 import Footer from '../components/Footer'
 import { sampleCourses } from './data'
 
@@ -45,14 +46,33 @@ export default function Courses() {
   const isInView = useInView(ref);
   const [level, setLevel] = useState('All');
   const [selected, setSelected] = useState(null);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
-  const [selectedCourseForRegistration, setSelectedCourseForRegistration] = useState(null);
+  const [selectedCourse, setSelectedCourse] = useState(null);
   const [showNotDevelopedModal, setShowNotDevelopedModal] = useState(false);
 
-  // Handle View Details button click
+  // Handle View Details button click - shows course details modal
   const handleViewDetails = (course) => {
-    setSelectedCourseForRegistration(course);
-    setShowRegistrationModal(true);
+    setSelectedCourse(course);
+    setShowDetailsModal(true);
+  };
+
+  // Handle Enroll Now button click from details modal - shows registration modal
+  const handleEnrollNow = () => {
+    setShowDetailsModal(false); // Close details modal
+    setShowRegistrationModal(true); // Open registration modal
+  };
+
+  // Handle close details modal
+  const handleCloseDetailsModal = () => {
+    setShowDetailsModal(false);
+    setSelectedCourse(null);
+  };
+
+  // Handle close registration modal
+  const handleCloseRegistrationModal = () => {
+    setShowRegistrationModal(false);
+    setSelectedCourse(null);
   };
 
   // Handle mouse movement for parallax effect
@@ -161,11 +181,6 @@ export default function Courses() {
               transition={{ delay: 1 }}
             >
               <GlassCard className="p-8 rounded-xl inline-block">
-                <div className="flex items-center justify-center mb-4">
-                  <div className="w-16 h-16 rounded-full overflow-hidden">
-                    <img src="/startup-cert.png" alt="AI Saraswathi" className="w-full h-full object-cover" />
-                  </div>
-                </div>
                 <h3 className="text-2xl font-bold mb-4 text-white">AI-Powered Assistance</h3>
                 <p className="text-gray-300">
                   Our intelligent tutoring system provides personalized help and instant feedback to accelerate learning.
@@ -317,14 +332,19 @@ export default function Courses() {
         )}
       </AnimatePresence>
 
+      {/* Course Details Modal */}
+      <CourseDetailsModal
+        course={selectedCourse}
+        isOpen={showDetailsModal}
+        onClose={handleCloseDetailsModal}
+        onEnrollNow={handleEnrollNow}
+      />
+
       {/* Course Registration Modal */}
       {showRegistrationModal && (
         <CourseRegistrationModal
-          course={selectedCourseForRegistration}
-          onClose={() => {
-            setShowRegistrationModal(false);
-            setSelectedCourseForRegistration(null);
-          }}
+          course={selectedCourse}
+          onClose={handleCloseRegistrationModal}
         />
       )}
 

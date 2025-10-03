@@ -7,6 +7,18 @@ import Footer from '../components/Footer'
 export default function Services() {
   const services = [
     {
+      title: "SEO & Search Engine Marketing",
+      icon: "🔍",
+      items: [
+        "Complete keyword research and SEO strategy development",
+        "On-page SEO optimization for higher Google rankings",
+        "Technical SEO audits and website performance improvements",
+        "Local SEO for businesses to dominate local search results",
+        "Link building and off-page SEO campaigns",
+        "SEO content writing and optimization"
+      ]
+    },
+    {
       title: "Web Development & Design",
       icon: "💻",
       items: [

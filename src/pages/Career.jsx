@@ -51,6 +51,23 @@ export default function Career(){
 
   const roles = [
     {
+      title: 'SEO Specialist',
+      responsibilities: [
+        'Conduct comprehensive keyword research and competitive analysis',
+        'Optimize website content for search engines and user experience',
+        'Perform technical SEO audits and implement improvements',
+        'Build high-quality backlinks and manage off-page SEO campaigns',
+        'Monitor search engine rankings and provide detailed reports',
+        'Stay updated with Google algorithm changes and SEO best practices'
+      ],
+      qualifications: [
+        'Experience with SEO tools (SEMrush, Ahrefs, Google Analytics)',
+        'Strong understanding of on-page and technical SEO',
+        'Knowledge of HTML, CSS, and website optimization',
+        'Excellent analytical and reporting skills'
+      ]
+    },
+    {
       title: 'Content Writer',
       responsibilities: [
         'Write clear, engaging, SEO‑optimized copy for websites',

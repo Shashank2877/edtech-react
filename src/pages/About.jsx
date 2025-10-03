@@ -63,6 +63,11 @@ export default function About() {
       items: ['Custom Software (SaaS)', 'Mobile App Development', 'E-commerce Solutions', 'AR/VR Integration', 'Static/Dynamic Websites']
     },
     {
+      category: 'SEO & Search Marketing',
+      icon: '🔍',
+      items: ['Keyword Research & Strategy', 'On-Page SEO Optimization', 'Technical SEO Audits', 'Local SEO Services', 'Content SEO Writing', 'Search Engine Rankings']
+    },
+    {
       category: 'Education & Training',
       icon: '📚',
       items: ['Web Academy (Grades 5-12)', 'Professional Upskilling', 'AI & Coding Bootcamps', 'Cybersecurity Training', 'Data Science Courses']
@@ -70,7 +75,7 @@ export default function About() {
     {
       category: 'Digital Marketing',
       icon: '📈',
-      items: ['SEO Optimization', 'Email Marketing', 'Social Media Marketing', 'Google & Meta Ads', 'Marketing Automation']
+      items: ['Social Media Marketing', 'Email Marketing', 'Google & Meta Ads', 'Marketing Automation', 'PPC Management']
     },
     {
       category: 'Design & Branding',
@@ -141,8 +146,19 @@ export default function About() {
                 </p>
                 <div className="text-lg text-gray-300 space-y-3">
                   <div className="border-l-4 border-[#B4A5FF] pl-4">
-                    <p className="text-[#B4A5FF] font-semibold">FOUNDER</p>
+                    <p className="text-[#B4A5FF] font-semibold">FOUNDER & CEO</p>
                     <p className="text-white font-bold">MALLIKARJUN S NANDYAL</p>
+                    <motion.a 
+                      href="https://zippy-biscuit-5b2987.netlify.app/#hero"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center mt-2 px-4 py-2 bg-gradient-to-r from-[#B4A5FF] to-purple-500 text-white text-sm font-semibold rounded-lg hover:from-purple-500 hover:to-[#B4A5FF] transition-all duration-300 transform hover:scale-105"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <span className="mr-2">👨‍💼</span>
+                      View CEO Profile
+                    </motion.a>
                   </div>
                   <div className="border-l-4 border-[#B4A5FF] pl-4">
                     <p className="text-[#B4A5FF] font-semibold">MANAGING DIRECTOR</p>
@@ -187,21 +203,6 @@ export default function About() {
               </motion.div>
             </div>
           </GlassSection>
-
-          {/* Startup India Certificate */}
-          <motion.div 
-            className="mt-12"
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-          >
-            <GlassSection>
-              <div className="p-3 sm:p-4 hover:scale-[1.02] transition-transform duration-300">
-                <img src="/startup-cert.png" alt="Startup India Certificate of Recognition - NAMMA WEB" className="w-full h-auto rounded-md" />
-              </div>
-            </GlassSection>
-          </motion.div>
 
           {/* Interactive Stats */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6 mt-12">

@@ -48,6 +48,14 @@ export default function Contact(){
         >
           <h2 className="text-xl font-semibold">Get in touch</h2>
           <p className="text-gray-700 dark:text-gray-300 mt-2">Prefer email? Reach us anytime.</p>
+          
+          <div className="mt-4 p-4 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-lg">
+            <h3 className="font-semibold text-blue-600 dark:text-blue-400 mb-2">🔍 SEO Services Available</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Boost your website's Google rankings with our expert SEO services. Contact us for a free SEO audit!
+            </p>
+          </div>
+          
           <div className="mt-4 space-y-2 text-sm text-gray-700 dark:text-gray-300">
             <div><span className="font-medium">Email:</span> nammaweb1@gmail.com</div>
             <div><span className="font-medium">Phone:</span> +91 92415 27429</div>

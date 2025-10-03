@@ -7,23 +7,23 @@ const NavItem = ({ to, children, onClick, isHomePage }) => {
   return (
     <NavLink 
       to={to} 
-      onClick={onClick} 
+      onClick={onClick}
+      aria-current={window.location.pathname === to ? 'page' : undefined}
       className={({ isActive }) => {
         if (isHomePage) {
-          return `relative px-3 py-2 rounded-lg transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ${
+          return `relative px-3 py-2 rounded-lg transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-white ${
             isActive 
               ? 'text-indigo-600 font-semibold bg-indigo-50/80 backdrop-blur-sm shadow-sm' 
               : 'text-gray-700 hover:text-indigo-600 hover:bg-white/50 backdrop-blur-sm'
           }`
         } else {
-          return `relative px-3 py-2 rounded-lg transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ${
+          return `relative px-3 py-2 rounded-lg transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-900 ${
             isActive 
               ? 'text-indigo-400 font-semibold bg-indigo-900/50 backdrop-blur-sm shadow-sm' 
               : 'text-gray-300 hover:text-indigo-400 hover:bg-gray-800/50 backdrop-blur-sm'
           }`
         }
       }}
-      aria-current={window.location.pathname === to ? 'page' : undefined}
     >
       {children}
       <motion.div
@@ -134,44 +134,49 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-16 lg:h-20 overflow-visible">
             <div className="flex items-center gap-4 flex-shrink-0">
               <motion.button
-                className={`md:hidden p-2 rounded-lg backdrop-blur-sm transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
+                className={`md:hidden p-3 rounded-xl backdrop-blur-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 hover:scale-105 active:scale-95 ${
                   isHomePage 
-                    ? 'hover:bg-gray-100/50 text-gray-700' 
-                    : 'hover:bg-gray-800/50 text-gray-300'
+                    ? 'hover:bg-gray-100/50 text-gray-700 focus:bg-gray-100/70' 
+                    : 'hover:bg-gray-800/50 text-gray-300 focus:bg-gray-800/70'
                 }`}
+                style={{ 
+                  minHeight: '48px', 
+                  minWidth: '48px',
+                  touchAction: 'manipulation'
+                }}
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                aria-label="Toggle mobile menu"
+                aria-label={mobileMenuOpen ? 'Close mobile menu' : 'Open mobile menu'}
                 aria-expanded={mobileMenuOpen}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <motion.div
                   animate={mobileMenuOpen ? "open" : "closed"}
-                  className="w-6 h-6 flex flex-col justify-center items-center"
+                  className="w-7 h-7 flex flex-col justify-center items-center"
                 >
                   <motion.span
-                    className="block h-0.5 w-6 bg-current origin-center"
+                    className="block h-0.5 w-7 bg-current origin-center rounded-full"
                     variants={{
                       closed: { rotate: 0, y: 0 },
-                      open: { rotate: 45, y: 2 }
+                      open: { rotate: 45, y: 3 }
                     }}
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
                   />
                   <motion.span
-                    className="block h-0.5 w-6 bg-current origin-center mt-1"
+                    className="block h-0.5 w-7 bg-current origin-center mt-1.5 rounded-full"
                     variants={{
                       closed: { opacity: 1 },
                       open: { opacity: 0 }
                     }}
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
                   />
                   <motion.span
-                    className="block h-0.5 w-6 bg-current origin-center mt-1"
+                    className="block h-0.5 w-7 bg-current origin-center mt-1.5 rounded-full"
                     variants={{
                       closed: { rotate: 0, y: 0 },
                       open: { rotate: -45, y: -6 }
                     }}
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
                   />
                 </motion.div>
               </motion.button>
@@ -213,15 +218,17 @@ export default function Navbar() {
                 href="https://wa.me/1234567890" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className={`ml-4 px-6 py-2.5 rounded-xl text-white font-bold text-sm transition-all duration-300 flex items-center gap-2 whitespace-nowrap ${
+                className={`ml-2 lg:ml-4 px-4 lg:px-6 py-3 lg:py-2.5 rounded-xl text-white font-bold text-sm transition-all duration-300 flex items-center gap-2 whitespace-nowrap hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
                   isHomePage 
-                    ? 'bg-purple-500 hover:bg-purple-600 shadow-lg hover:shadow-xl' 
-                    : 'bg-indigo-600 hover:bg-indigo-700 shadow-lg hover:shadow-xl'
+                    ? 'bg-purple-500 hover:bg-purple-600 shadow-lg hover:shadow-xl focus:ring-purple-400' 
+                    : 'bg-indigo-600 hover:bg-indigo-700 shadow-lg hover:shadow-xl focus:ring-indigo-400'
                 }`}
                 style={{ 
                   minWidth: '140px',
+                  minHeight: '48px',
                   display: 'flex !important',
-                  visibility: 'visible !important'
+                  visibility: 'visible !important',
+                  touchAction: 'manipulation'
                 }}
               >
                 <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
@@ -242,12 +249,12 @@ export default function Navbar() {
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: 'easeInOut' }}
             >
-              <div className={`px-4 pb-4 pt-2 backdrop-blur-md transition-all duration-500 border-t ${
+              <div className={`px-4 pb-6 pt-4 backdrop-blur-md transition-all duration-500 border-t ${
                 isHomePage 
                   ? 'bg-white/98 border-gray-200/50 text-gray-700' 
                   : 'bg-gray-900/98 border-gray-700/50 text-gray-300'
               }`}>
-                <div className="-space-y-1">
+                <div className="space-y-2">
                   {[
                     { to: '/', label: 'HOME' },
                     { to: '/about', label: 'ABOUT' },
@@ -275,7 +282,7 @@ export default function Navbar() {
                           setMobileMenuOpen(false)
                         }}
                       >
-                        <span className="block w-full text-left py-0.5 px-3 rounded-lg">
+                        <span className="block w-full text-left py-3 px-4 rounded-xl font-medium text-base" style={{ minHeight: '48px', touchAction: 'manipulation' }}>
                           {item.label}
                         </span>
                       </NavItem>
@@ -294,11 +301,15 @@ export default function Navbar() {
                       href="https://wa.me/1234567890" 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      className={`flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl text-white font-semibold shadow-lg transition-all duration-300 ${
+                      className={`flex items-center justify-center gap-3 w-full px-6 py-4 rounded-xl text-white font-semibold shadow-lg transition-all duration-300 hover:scale-[1.02] active:scale-98 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
                         isHomePage 
-                          ? 'bg-purple-500 hover:bg-purple-600 border border-purple-400/30' 
-                          : 'bg-indigo-600 hover:bg-indigo-700 border border-indigo-400/30'
+                          ? 'bg-purple-500 hover:bg-purple-600 border border-purple-400/30 focus:ring-purple-400' 
+                          : 'bg-indigo-600 hover:bg-indigo-700 border border-indigo-400/30 focus:ring-indigo-400'
                       }`}
+                      style={{ 
+                        minHeight: '56px',
+                        touchAction: 'manipulation'
+                      }}
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
