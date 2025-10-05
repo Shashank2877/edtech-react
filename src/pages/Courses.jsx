@@ -14,7 +14,7 @@ import { sampleCourses } from './data'
 const CourseCard = ({ course, onViewDetails }) => (
   <GlassCard className="p-6 rounded-xl hover:scale-105 transition-transform duration-300">
     <div className="flex items-center gap-3 mb-4">
-      <span className="text-3xl">{course.icon || '📚'}</span>
+      <span className="text-3xl">{course.icon || ''}</span>
       <h3 className="text-xl font-bold text-white">{course.title}</h3>
     </div>
     <p className="text-gray-300 mb-4">{course.description}</p>

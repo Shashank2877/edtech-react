@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react'
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
-import DynamicGeometricBackground from './components/DynamicGeometricBackground'
 import Home from './pages/Home'
 import About from './pages/About'
 import Contact from './pages/Contact'
 import Services from './pages/Services'
 import Courses from './pages/Courses'
 import Career from './pages/Career'
+import Navbar from './components/Navbar'
+import DynamicGeometricBackground from './components/DynamicGeometricBackground'
 
 export default function App(){
   const location = useLocation()
@@ -30,10 +29,10 @@ export default function App(){
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-900 text-gray-100 relative overflow-hidden">
-      {/* Dynamic Geometric Background */}
       <DynamicGeometricBackground />
       
       <Navbar />
+      
       <main id="main-content" className="flex-1 relative z-10" role="main">
         <AnimatePresence mode="wait">
           <motion.div

@@ -80,7 +80,7 @@ export const paymentConfig = {
   security: {
     enableSignatureVerification: true,
     enableWebhooks: true,
-    webhookSecret: process.env.REACT_APP_WEBHOOK_SECRET || 'your_webhook_secret'
+    webhookSecret: import.meta.env.VITE_WEBHOOK_SECRET || 'your_webhook_secret'
   }
 }
 

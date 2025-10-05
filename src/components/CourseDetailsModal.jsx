@@ -52,7 +52,7 @@ export default function CourseDetailsModal({ course, isOpen, onClose, onEnrollNo
             {/* Course Header */}
             <div className="mb-6">
               <div className="flex items-center gap-3 mb-4">
-                <span className="text-3xl">{course.icon || '📚'}</span>
+                <span className="text-3xl">{course.icon || ''}</span>
                 <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
                   {course.title}
                 </h2>

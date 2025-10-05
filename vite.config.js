@@ -4,6 +4,9 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   
+  // Set base path to relative for IIS deployment
+  base: './',
+  
   // Performance optimizations
   build: {
     // Enable code splitting

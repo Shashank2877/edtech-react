@@ -9,7 +9,7 @@ export const sampleCourses = [
     level: 'Beginner',
     duration: '8 weeks',
     price: 12999,
-    icon: '🎯',
+    icon: '',
     image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=1200&auto=format&fit=crop',
     students: '2,500+',
     rating: '4.9',
@@ -25,7 +25,7 @@ export const sampleCourses = [
     pricing: {
       basic: 7500,
       foundation: 11999,
-      advanced: 24999,
+      advanced: 25999,
       pro: 61999
     },
     syllabus: [
@@ -39,13 +39,13 @@ export const sampleCourses = [
   },
   {
     id: 2,
-    title: 'AI for Marketing',
+    title: 'AI Marketing',
     description: 'Transform your marketing with AI-powered strategies and automation.',
     extendedDescription: 'Discover how artificial intelligence is revolutionizing marketing. Learn to implement AI-driven campaigns, automate customer interactions, and leverage data analytics for personalized marketing experiences.',
     level: 'Intermediate',
     duration: '10 weeks',
     price: 16999,
-    icon: '📈',
+    icon: '',
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop',
     students: '1,800+',
     rating: '4.8',
@@ -61,7 +61,7 @@ export const sampleCourses = [
     pricing: {
       basic: 7500,
       foundation: 11999,
-      advanced: 24999,
+      advanced: 29999,
       pro: 61999
     },
     syllabus: [
@@ -81,7 +81,7 @@ export const sampleCourses = [
     level: 'All Levels',
     duration: '12 weeks',
     price: 18999,
-    icon: '💻',
+    icon: '',
     image: 'https://images.unsplash.com/photo-1432888622747-4eb9a8b05c91?q=80&w=1200&auto=format&fit=crop',
     students: '3,200+',
     rating: '4.9',
@@ -97,7 +97,7 @@ export const sampleCourses = [
     pricing: {
       basic: 7500,
       foundation: 11999,
-      advanced: 24999,
+      advanced: 29999,
       pro: 61999
     },
     syllabus: [
@@ -119,7 +119,7 @@ export const sampleCourses = [
     level: 'Advanced',
     duration: '14 weeks',
     price: 22999,
-    icon: '✨',
+    icon: '',
     image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1200&auto=format&fit=crop',
     students: '1,200+',
     rating: '4.9',
@@ -155,7 +155,7 @@ export const sampleCourses = [
     level: 'Advanced',
     duration: '16 weeks',
     price: 26999,
-    icon: '🧠',
+    icon: '',
     image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1200&auto=format&fit=crop',
     students: '800+',
     rating: '4.8',
@@ -191,7 +191,7 @@ export const sampleCourses = [
     level: 'Executive',
     duration: '8 weeks',
     price: 35999,
-    icon: '�',
+    icon: '',
     image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1200&auto=format&fit=crop',
     students: '500+',
     rating: '4.9',
@@ -227,7 +227,7 @@ export const sampleCourses = [
     level: 'Intermediate',
     duration: '12 weeks',
     price: 18999,
-    icon: '💻',
+    icon: '',
     image: 'https://images.unsplash.com/photo-1593720213428-28a5b9e94613?q=80&w=1200&auto=format&fit=crop',
     students: '2,100+',
     rating: '4.7',
@@ -263,7 +263,7 @@ export const sampleCourses = [
     level: 'Intermediate',
     duration: '14 weeks',
     price: 21999,
-    icon: '�',
+    icon: '',
     image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1200&auto=format&fit=crop',
     students: '1,600+',
     rating: '4.8',
@@ -299,7 +299,7 @@ export const sampleCourses = [
     level: 'Advanced',
     duration: '12 weeks',
     price: 28999,
-    icon: '�',
+    icon: '',
     image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=1200&auto=format&fit=crop',
     students: '1,100+',
     rating: '4.7',
@@ -315,7 +315,7 @@ export const sampleCourses = [
     pricing: {
       basic: 7500,
       foundation: 11999,
-      advanced: 24999,
+      advanced: 29999,
       pro: 61999
     },
     syllabus: [
@@ -329,19 +329,19 @@ export const sampleCourses = [
   },
   {
     id: 10,
-    title: 'AI for Accounting and Finance',
+    title: 'AI for Finance',
     description: 'Revolutionize financial processes with artificial intelligence.',
-    extendedDescription: 'Transform accounting and finance operations using AI. Learn automated bookkeeping, financial forecasting, fraud detection, and intelligent financial reporting systems.',
+    extendedDescription: 'Transform finance operations using AI. Learn automated financial processes, financial forecasting, fraud detection, and intelligent financial reporting systems.',
     level: 'Intermediate',
     duration: '10 weeks',
     price: 19999,
-    icon: '💰',
+    icon: '',
     image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=1200&auto=format&fit=crop',
     students: '1,400+',
     rating: '4.8',
     projects: '7',
     features: [
-      'Automated bookkeeping systems',
+      'Automated financial processes',
       'Financial forecasting models',
       'Fraud detection algorithms',
       'Intelligent expense management',
@@ -351,7 +351,7 @@ export const sampleCourses = [
     pricing: {
       basic: 7500,
       foundation: 11999,
-      advanced: 24999,
+      advanced: 29999,
       pro: 61999
     },
     syllabus: [
@@ -371,7 +371,7 @@ export const sampleCourses = [
     level: 'Intermediate',
     duration: '8 weeks',
     price: 17999,
-    icon: '👥',
+    icon: '',
     image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200&auto=format&fit=crop',
     students: '1,300+',
     rating: '4.7',
@@ -407,7 +407,7 @@ export const sampleCourses = [
     level: 'Beginner',
     duration: '6 weeks',
     price: 15999,
-    icon: '�',
+    icon: '',
     image: 'https://images.unsplash.com/photo-1586953208448-b95a79798f07?q=80&w=1200&auto=format&fit=crop',
     students: '900+',
     rating: '4.6',
