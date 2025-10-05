@@ -3,11 +3,13 @@
 ## Steps to add the professional images to your About page:
 
 1. **Save the attached images** to your `d:\edtech-react\public\` folder with these names:
+
    - First image (conference/auditorium): `professional-event-1.jpg`
-   - Second image (classroom presentation): `professional-event-2.jpg` 
+   - Second image (classroom presentation): `professional-event-2.jpg`
    - Third image (award ceremony): `professional-event-3.jpg`
 
 2. **Image names should be exactly:**
+
    ```
    d:\edtech-react\public\professional-event-1.jpg
    d:\edtech-react\public\professional-event-2.jpg
@@ -26,6 +28,7 @@
 ✅ **Smooth Animations**: Fade-in effects and hover interactions
 
 ## The section includes:
+
 - Professional description of NammaWeb's collaboration with BEL
 - Emphasis on security, scalability, and performance standards
 - Credibility for government and defense-sector projects
