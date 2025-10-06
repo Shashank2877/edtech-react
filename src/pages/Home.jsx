@@ -1,9 +1,46 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import ModernHero from '../components/ModernHero'
 import BrandPartners from '../components/BrandPartners'
 import Footer from '../components/Footer'
+
+// Counter component for animated numbers
+const Counter = ({ end, suffix = "", duration = 2, animate = true, staticText }) => {
+  const [count, setCount] = useState(animate ? 0 : end)
+  const [hasAnimated, setHasAnimated] = useState(false)
+
+  const startAnimation = () => {
+    if (hasAnimated || !animate) return
+    setHasAnimated(true)
+
+    let startTime
+    const animateCounter = (timestamp) => {
+      if (!startTime) startTime = timestamp
+      const progress = Math.min((timestamp - startTime) / (duration * 1000), 1)
+      
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4)
+      setCount(Math.floor(easeOutQuart * end))
+
+      if (progress < 1) {
+        requestAnimationFrame(animateCounter)
+      }
+    }
+    
+    requestAnimationFrame(animateCounter)
+  }
+
+  return (
+    <motion.span
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      onViewportEnter={startAnimation}
+    >
+      {staticText || `${count}${suffix}`}
+    </motion.span>
+  )
+}
 
 export default function Home() {
   const navigate = useNavigate()
@@ -16,12 +53,12 @@ export default function Home() {
     experience: ''
   })
 
-  // Stats data
+  // Stats data with animation values
   const stats = [
-    { number: "1000+", label: "Students Trained" },
-    { number: "50+", label: "Industry Partners" },
-    { number: "95%", label: "Job Placement Rate" },
-    { number: "24/7", label: "Support Available" }
+    { target: 1000, suffix: "+", label: "Students Trained", animate: true },
+    { target: 50, suffix: "+", label: "Industry Partners", animate: true },
+    { target: 95, suffix: "%", label: "Job Placement Rate", animate: true },
+    { target: 24, suffix: "/7", label: "Support Available", animate: false, staticText: "24/7" }
   ]
 
   const handleSubmit = (e) => {
@@ -126,7 +163,15 @@ export default function Home() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="p-4"
               >
-                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-blue-600 mb-2">{stat.number}</div>
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-blue-600 mb-2">
+                  <Counter 
+                    end={stat.target} 
+                    suffix={stat.suffix} 
+                    duration={2.5 + (index * 0.2)}
+                    animate={stat.animate}
+                    staticText={stat.staticText}
+                  />
+                </div>
                 <div className="text-gray-600 text-sm sm:text-base">{stat.label}</div>
               </motion.div>
             ))}

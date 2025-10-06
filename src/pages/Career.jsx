@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import VideoBackground from '../components/VideoBackground'
 import GlassSection from '../components/GlassSection'
 import Footer from '../components/Footer'
 
@@ -73,12 +72,15 @@ export default function Career(){
         'Write clear, engaging, SEO‑optimized copy for websites',
         'Collaborate with design/dev teams to align content with goals',
         'Perform keyword research and apply SEO best practices',
-        'Edit and proofread for accuracy and brand voice'
+        'Edit and proofread for accuracy and brand voice',
+        'Create compelling blog posts and marketing materials',
+        'Develop content strategies for various digital platforms'
       ],
       qualifications: [
         'Excellent written & verbal communication',
         'Basic knowledge of SEO principles',
-        'Creative mindset; adaptable writing styles'
+        'Creative mindset; adaptable writing styles',
+        'Experience with content management systems'
       ]
     },
     {
@@ -168,27 +170,92 @@ export default function Career(){
   ]
 
   return (
-    <div className="min-h-screen relative">
-      <VideoBackground />
-      {/* Video Background */}
-      <div className="fixed inset-0 z-0">
-        <VideoBackground />
-        <div className="absolute inset-0 bg-[#080B1A]/40 pointer-events-none" />
+    <div className="min-h-screen relative bg-gradient-to-br from-slate-50 via-white to-indigo-50 overflow-hidden"
+         style={{ 
+           background: 'linear-gradient(135deg, #f8fafc 0%, #ffffff 25%, #f1f5f9 50%, #e0e7ff 75%, #f0f4ff 100%)'
+         }}>
+      {/* Floating geometric shapes background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          className="absolute top-20 right-20 w-32 h-32 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full opacity-20"
+          animate={{
+            y: [0, -20, 0],
+            rotate: [0, 180, 360],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          style={{ 
+            filter: 'drop-shadow(0 10px 20px rgba(99, 102, 241, 0.2))',
+            transformStyle: 'preserve-3d'
+          }}
+        />
+        <motion.div
+          className="absolute bottom-20 left-20 w-24 h-24 bg-gradient-to-r from-pink-400 to-yellow-400 rounded-full opacity-30"
+          animate={{
+            y: [0, 20, 0],
+            x: [0, 10, 0],
+            rotateY: [0, 180, 360],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          style={{ 
+            filter: 'drop-shadow(0 8px 16px rgba(244, 114, 182, 0.2))',
+            transformStyle: 'preserve-3d'
+          }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/4 w-16 h-16 bg-gradient-to-r from-green-400 to-blue-500 transform rotate-45 opacity-25"
+          animate={{
+            rotate: [45, 225, 405],
+            scale: [1, 1.2, 1],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          style={{ 
+            filter: 'drop-shadow(0 6px 12px rgba(34, 197, 94, 0.2))'
+          }}
+        />
+        <motion.div
+          className="absolute top-1/3 right-1/3 w-20 h-20 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full opacity-20"
+          animate={{
+            y: [0, -30, 0],
+            x: [0, 15, 0],
+            scale: [1, 0.8, 1],
+          }}
+          transition={{
+            duration: 7,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          style={{ 
+            filter: 'drop-shadow(0 8px 16px rgba(168, 85, 247, 0.2))'
+          }}
+        />
       </div>
 
       {/* Content */}
       <div className="relative z-10">
         {/* Hero Section */}
         <motion.div 
-          className="max-w-7xl mx-auto px-4 pt-16 pb-12 text-center"
+          className="max-w-7xl mx-auto px-4 pt-24 pb-16 text-center"
           initial={fadeIn.initial}
           animate={fadeIn.animate}
           transition={fadeIn.transition}
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-[#B4A5FF]">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
             Join Hands With Us
           </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-700 max-w-3xl mx-auto">
             Launch your career with our WEB DEVELOPMENT STUDENT PROGRAM. 
             A 2-month immersive journey combining hands-on learning with real projects, 
             leading to certification and career advancement.
@@ -212,25 +279,25 @@ export default function Career(){
               >
                 <GlassSection>
                   <div className="p-6">
-                    <h2 className="text-2xl font-semibold text-[#B4A5FF] mb-4">{role.title}</h2>
+                    <h2 className="text-2xl font-semibold text-blue-600 mb-4">{role.title}</h2>
                     <div className="space-y-4">
                       <div>
-                        <h3 className="text-indigo-400 font-medium mb-2">Key Responsibilities</h3>
+                        <h3 className="text-blue-600 font-medium mb-2">Key Responsibilities</h3>
                         <ul className="space-y-2">
                           {role.responsibilities.map((item) => (
-                            <li key={item} className="text-gray-300 text-sm flex items-start">
-                              <span className="text-indigo-400 mr-2">•</span>
+                            <li key={item} className="text-gray-700 text-sm flex items-start">
+                              <span className="text-blue-600 mr-2">•</span>
                               {item}
                             </li>
                           ))}
                         </ul>
                       </div>
                       <div>
-                        <h3 className="text-indigo-400 font-medium mb-2">Qualifications</h3>
+                        <h3 className="text-blue-600 font-medium mb-2">Qualifications</h3>
                         <ul className="space-y-2">
                           {role.qualifications.map((item) => (
-                            <li key={item} className="text-gray-300 text-sm flex items-start">
-                              <span className="text-indigo-400 mr-2">•</span>
+                            <li key={item} className="text-gray-700 text-sm flex items-start">
+                              <span className="text-blue-600 mr-2">•</span>
                               {item}
                             </li>
                           ))}
@@ -239,7 +306,7 @@ export default function Career(){
                     </div>
                     <div className="px-6 pb-6 mt-3">
                       <motion.button
-                        className="inline-block px-6 py-3 rounded-lg bg-[#B4A5FF] text-gray-900 font-semibold hover:bg-indigo-400 transition-colors duration-300"
+                        className="inline-block px-6 py-3 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors duration-300"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={() => {
@@ -268,7 +335,7 @@ export default function Career(){
                 <h2 className="text-2xl font-semibold text-[#B4A5FF] mb-4">
                   Student Program — Summary
                 </h2>
-                <p className="text-gray-300 mb-6">
+                <p className="text-gray-700 mb-6">
                   2-month hands-on program with real projects. Completing the program earns 
                   a certification and provides a solid career boost.
                 </p>
@@ -286,17 +353,17 @@ export default function Career(){
 
             <GlassSection>
               <div className="p-6">
-                <h3 className="text-2xl font-semibold text-[#B4A5FF] mb-4">Why join?</h3>
+                <h3 className="text-2xl font-semibold text-blue-600 mb-4">Why join?</h3>
                 <ul className="space-y-3">
-                  <li className="text-gray-300 text-sm flex items-start">
+                  <li className="text-gray-900 text-sm flex items-start">
                     <span className="text-indigo-400 mr-2">•</span>
                     Real projects with mentorship
                   </li>
-                  <li className="text-gray-300 text-sm flex items-start">
+                  <li className="text-gray-900 text-sm flex items-start">
                     <span className="text-indigo-400 mr-2">•</span>
                     Certification on completion
                   </li>
-                  <li className="text-gray-300 text-sm flex items-start">
+                  <li className="text-gray-900 text-sm flex items-start">
                     <span className="text-indigo-400 mr-2">•</span>
                     Portfolio development and career guidance
                   </li>

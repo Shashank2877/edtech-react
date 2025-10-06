@@ -3,7 +3,6 @@ import { motion, AnimatePresence, useAnimation, useInView } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import GlassCard from '../components/GlassCard'
 import GlassSection from '../components/GlassSection'
-import VideoBackground from '../components/VideoBackground'
 import CourseRegistrationModal from '../components/CourseRegistrationModal'
 import CourseDetailsModal from '../components/CourseDetailsModal'
 import Footer from '../components/Footer'
@@ -15,20 +14,20 @@ const CourseCard = ({ course, onViewDetails }) => (
   <GlassCard className="p-6 rounded-xl hover:scale-105 transition-transform duration-300">
     <div className="flex items-center gap-3 mb-4">
       <span className="text-3xl">{course.icon || ''}</span>
-      <h3 className="text-xl font-bold text-white">{course.title}</h3>
+      <h3 className="text-xl font-bold text-gray-900">{course.title}</h3>
     </div>
-    <p className="text-gray-300 mb-4">{course.description}</p>
+    <p className="text-gray-700 mb-4">{course.description}</p>
     <div className="flex items-center gap-4 mb-4">
-      <span className="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-sm">
+      <span className="px-3 py-1 rounded-full bg-blue-500/20 text-blue-700 text-sm">
         {course.level}
       </span>
-      <span className="px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 text-sm">
+      <span className="px-3 py-1 rounded-full bg-purple-500/20 text-purple-700 text-sm">
         {course.duration}
       </span>
     </div>
     <div className="flex justify-center items-center">
       <motion.button
-        className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg text-white"
+        className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg text-white"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => onViewDetails(course)}
@@ -102,11 +101,77 @@ export default function Courses() {
   }, [level])
 
   return (
-    <div className="min-h-screen relative">
-      {/* Video Background */}
-      <div className="fixed inset-0 z-0">
-        <VideoBackground />
-        <div className="absolute inset-0 bg-[#080B1A]/40 pointer-events-none" />
+    <div className="min-h-screen relative bg-gradient-to-br from-slate-50 via-white to-indigo-50 overflow-hidden"
+         style={{ 
+           background: 'linear-gradient(135deg, #f8fafc 0%, #ffffff 25%, #f1f5f9 50%, #e0e7ff 75%, #f0f4ff 100%)'
+         }}>
+      {/* Floating geometric shapes background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          className="absolute top-20 right-20 w-32 h-32 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full opacity-20"
+          animate={{
+            y: [0, -20, 0],
+            rotate: [0, 180, 360],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          style={{ 
+            filter: 'drop-shadow(0 10px 20px rgba(99, 102, 241, 0.2))',
+            transformStyle: 'preserve-3d'
+          }}
+        />
+        <motion.div
+          className="absolute bottom-20 left-20 w-24 h-24 bg-gradient-to-r from-pink-400 to-yellow-400 rounded-full opacity-30"
+          animate={{
+            y: [0, 20, 0],
+            x: [0, 10, 0],
+            rotateY: [0, 180, 360],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          style={{ 
+            filter: 'drop-shadow(0 8px 16px rgba(244, 114, 182, 0.2))',
+            transformStyle: 'preserve-3d'
+          }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/4 w-16 h-16 bg-gradient-to-r from-green-400 to-blue-500 transform rotate-45 opacity-25"
+          animate={{
+            rotate: [45, 225, 405],
+            scale: [1, 1.2, 1],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          style={{ 
+            filter: 'drop-shadow(0 6px 12px rgba(34, 197, 94, 0.2))'
+          }}
+        />
+        <motion.div
+          className="absolute top-1/3 right-1/3 w-20 h-20 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full opacity-20"
+          animate={{
+            y: [0, -30, 0],
+            x: [0, 15, 0],
+            scale: [1, 0.8, 1],
+          }}
+          transition={{
+            duration: 7,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          style={{ 
+            filter: 'drop-shadow(0 8px 16px rgba(168, 85, 247, 0.2))'
+          }}
+        />
       </div>
 
       {/* Content */}
@@ -126,7 +191,7 @@ export default function Courses() {
               }}
             >
               <motion.h1 
-                className="text-4xl md:text-6xl font-bold mb-4 text-white"
+                className="text-4xl md:text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
@@ -134,7 +199,7 @@ export default function Courses() {
                 Future-Ready Coding Education
               </motion.h1>
               <motion.p 
-                className="text-xl md:text-2xl text-gray-300 mb-8"
+                className="text-xl md:text-2xl text-gray-700 mb-8"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
@@ -151,10 +216,10 @@ export default function Courses() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.6 }}
                 >
-                  <h3 className="text-2xl font-bold mb-4 text-white">Web Academy</h3>
-                  <p className="text-gray-300 mb-4">Learn, Create, and Certify with our AI-Powered Learning Tools</p>
-                  <div className="bg-white/10 p-4 rounded-lg">
-                    <p className="text-yellow-300 font-semibold mb-2">Coming soon</p>
+                  <h3 className="text-2xl font-bold mb-4 text-gray-900">Web Academy</h3>
+                  <p className="text-gray-700 mb-4">Learn, Create, and Certify with our AI-Powered Learning Tools</p>
+                  <div className="bg-gray-100 p-4 rounded-lg">
+                    <p className="text-yellow-600 font-semibold mb-2">Coming soon</p>
                   </div>
                 </motion.div>
               </GlassCard>
@@ -165,8 +230,8 @@ export default function Courses() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.8 }}
                 >
-                  <h3 className="text-2xl font-bold mb-4 text-white">Project-Based Learning</h3>
-                  <p className="text-gray-300">
+                  <h3 className="text-2xl font-bold mb-4 text-gray-900">Project-Based Learning</h3>
+                  <p className="text-gray-700">
                     Students learn by building real projects, from simple websites to complex applications, ensuring practical skills.
                   </p>
                 </motion.div>
@@ -181,8 +246,8 @@ export default function Courses() {
               transition={{ delay: 1 }}
             >
               <GlassCard className="p-8 rounded-xl inline-block">
-                <h3 className="text-2xl font-bold mb-4 text-white">AI-Powered Assistance</h3>
-                <p className="text-gray-300">
+                <h3 className="text-2xl font-bold mb-4 text-gray-900">AI-Powered Assistance</h3>
+                <p className="text-gray-700">
                   Our intelligent tutoring system provides personalized help and instant feedback to accelerate learning.
                 </p>
               </GlassCard>
@@ -199,7 +264,7 @@ export default function Courses() {
             transition={{ duration: 0.6 }}
           >
             <motion.h2 
-              className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-600 mb-4"
+              className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 mb-4"
               animate={{ 
                 backgroundPosition: ["0%", "100%"],
                 transition: { duration: 8, repeat: Infinity, repeatType: "reverse" }
@@ -208,7 +273,7 @@ export default function Courses() {
               Explore Our Courses
             </motion.h2>
             <motion.p 
-              className="text-xl text-gray-300"
+              className="text-xl text-gray-700"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
@@ -230,8 +295,8 @@ export default function Courses() {
                 onClick={() => setLevel(l)}
                 className={`px-6 py-3 rounded-xl backdrop-blur-lg transition-all duration-300 flex items-center gap-2 ${
                   level === l
-                    ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-500/25'
-                    : 'border border-white/10 bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white'
+                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25'
+                    : 'border border-gray-300 bg-white/70 hover:bg-white/90 text-gray-700 hover:text-gray-900'
                 }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}

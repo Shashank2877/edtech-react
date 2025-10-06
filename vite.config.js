@@ -9,6 +9,8 @@ export default defineConfig({
   
   // Performance optimizations
   build: {
+    // Output directory
+    outDir: 'dist',
     // Enable code splitting
     rollupOptions: {
       output: {
@@ -16,7 +18,11 @@ export default defineConfig({
           vendor: ['react', 'react-dom'],
           motion: ['framer-motion'],
           router: ['react-router-dom']
-        }
+        },
+        // Ensure consistent asset naming for IIS
+        assetFileNames: 'assets/[name]-[hash][extname]',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        entryFileNames: 'assets/[name]-[hash].js'
       }
     },
     // Optimize chunk size
@@ -28,7 +34,11 @@ export default defineConfig({
         drop_console: true,
         drop_debugger: true
       }
-    }
+    },
+    // Ensure source maps are generated for debugging
+    sourcemap: false,
+    // Target modern browsers but ensure compatibility
+    target: 'es2015'
   },
   
   // Development server optimizations

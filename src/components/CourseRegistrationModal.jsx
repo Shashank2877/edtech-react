@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import PaymentService from '../services/PaymentService'
-import { calculateTotalAmount, formatCurrency, getAvailablePaymentMethods } from '../config/paymentConfig'
 
 export default function CourseRegistrationModal({ course, onClose }) {
   const [formData, setFormData] = useState({
@@ -18,9 +16,7 @@ export default function CourseRegistrationModal({ course, onClose }) {
   const [showTierModal, setShowTierModal] = useState(false)
   const [selectedTierInfo, setSelectedTierInfo] = useState(null)
   const [isProcessingPayment, setIsProcessingPayment] = useState(false)
-  const [paymentStep, setPaymentStep] = useState('form') // 'form', 'payment', 'success'
-  const [paymentMethod, setPaymentMethod] = useState('razorpay')
-  const [totalAmountBreakdown, setTotalAmountBreakdown] = useState(null)
+  const [paymentStep, setPaymentStep] = useState('form') // 'form', 'success'
 
   // Tier information data
   const tierDetails = {
@@ -146,51 +142,36 @@ export default function CourseRegistrationModal({ course, onClose }) {
       return
     }
     
-    // Calculate total amount with fees and taxes
-    const amountBreakdown = calculateTotalAmount(selectedPrice)
-    setTotalAmountBreakdown(amountBreakdown)
-    
-    // Move to payment step
-    setPaymentStep('payment')
+    // Directly process enrollment via WhatsApp
+    handlePayment()
   }
 
   const handlePayment = async () => {
     setIsProcessingPayment(true)
     
     try {
-      const paymentData = {
-        amount: totalAmountBreakdown.totalAmount,
-        currency: 'INR',
-        customerName: formData.fullName,
-        customerEmail: formData.emailAddress,
-        customerPhone: formData.phoneNumber,
-        courseName: course?.title,
-        tier: formData.selectedPricingTier,
-        mode: formData.selectedMode,
-        description: `${course?.title} - ${formData.selectedPricingTier} Tier`,
-        gateway: paymentMethod
-      }
-
-      const paymentResult = await PaymentService.processPayment(paymentData)
+      // Redirect to WhatsApp for payment discussion
+      const courseDetails = `Course: ${course?.title}
+Tier: ${formData.selectedPricingTier}
+Price: ₹${selectedPrice}
+Name: ${formData.fullName}
+Phone: ${formData.phoneNumber}
+Email: ${formData.emailAddress}
+Mode: ${formData.selectedMode}`
       
-      if (paymentResult.success) {
-        // Save enrollment data
-        const enrollmentData = {
-          ...formData,
-          selectedPrice: selectedPrice,
-          totalAmount: totalAmountBreakdown.totalAmount,
-          paymentId: paymentResult.paymentId,
-          orderId: paymentResult.orderId,
-          courseName: course?.title,
-          paymentStatus: 'completed'
-        }
-        
-        await PaymentService.saveEnrollment(enrollmentData)
-        
-        setPaymentStep('success')
-      } else {
-        throw new Error(paymentResult.message || 'Payment failed')
-      }
+      const whatsappMessage = encodeURIComponent(`Hi! I'm interested in enrolling for the following course:
+
+${courseDetails}
+
+Please help me with the enrollment process and payment details.`)
+      
+      const whatsappURL = `https://wa.me/+919241527429?text=${whatsappMessage}`
+      
+      // Open WhatsApp in new tab
+      window.open(whatsappURL, '_blank')
+      
+      // Show success message
+      setPaymentStep('success')
     } catch (error) {
       console.error('Payment error:', error)
       alert(`Payment failed: ${error.message}. Please try again.`)
@@ -201,7 +182,7 @@ export default function CourseRegistrationModal({ course, onClose }) {
 
   const handleGoBack = () => {
     setPaymentStep('form')
-    setTotalAmountBreakdown(null)
+
   }
 
   return (
@@ -506,127 +487,7 @@ export default function CourseRegistrationModal({ course, onClose }) {
           </motion.form>
         )}
 
-        {/* Payment Step */}
-        {paymentStep === 'payment' && totalAmountBreakdown && (
-          <motion.div
-            className="space-y-6"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 20 }}
-            transition={{ duration: 0.3 }}
-          >
-            {/* Order Summary */}
-            <div className="bg-gradient-to-r from-blue-900/30 to-indigo-900/30 border border-blue-600/50 rounded-lg p-4">
-              <h3 className="text-lg font-semibold text-blue-300 mb-3">Order Summary</h3>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between text-gray-300">
-                  <span>Course: {course?.title}</span>
-                  <span>{formData.selectedPricingTier} Tier</span>
-                </div>
-                <div className="flex justify-between text-gray-300">
-                  <span>Student: {formData.fullName}</span>
-                  <span>{formData.selectedMode}</span>
-                </div>
-                <div className="border-t border-blue-600/50 pt-2 mt-3">
-                  <div className="flex justify-between">
-                    <span>Course Fee:</span>
-                    <span>{formatCurrency(totalAmountBreakdown.baseAmount)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Consultation Fee:</span>
-                    <span>{formatCurrency(totalAmountBreakdown.consultationFee)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>GST (18%):</span>
-                    <span>{formatCurrency(totalAmountBreakdown.gstAmount)}</span>
-                  </div>
-                  <div className="flex justify-between font-semibold text-lg text-blue-300 pt-2 border-t border-blue-600/50">
-                    <span>Total Amount:</span>
-                    <span>{formatCurrency(totalAmountBreakdown.totalAmount)}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            {/* Payment Method Selection */}
-            <div>
-              <h3 className="text-lg font-semibold text-white mb-3">Select Payment Method</h3>
-              <div className="space-y-3">
-                {getAvailablePaymentMethods().map((method) => (
-                  <motion.div
-                    key={method.id}
-                    className={`border-2 rounded-lg p-4 cursor-pointer transition-all duration-200 ${
-                      paymentMethod === method.id
-                        ? 'border-indigo-500 bg-gradient-to-br from-indigo-900/50 to-purple-900/50'
-                        : 'border-gray-600 bg-gray-800/50 hover:border-gray-500'
-                    }`}
-                    onClick={() => setPaymentMethod(method.id)}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <div className="flex items-center space-x-3">
-                      <span className="text-2xl">{method.icon}</span>
-                      <div>
-                        <h4 className="font-semibold text-white">{method.name}</h4>
-                        <p className="text-sm text-gray-400">{method.description}</p>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3">
-              <motion.button
-                type="button"
-                onClick={handleGoBack}
-                className="flex-1 px-6 py-3 rounded-lg border border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white transition-all duration-200 font-semibold"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <span className="flex items-center justify-center">
-                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                  </svg>
-                  Go Back
-                </span>
-              </motion.button>
-
-              <motion.button
-                type="button"
-                onClick={handlePayment}
-                disabled={isProcessingPayment}
-                className={`flex-1 px-6 py-3 rounded-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl ${
-                  isProcessingPayment
-                    ? 'bg-gray-700 text-gray-400 cursor-not-allowed'
-                    : 'bg-gradient-to-r from-green-600 to-emerald-600 text-white hover:from-green-700 hover:to-emerald-700'
-                }`}
-                whileHover={!isProcessingPayment ? { scale: 1.02 } : {}}
-                whileTap={!isProcessingPayment ? { scale: 0.98 } : {}}
-              >
-                <span className="flex items-center justify-center">
-                  {isProcessingPayment ? (
-                    <>
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      Processing...
-                    </>
-                  ) : (
-                    <>
-                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                      </svg>
-                      Pay {formatCurrency(totalAmountBreakdown.totalAmount)}
-                    </>
-                  )}
-                </span>
-              </motion.button>
-            </div>
-          </motion.div>
-        )}
 
         {/* Success Step */}
         {paymentStep === 'success' && (
@@ -649,14 +510,15 @@ export default function CourseRegistrationModal({ course, onClose }) {
             </motion.div>
 
             <div>
-              <h3 className="text-2xl font-bold text-white mb-2">Payment Successful!</h3>
+              <h3 className="text-2xl font-bold text-white mb-2">Enrollment Request Sent!</h3>
               <p className="text-gray-300 mb-4">
-                Welcome to {course?.title}! Your enrollment has been confirmed.
+                We've opened WhatsApp with your course details. Please complete your enrollment by chatting with our team.
               </p>
               <div className="bg-gradient-to-r from-green-900/30 to-emerald-900/30 border border-green-600/50 rounded-lg p-4 text-left">
                 <h4 className="font-semibold text-green-300 mb-2">What's Next?</h4>
                 <ul className="text-sm text-gray-300 space-y-1">
-                  <li>• Check your email for course access details</li>
+                  <li>• Continue the conversation on WhatsApp</li>
+                  <li>• Complete payment with our team</li>
                   <li>• Join our student community</li>
                   <li>• Download course materials</li>
                   <li>• Schedule your first mentoring session</li>

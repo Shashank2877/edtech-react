@@ -11,7 +11,7 @@ export default function GlassCard({
 }) {
   return (
     <motion.div
-      className={`p-6 rounded-xl border border-white/10 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 backdrop-blur-lg group hover:border-white/20 ${className}`}
+      className={`p-6 rounded-xl border border-gray-200/60 bg-white/70 backdrop-blur-lg group hover:border-gray-300/80 shadow-lg hover:shadow-xl ${className}`}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -29,12 +29,12 @@ export default function GlassCard({
         </motion.div>
       )}
       {title && (
-        <h3 className="text-xl font-semibold mb-2 text-indigo-400">{title}</h3>
+        <h3 className="text-xl font-semibold mb-2 text-blue-600">{title}</h3>
       )}
       {children}
       {showGradientBar && (
         <motion.div
-          className="w-0 h-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 mt-4 group-hover:w-full transition-all duration-300"
+          className="w-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 mt-4 group-hover:w-full transition-all duration-300"
         />
       )}
     </motion.div>

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { motion, useAnimation, useInView } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import VideoBackground from '../components/VideoBackground'
 import GlassSection from '../components/GlassSection'
 import Footer from '../components/Footer'
 
@@ -43,28 +42,28 @@ export default function About() {
   }
 
   const stats = [
-    { label: 'Years of Experience', value: '3+', icon: '🎓' },
-    { label: 'Projects Completed', value: '50+', icon: '🚀' },
-    { label: 'Team Members', value: '10+', icon: '👥' },
-    { label: 'Client Satisfaction', value: '100%', icon: '⭐' },
-    { label: 'Startup Ranking', value: 'Top 50', icon: '🏆' },
-    { label: 'Recognition', value: 'Startup India', icon: '🇮🇳' }
+    { label: 'Years of Experience', value: '3+', icon: '' },
+    { label: 'Projects Completed', value: '50+', icon: '' },
+    { label: 'Team Members', value: '10+', icon: '' },
+    { label: 'Client Satisfaction', value: '100%', icon: '' },
+    { label: 'Startup Ranking', value: 'Top 50', icon: '' },
+    { label: 'Recognition', value: 'Startup India', icon: '' }
   ]
 
   const services = [
     {
       category: 'AI & Automation',
-      icon: '🤖',
+      icon: '',
       items: ['AI Co-Pilot', 'Business Automation', 'Chatbots (Saraswathi AI)', 'RPA Automation', 'AI in Commerce']
     },
     {
       category: 'Development',
-      icon: '💻',
+      icon: '',
       items: ['Custom Software (SaaS)', 'Mobile App Development', 'E-commerce Solutions', 'AR/VR Integration', 'Static/Dynamic Websites']
     },
     {
       category: 'SEO & Search Marketing',
-      icon: '🔍',
+      icon: '',
       items: ['Keyword Research & Strategy', 'On-Page SEO Optimization', 'Technical SEO Audits', 'Local SEO Services', 'Content SEO Writing', 'Search Engine Rankings']
     },
     {
@@ -74,56 +73,122 @@ export default function About() {
     },
     {
       category: 'Digital Marketing',
-      icon: '📈',
+      icon: '',
       items: ['Social Media Marketing', 'Email Marketing', 'Google & Meta Ads', 'Marketing Automation', 'PPC Management']
     },
     {
       category: 'Design & Branding',
-      icon: '🎨',
+      icon: '',
       items: ['Logo & Brand Identity', 'UI/UX Design', 'Print Design', 'Motion Graphics', 'Social Media Graphics']
     },
     {
       category: 'Specialized Services',
-      icon: '🔧',
+      icon: '',
       items: ['IT Outsourcing', 'Data Security', 'Voice-over Dubbing', 'Resource Outsourcing', 'GDPR Compliance']
     }
   ]
 
   const achievements = [
-    { title: 'Startup India Recognition', desc: 'Officially recognized by the Government of India', icon: '🏅' },
-    { title: 'AICTE Support', desc: 'Supported by All India Council for Technical Education', icon: '🎓' },
-    { title: 'Skill India Partnership', desc: 'Partner in national skill development initiatives', icon: '🤝' },
-    { title: 'Top 50 Emerging Startup', desc: 'Ranked among India\'s most promising startups', icon: '🌟' }
+    { title: 'Startup India Recognition', desc: 'Officially recognized by the Government of India', icon: '' },
+    { title: 'AICTE Support', desc: 'Supported by All India Council for Technical Education', icon: '' },
+    { title: 'Skill India Partnership', desc: 'Partner in national skill development initiatives', icon: '' },
+    { title: 'Top 50 Emerging Startup', desc: 'Ranked among India\'s most promising startups', icon: '' }
   ]
 
   const products = [
-    { name: 'Time Tick', category: 'Time Management SaaS', icon: '⏰' },
-    { name: 'CoreX ERP', category: 'Enterprise Resource Planning', icon: '📊' },
-    { name: 'Maze HCM', category: 'Human Capital Management', icon: '👥' },
-    { name: 'Traction', category: 'Vehicle Tracking System', icon: '🚗' },
-    { name: 'Vendor Management', category: 'Supply Chain Solution', icon: '📦' },
-    { name: 'Safety Management', category: 'Workplace Safety System', icon: '🛡️' },
-    { name: 'HSEQ System', category: 'Health, Safety, Environment & Quality', icon: '✅' },
-    { name: 'Saraswathi AI', category: 'Educational Chatbot', icon: '🤖' }
+    { name: 'Time Tick', category: 'Time Management SaaS', icon: '' },
+    { name: 'CoreX ERP', category: 'Enterprise Resource Planning', icon: '' },
+    { name: 'Maze HCM', category: 'Human Capital Management', icon: '' },
+    { name: 'Traction', category: 'Vehicle Tracking System', icon: '' },
+    { name: 'Vendor Management', category: 'Supply Chain Solution', icon: '' },
+    { name: 'Safety Management', category: 'Workplace Safety System', icon: '' },
+    { name: 'HSEQ System', category: 'Health, Safety, Environment & Quality', icon: '' },
+    { name: 'Saraswathi AI', category: 'Educational Chatbot', icon: '' }
   ]
 
   const courses = [
-    { name: 'Data Science', icon: '📊', level: 'Advanced' },
-    { name: 'Front-End Development', icon: '💻', level: 'Beginner to Advanced' },
-    { name: 'Graphic Design', icon: '🎨', level: 'Creative' },
-    { name: 'Tally (Basic)', icon: '💼', level: 'Professional' },
-    { name: 'HR Training', icon: '👥', level: 'Management' },
-    { name: 'Cybersecurity', icon: '🔒', level: 'Specialized' },
-    { name: 'Medical Coding', icon: '🏥', level: 'Healthcare' },
-    { name: 'Digital Marketing', icon: '📱', level: 'Marketing' }
+    { name: 'Data Science', icon: '', level: 'Advanced' },
+    { name: 'Front-End Development', icon: '', level: 'Beginner to Advanced' },
+    { name: 'Graphic Design', icon: '', level: 'Creative' },
+    { name: 'Tally (Basic)', icon: '', level: 'Professional' },
+    { name: 'HR Training', icon: '', level: 'Management' },
+    { name: 'Cybersecurity', icon: '', level: 'Specialized' },
+    { name: 'Medical Coding', icon: '', level: 'Healthcare' },
+    { name: 'Digital Marketing', icon: '', level: 'Marketing' }
   ]
 
   return (
-    <div className="min-h-screen relative">
-      {/* Video Background */}
-      <div className="fixed inset-0 z-0">
-        <VideoBackground />
-        <div className="absolute inset-0 bg-[#080B1A]/40 pointer-events-none" />
+    <div className="min-h-screen relative bg-gradient-to-br from-slate-50 via-white to-indigo-50 overflow-hidden"
+         style={{ 
+           background: 'linear-gradient(135deg, #f8fafc 0%, #ffffff 25%, #f1f5f9 50%, #e0e7ff 75%, #f0f4ff 100%)'
+         }}>
+      {/* Floating geometric shapes background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          className="absolute top-20 right-20 w-32 h-32 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full opacity-20"
+          animate={{
+            y: [0, -20, 0],
+            rotate: [0, 180, 360],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          style={{ 
+            filter: 'drop-shadow(0 10px 20px rgba(99, 102, 241, 0.2))',
+            transformStyle: 'preserve-3d'
+          }}
+        />
+        <motion.div
+          className="absolute bottom-20 left-20 w-24 h-24 bg-gradient-to-r from-pink-400 to-yellow-400 rounded-full opacity-30"
+          animate={{
+            y: [0, 20, 0],
+            x: [0, 10, 0],
+            rotateY: [0, 180, 360],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          style={{ 
+            filter: 'drop-shadow(0 8px 16px rgba(244, 114, 182, 0.2))',
+            transformStyle: 'preserve-3d'
+          }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/4 w-16 h-16 bg-gradient-to-r from-green-400 to-blue-500 transform rotate-45 opacity-25"
+          animate={{
+            rotate: [45, 225, 405],
+            scale: [1, 1.2, 1],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          style={{ 
+            filter: 'drop-shadow(0 6px 12px rgba(34, 197, 94, 0.2))'
+          }}
+        />
+        <motion.div
+          className="absolute top-1/3 right-1/3 w-20 h-20 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full opacity-20"
+          animate={{
+            y: [0, -30, 0],
+            x: [0, 15, 0],
+            scale: [1, 0.8, 1],
+          }}
+          transition={{
+            duration: 7,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          style={{ 
+            filter: 'drop-shadow(0 8px 16px rgba(168, 85, 247, 0.2))'
+          }}
+        />
       </div>
 
       {/* Content */}
@@ -138,38 +203,37 @@ export default function About() {
                 animate={fadeIn.animate}
                 transition={fadeIn.transition}
               >
-                <h1 className="text-4xl sm:text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-[#B4A5FF] to-purple-500">
+                <h1 className="text-4xl sm:text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
                   NAMMA WEB LLP
                 </h1>
-                <p className="text-2xl sm:text-3xl font-semibold text-[#B4A5FF] mb-4">
+                <p className="text-2xl sm:text-3xl font-semibold text-purple-600 mb-4">
                   "We create your dreams to reality"
                 </p>
-                <div className="text-lg text-gray-300 space-y-3">
-                  <div className="border-l-4 border-[#B4A5FF] pl-4">
-                    <p className="text-[#B4A5FF] font-semibold">FOUNDER & CEO</p>
-                    <p className="text-white font-bold">MALLIKARJUN S NANDYAL</p>
+                <div className="text-lg text-gray-700 space-y-3">
+                  <div className="border-l-4 border-purple-500 pl-4">
+                    <p className="text-purple-600 font-semibold">FOUNDER & CEO</p>
+                    <p className="text-gray-900 font-bold">MALLIKARJUN S NANDYAL</p>
                     <motion.a 
                       href="https://zippy-biscuit-5b2987.netlify.app/#hero"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center mt-2 px-4 py-2 bg-gradient-to-r from-[#B4A5FF] to-purple-500 text-white text-sm font-semibold rounded-lg hover:from-purple-500 hover:to-[#B4A5FF] transition-all duration-300 transform hover:scale-105"
+                      className="inline-flex items-center mt-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-sm font-semibold rounded-lg hover:from-purple-600 hover:to-blue-500 transition-all duration-300 transform hover:scale-105"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <span className="mr-2">👨‍💼</span>
                       View CEO Profile
                     </motion.a>
                   </div>
-                  <div className="border-l-4 border-[#B4A5FF] pl-4">
-                    <p className="text-[#B4A5FF] font-semibold">MANAGING DIRECTOR</p>
-                    <p className="text-white font-bold">P. DAKSHAYANI</p>
+                  <div className="border-l-4 border-purple-500 pl-4">
+                    <p className="text-purple-600 font-semibold">MANAGING DIRECTOR</p>
+                    <p className="text-gray-900 font-bold">P. DAKSHAYANI</p>
                   </div>
-                  <p className="mt-4">Headquarters: <span className="text-white font-semibold">Bengaluru, Karnataka, India</span></p>
+                  <p className="mt-4">Headquarters: <span className="text-gray-900 font-semibold">Bengaluru, Karnataka, India</span></p>
                 </div>
               </motion.div>
               
               <motion.p 
-                className="text-xl text-gray-300 max-w-4xl mx-auto mb-8 text-center"
+                className="text-xl text-gray-700 max-w-4xl mx-auto mb-8 text-center"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
@@ -186,20 +250,21 @@ export default function About() {
               >
                 <motion.a 
                   href="#achievements" 
-                  className="px-6 py-3 bg-[#B4A5FF] text-gray-900 rounded-lg hover:bg-indigo-400 transition-all font-semibold"
+                  className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all font-semibold"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   Our Achievements
                 </motion.a>
-                <motion.a 
-                  href="#services" 
-                  className="px-6 py-3 border border-[#B4A5FF] text-[#B4A5FF] rounded-lg hover:bg-[#B4A5FF] hover:text-gray-900 transition-all font-semibold"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Our Services
-                </motion.a>
+                <Link to="/services">
+                  <motion.div 
+                    className="px-6 py-3 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-all font-semibold cursor-pointer text-center"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Our Services
+                  </motion.div>
+                </Link>
               </motion.div>
             </div>
           </GlassSection>
@@ -223,8 +288,8 @@ export default function About() {
                     >
                       {s.icon}
                     </motion.div>
-                    <div className="text-2xl sm:text-3xl font-bold text-[#B4A5FF] mb-1">{s.value}</div>
-                    <div className="text-xs sm:text-sm text-gray-400">{s.label}</div>
+                    <div className="text-2xl sm:text-3xl font-bold text-blue-600 mb-1">{s.value}</div>
+                    <div className="text-xs sm:text-sm text-gray-600">{s.label}</div>
                   </div>
                 </GlassSection>
               </motion.div>
@@ -242,8 +307,8 @@ export default function About() {
           >
             <GlassSection>
               <div className="p-8 sm:p-12">
-                <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-[#B4A5FF] to-purple-500">
-                  🏆 Our Achievements & Recognition
+                <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+                  Our Achievements & Recognition
                 </h2>
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                   {achievements.map((achievement, i) => (
@@ -257,8 +322,8 @@ export default function About() {
                       whileHover={{ scale: 1.05, y: -5 }}
                     >
                       <div className="text-4xl mb-4">{achievement.icon}</div>
-                      <h3 className="text-lg font-semibold text-[#B4A5FF] mb-2">{achievement.title}</h3>
-                      <p className="text-gray-300 text-sm">{achievement.desc}</p>
+                      <h3 className="text-lg font-semibold text-blue-600 mb-2">{achievement.title}</h3>
+                      <p className="text-gray-700 text-sm">{achievement.desc}</p>
                     </motion.div>
                   ))}
                 </div>
@@ -276,7 +341,7 @@ export default function About() {
           >
             <GlassSection>
               <div className="p-8 sm:p-12">
-                <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-[#B4A5FF] to-purple-500">
+                <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
                   💡 Our SaaS Products
                 </h2>
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -291,8 +356,8 @@ export default function About() {
                       whileHover={{ scale: 1.05 }}
                     >
                       <div className="text-2xl mb-2">{product.icon}</div>
-                      <h4 className="font-semibold text-[#B4A5FF] mb-1">{product.name}</h4>
-                      <p className="text-xs text-gray-400">{product.category}</p>
+                      <h4 className="font-semibold text-blue-600 mb-1">{product.name}</h4>
+                      <p className="text-xs text-gray-600">{product.category}</p>
                     </motion.div>
                   ))}
                 </div>
@@ -310,8 +375,8 @@ export default function About() {
           >
             <GlassSection>
               <div className="p-8 sm:p-12">
-                <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-[#B4A5FF] to-purple-500">
-                  🏛️ Government Recognition & Professional Certification
+                <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+                  Government Recognition & Professional Certification
                 </h2>
                 
                 {/* BEL Collaboration Text */}
@@ -322,10 +387,10 @@ export default function About() {
                   viewport={{ once: true }}
                   transition={{ delay: 0.2 }}
                 >
-                  <p className="text-gray-300 leading-relaxed text-lg text-center max-w-4xl mx-auto">
-                    <span className="text-[#B4A5FF] font-semibold">NammaWeb</span> specializes in end-to-end web development, 
+                  <p className="text-gray-700 leading-relaxed text-lg text-center max-w-4xl mx-auto">
+                    <span className="text-blue-600 font-semibold">NammaWeb</span> specializes in end-to-end web development, 
                     application modernization, and enterprise software solutions. As part of our professional engagements, 
-                    we have collaborated with <span className="text-[#B4A5FF] font-semibold">Bharat Electronics Limited (BEL)</span> to 
+                    we have collaborated with <span className="text-blue-600 font-semibold">Bharat Electronics Limited (BEL)</span> to 
                     develop and enhance digital systems that meet stringent security, scalability, and performance standards. 
                     Our work involved full-stack development, database optimization, and UI/UX engineering tailored to BEL's 
                     organizational requirements, reinforcing our credibility in handling mission-critical government and 
@@ -365,15 +430,15 @@ export default function About() {
                   viewport={{ once: true }}
                   transition={{ delay: 0.3 }}
                 >
-                  <h3 className="text-xl font-bold text-[#B4A5FF] mb-3">🏆 Official Government Recognition</h3>
-                  <p className="text-gray-300 mb-2">
+                  <h3 className="text-xl font-bold text-blue-600 mb-3">Official Government Recognition</h3>
+                  <p className="text-gray-700 mb-2">
                     <span className="font-semibold">NAMMAWEB LLP</span> is officially recognized as a 
-                    <span className="text-[#B4A5FF] font-semibold"> Limited Liability Partnership</span> and certified startup by the
+                    <span className="text-blue-600 font-semibold"> Limited Liability Partnership</span> and certified startup by the
                   </p>
-                  <p className="text-[#B4A5FF] font-semibold text-lg">
+                  <p className="text-blue-600 font-semibold text-lg">
                     Government of India - Department for Promotion of Industry and Internal Trade
                   </p>
-                  <p className="text-gray-400 text-sm mt-2">
+                  <p className="text-gray-600 text-sm mt-2">
                     Working in 'Education' Industry and 'Skill Development' sector | Certificate No: DIPP199820
                   </p>
                 </motion.div>
@@ -387,19 +452,19 @@ export default function About() {
                   transition={{ delay: 0.4 }}
                 >
                   <div className="text-center p-4 rounded-lg bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border border-blue-500/20">
-                    <div className="text-3xl mb-2">🏛️</div>
-                    <h4 className="font-semibold text-[#B4A5FF] mb-1">Government Certified</h4>
-                    <p className="text-xs text-gray-400">Official Startup Recognition</p>
+                    <div className="text-3xl mb-2"></div>
+                    <h4 className="font-semibold text-blue-600 mb-1">Government Certified</h4>
+                    <p className="text-xs text-gray-600">Official Startup Recognition</p>
                   </div>
                   <div className="text-center p-4 rounded-lg bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20">
-                    <div className="text-3xl mb-2">🎓</div>
-                    <h4 className="font-semibold text-[#B4A5FF] mb-1">Education Sector</h4>
-                    <p className="text-xs text-gray-400">Skill Development & Training</p>
+                    <div className="text-3xl mb-2"></div>
+                    <h4 className="font-semibold text-blue-600 mb-1">Education Sector</h4>
+                    <p className="text-xs text-gray-600">Skill Development & Training</p>
                   </div>
                   <div className="text-center p-4 rounded-lg bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20">
-                    <div className="text-3xl mb-2">🔒</div>
-                    <h4 className="font-semibold text-[#B4A5FF] mb-1">Defense Projects</h4>
-                    <p className="text-xs text-gray-400">BEL Collaboration & Security</p>
+                    <div className="text-3xl mb-2"></div>
+                    <h4 className="font-semibold text-blue-600 mb-1">Defense Projects</h4>
+                    <p className="text-xs text-gray-600">BEL Collaboration & Security</p>
                   </div>
                 </motion.div>
               </div>
@@ -416,8 +481,8 @@ export default function About() {
           >
             <GlassSection>
               <div className="p-8 sm:p-12">
-                <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-[#B4A5FF] to-purple-500">
-                  🤝 Professional Events & Industry Collaborations
+                <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+                  Professional Events & Industry Collaborations
                 </h2>
                 
                 {/* BEL Collaboration Description */}
@@ -428,10 +493,10 @@ export default function About() {
                   viewport={{ once: true }}
                   transition={{ delay: 0.2 }}
                 >
-                  <p className="text-gray-300 leading-relaxed text-lg text-center max-w-4xl mx-auto">
-                    <span className="text-[#B4A5FF] font-semibold">Namma Web</span> specializes in end-to-end web development, 
+                  <p className="text-gray-700 leading-relaxed text-lg text-center max-w-4xl mx-auto">
+                    <span className="text-blue-600 font-semibold">Namma Web</span> specializes in end-to-end web development, 
                     application modernization, and enterprise software solutions. As part of our professional engagements, 
-                    we have collaborated with <span className="text-[#B4A5FF] font-semibold">Bharat Electronics Limited (BEL)</span> to 
+                    we have collaborated with <span className="text-blue-600 font-semibold">Bharat Electronics Limited (BEL)</span> to 
                     develop and enhance digital systems that meet stringent security, scalability, and performance standards. 
                     Our work involved full-stack development, database optimization, and UI/UX engineering tailored to BEL's 
                     organizational requirements, reinforcing our credibility in handling mission-critical government and 
@@ -526,24 +591,24 @@ export default function About() {
                   transition={{ delay: 0.4 }}
                 >
                   <div className="text-center p-4 rounded-lg bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border border-blue-500/20">
-                    <div className="text-3xl mb-2">🏛️</div>
-                    <h4 className="font-semibold text-[#B4A5FF] mb-1">Government Sector</h4>
-                    <p className="text-xs text-gray-400">Defense & Public Projects</p>
+                    <div className="text-3xl mb-2"></div>
+                    <h4 className="font-semibold text-blue-600 mb-1">Government Sector</h4>
+                    <p className="text-xs text-gray-600">Defense & Public Projects</p>
                   </div>
                   <div className="text-center p-4 rounded-lg bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20">
-                    <div className="text-3xl mb-2">🔒</div>
-                    <h4 className="font-semibold text-[#B4A5FF] mb-1">Security Standards</h4>
-                    <p className="text-xs text-gray-400">Mission-Critical Systems</p>
+                    <div className="text-3xl mb-2"></div>
+                    <h4 className="font-semibold text-blue-600 mb-1">Security Standards</h4>
+                    <p className="text-xs text-gray-600">Mission-Critical Systems</p>
                   </div>
                   <div className="text-center p-4 rounded-lg bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20">
-                    <div className="text-3xl mb-2">🤝</div>
-                    <h4 className="font-semibold text-[#B4A5FF] mb-1">Industry Partnerships</h4>
-                    <p className="text-xs text-gray-400">BEL & Enterprise Collaborations</p>
+                    <div className="text-3xl mb-2"></div>
+                    <h4 className="font-semibold text-blue-600 mb-1">Industry Partnerships</h4>
+                    <p className="text-xs text-gray-600">BEL & Enterprise Collaborations</p>
                   </div>
                   <div className="text-center p-4 rounded-lg bg-gradient-to-br from-yellow-500/10 to-orange-500/10 border border-yellow-500/20">
-                    <div className="text-3xl mb-2">🏆</div>
-                    <h4 className="font-semibold text-[#B4A5FF] mb-1">Professional Recognition</h4>
-                    <p className="text-xs text-gray-400">Awards & Achievements</p>
+                    <div className="text-3xl mb-2"></div>
+                    <h4 className="font-semibold text-blue-600 mb-1">Professional Recognition</h4>
+                    <p className="text-xs text-gray-600">Awards & Achievements</p>
                   </div>
                 </motion.div>
               </div>
@@ -561,10 +626,10 @@ export default function About() {
             <div className="grid md:grid-cols-2 gap-8">
               <GlassSection>
                 <div className="p-8">
-                  <h3 className="text-2xl font-bold text-[#B4A5FF] mb-4 flex items-center">
+                  <h3 className="text-2xl font-bold text-blue-600 mb-4 flex items-center">
                     🎯 Our Vision
                   </h3>
-                  <p className="text-gray-300 leading-relaxed">
+                  <p className="text-gray-700 leading-relaxed">
                     To empower businesses and individuals through AI-driven automation and innovation. 
                     We envision a future where technology bridges gaps and creates opportunities for everyone, 
                     making digital transformation accessible and affordable for all.
@@ -574,10 +639,10 @@ export default function About() {
               
               <GlassSection>
                 <div className="p-8">
-                  <h3 className="text-2xl font-bold text-[#B4A5FF] mb-4 flex items-center">
+                  <h3 className="text-2xl font-bold text-blue-600 mb-4 flex items-center">
                     🚀 Our Mission
                   </h3>
-                  <p className="text-gray-300 leading-relaxed">
+                  <p className="text-gray-700 leading-relaxed">
                     To provide cutting-edge digital solutions that drive measurable growth for our clients. 
                     We focus on security, innovation, and excellence in every project, ensuring 100% client 
                     satisfaction through our expertise in AI, automation, and digital transformation.
@@ -598,7 +663,7 @@ export default function About() {
             <GlassSection>
               <div className="p-8 sm:p-12 text-center">
                 <h2 className="text-3xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-[#B4A5FF] to-purple-500">
-                  🤝 Let's Connect
+                  Let's Connect
                 </h2>
                 <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
                   <motion.a 
@@ -609,8 +674,8 @@ export default function About() {
                     whileHover={{ y: -5 }}
                   >
                     <span className="text-2xl mb-2">🌐</span>
-                    <span className="text-[#B4A5FF] font-semibold">Website</span>
-                    <span className="text-gray-400 text-sm">nammaweb.com</span>
+                    <span className="text-blue-600 font-semibold">Website</span>
+                    <span className="text-gray-600 text-sm">nammaweb.com</span>
                   </motion.a>
                   
                   <motion.a 
@@ -619,8 +684,8 @@ export default function About() {
                     whileHover={{ y: -5 }}
                   >
                     <span className="text-2xl mb-2">📧</span>
-                    <span className="text-[#B4A5FF] font-semibold">Email</span>
-                    <span className="text-gray-400 text-sm">info@nammaweb.com</span>
+                    <span className="text-blue-600 font-semibold">Email</span>
+                    <span className="text-gray-600 text-sm">info@nammaweb.com</span>
                   </motion.a>
                   
                   <motion.a 
@@ -631,8 +696,8 @@ export default function About() {
                     whileHover={{ y: -5 }}
                   >
                     <span className="text-2xl mb-2">📱</span>
-                    <span className="text-[#B4A5FF] font-semibold">WhatsApp</span>
-                    <span className="text-gray-400 text-sm">+91 9241527429</span>
+                    <span className="text-blue-600 font-semibold">WhatsApp</span>
+                    <span className="text-gray-600 text-sm">+91 9241527429</span>
                   </motion.a>
                   
                   <motion.a 
@@ -643,8 +708,8 @@ export default function About() {
                     whileHover={{ y: -5 }}
                   >
                     <span className="text-2xl mb-2">💼</span>
-                    <span className="text-[#B4A5FF] font-semibold">LinkedIn</span>
-                    <span className="text-gray-400 text-sm">Company Page</span>
+                    <span className="text-blue-600 font-semibold">LinkedIn</span>
+                    <span className="text-gray-600 text-sm">Company Page</span>
                   </motion.a>
                   
                   <motion.a 
@@ -655,7 +720,7 @@ export default function About() {
                     whileHover={{ y: -5 }}
                   >
                     <span className="text-2xl mb-2">📺</span>
-                    <span className="text-[#B4A5FF] font-semibold">YouTube</span>
+                    <span className="text-blue-600 font-semibold">YouTube</span>
                     <span className="text-gray-400 text-sm">@NammaWeb1</span>
                   </motion.a>
                 </div>

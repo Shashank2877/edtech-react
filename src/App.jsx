@@ -28,7 +28,7 @@ export default function App(){
   }, [navigate]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-900 text-gray-100 relative overflow-hidden">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 via-white to-purple-50 text-gray-900 relative overflow-hidden">
       <DynamicGeometricBackground />
       
       <Navbar />
