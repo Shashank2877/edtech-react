@@ -7,7 +7,7 @@ export default function Services() {
   const services = [
     {
       title: "SEO & Search Engine Marketing",
-      icon: "🔍",
+      icon: "",
       items: [
         "Complete keyword research and SEO strategy development",
         "On-page SEO optimization for higher Google rankings",
@@ -19,7 +19,7 @@ export default function Services() {
     },
     {
       title: "Web Development & Design",
-      icon: "💻",
+      icon: "",
       items: [
         "Build user-friendly, responsive, custom websites optimized for all devices",
         "Seamless browsing experience with modern design principles",
@@ -29,7 +29,7 @@ export default function Services() {
     },
     {
       title: "E-commerce Solutions",
-      icon: "🛍️",
+      icon: "",
       items: [
         "Creation of engaging e-commerce websites",
         "SEO optimization for product/category pages",
@@ -39,7 +39,7 @@ export default function Services() {
     },
     {
       title: "Website Maintenance",
-      icon: "🔧",
+      icon: "",
       items: [
         "Ongoing updates, security, performance monitoring",
         "SEO audits, publishing blog posts",
@@ -49,7 +49,7 @@ export default function Services() {
     },
     {
       title: "Advertising Solutions",
-      icon: "📢",
+      icon: "",
       items: [
         "Plan and execute strategies to enhance brand visibility",
         "Create promotional materials (online & offline)",
@@ -58,7 +58,7 @@ export default function Services() {
     },
     {
       title: "Data Security",
-      icon: "🔒",
+      icon: "",
       items: [
         "Secure hosting and encrypted communications",
         "Vulnerability assessments",
@@ -67,11 +67,35 @@ export default function Services() {
     },
     {
       title: "Branding & Design",
-      icon: "🎨",
+      icon: "",
       items: [
         "Logo design, graphics, multimedia",
         "End-to-end brand identity systems",
         "Visual asset creation and management"
+      ]
+    },
+    {
+      title: "Automation",
+      icon: "",
+      items: [
+        "Business process automation and workflow optimization",
+        "Automated testing and deployment pipelines (CI/CD)",
+        "Robotic Process Automation (RPA) implementation",
+        "Task automation and scheduled operations",
+        "Email marketing automation and customer journey mapping",
+        "Inventory and supply chain automation"
+      ]
+    },
+    {
+      title: "AI driven Solutions",
+      icon: "",
+      items: [
+        "Custom AI chatbots and virtual assistants",
+        "Machine learning model development and deployment",
+        "Predictive analytics and business intelligence",
+        "Natural language processing (NLP) solutions",
+        "Computer vision and image recognition systems",
+        "AI-powered recommendation engines and personalization"
       ]
     }
   ];
