@@ -376,97 +376,21 @@ export default function About() {
             <GlassSection>
               <div className="p-8 sm:p-12">
                 <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
-                  Government Recognition & Professional Certification
+                  Internships & Training Opportunities
                 </h2>
-                
-                {/* BEL Collaboration Text */}
                 <motion.div 
-                  className="mb-12 p-6 rounded-xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20"
+                  className="mb-12 p-6 rounded-xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 text-center"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.2 }}
                 >
-                  <p className="text-gray-700 leading-relaxed text-lg text-center max-w-4xl mx-auto">
-                    <span className="text-blue-600 font-semibold">NammaWeb</span> specializes in end-to-end web development, 
-                    application modernization, and enterprise software solutions. As part of our professional engagements, 
-                    we have collaborated with <span className="text-blue-600 font-semibold">Bharat Electronics Limited (BEL)</span> to 
-                    develop and enhance digital systems that meet stringent security, scalability, and performance standards. 
-                    Our work involved full-stack development, database optimization, and UI/UX engineering tailored to BEL's 
-                    organizational requirements, reinforcing our credibility in handling mission-critical government and 
-                    defense-sector projects.
+                  <p className="text-gray-700 leading-relaxed text-lg max-w-3xl mx-auto">
+                    <strong className="text-blue-600">We are providing internships and training opportunities for Bharat Electronics Limited (BEL) and First Grade College</strong>
                   </p>
+                  <p className="text-gray-500 mt-4">For more information, please contact us using the form below or reach out to our team directly.</p>
                 </motion.div>
-
-                {/* Government Certificate Display */}
-                <div className="flex justify-center mb-8">
-                  <motion.div
-                    className="group cursor-pointer max-w-2xl"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.1 }}
-                    whileHover={{ scale: 1.02 }}
-                  >
-                    <div className="relative overflow-hidden rounded-xl border-2 border-indigo-500/30 bg-white p-6 shadow-2xl">
-                      <img 
-                        src="/government-certificate.jpg" 
-                        alt="Certificate of Recognition - NAMMAWEB LLP from Government of India Department for Promotion of Industry and Internal Trade"
-                        className="w-full h-auto object-contain transition-transform duration-300 group-hover:scale-105"
-                        onError={(e) => {
-                          e.target.src = '/startup-cert.png';
-                        }}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
-                    </div>
-                  </motion.div>
-                </div>
-
-                {/* Certification Details */}
-                <motion.div 
-                  className="text-center mb-8 p-6 rounded-xl bg-gradient-to-br from-blue-500/10 to-indigo-500/10 border border-blue-500/20"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 }}
-                >
-                  <h3 className="text-xl font-bold text-blue-600 mb-3">Official Government Recognition</h3>
-                  <p className="text-gray-700 mb-2">
-                    <span className="font-semibold">NAMMAWEB LLP</span> is officially recognized as a 
-                    <span className="text-blue-600 font-semibold"> Limited Liability Partnership</span> and certified startup by the
-                  </p>
-                  <p className="text-blue-600 font-semibold text-lg">
-                    Government of India - Department for Promotion of Industry and Internal Trade
-                  </p>
-                  <p className="text-gray-600 text-sm mt-2">
-                    Working in 'Education' Industry and 'Skill Development' sector | Certificate No: DIPP199820
-                  </p>
-                </motion.div>
-
-                {/* Achievement Highlights */}
-                <motion.div 
-                  className="grid md:grid-cols-3 gap-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.4 }}
-                >
-                  <div className="text-center p-4 rounded-lg bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border border-blue-500/20">
-                    <div className="text-3xl mb-2"></div>
-                    <h4 className="font-semibold text-blue-600 mb-1">Government Certified</h4>
-                    <p className="text-xs text-gray-600">Official Startup Recognition</p>
-                  </div>
-                  <div className="text-center p-4 rounded-lg bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20">
-                    <div className="text-3xl mb-2"></div>
-                    <h4 className="font-semibold text-blue-600 mb-1">Education Sector</h4>
-                    <p className="text-xs text-gray-600">Skill Development & Training</p>
-                  </div>
-                  <div className="text-center p-4 rounded-lg bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20">
-                    <div className="text-3xl mb-2"></div>
-                    <h4 className="font-semibold text-blue-600 mb-1">Defense Projects</h4>
-                    <p className="text-xs text-gray-600">BEL Collaboration & Security</p>
-                  </div>
-                </motion.div>
+                {/* Optional: Add a simple contact form here if desired */}
               </div>
             </GlassSection>
           </motion.section>
@@ -590,26 +514,7 @@ export default function About() {
                   viewport={{ once: true }}
                   transition={{ delay: 0.4 }}
                 >
-                  <div className="text-center p-4 rounded-lg bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border border-blue-500/20">
-                    <div className="text-3xl mb-2"></div>
-                    <h4 className="font-semibold text-blue-600 mb-1">Government Sector</h4>
-                    <p className="text-xs text-gray-600">Defense & Public Projects</p>
-                  </div>
-                  <div className="text-center p-4 rounded-lg bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20">
-                    <div className="text-3xl mb-2"></div>
-                    <h4 className="font-semibold text-blue-600 mb-1">Security Standards</h4>
-                    <p className="text-xs text-gray-600">Mission-Critical Systems</p>
-                  </div>
-                  <div className="text-center p-4 rounded-lg bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20">
-                    <div className="text-3xl mb-2"></div>
-                    <h4 className="font-semibold text-blue-600 mb-1">Industry Partnerships</h4>
-                    <p className="text-xs text-gray-600">BEL & Enterprise Collaborations</p>
-                  </div>
-                  <div className="text-center p-4 rounded-lg bg-gradient-to-br from-yellow-500/10 to-orange-500/10 border border-yellow-500/20">
-                    <div className="text-3xl mb-2"></div>
-                    <h4 className="font-semibold text-blue-600 mb-1">Professional Recognition</h4>
-                    <p className="text-xs text-gray-600">Awards & Achievements</p>
-                  </div>
+                  {/* Section intentionally left blank until official MoU announcement */}
                 </motion.div>
               </div>
             </GlassSection>
@@ -679,13 +584,14 @@ export default function About() {
                   </motion.a>
                   
                   <motion.a 
-                    href="mailto:info@nammaweb.com"
+                    href="mailto:Mallikarjunsnandyal@nammaweb.com"
                     className="flex flex-col items-center p-4 rounded-lg bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20 hover:scale-105 transition-transform"
                     whileHover={{ y: -5 }}
                   >
                     <span className="text-2xl mb-2">📧</span>
                     <span className="text-blue-600 font-semibold">Email</span>
-                    <span className="text-gray-600 text-sm">info@nammaweb.com</span>
+                    <span className="text-gray-600 text-sm">Mallikarjunsnandyal
+                      @nammaweb.com</span>
                   </motion.a>
                   
                   <motion.a 

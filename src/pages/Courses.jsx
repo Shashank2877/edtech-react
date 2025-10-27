@@ -209,49 +209,53 @@ export default function Courses() {
             </motion.div>
 
             {/* Main Features */}
-            <div className="grid md:grid-cols-2 gap-8 mb-12">
-              <GlassCard className="p-6 rounded-xl hover:scale-105 transition-transform duration-300">
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.6 }}
-                >
+            <div className="space-y-8 mb-12">
+              {/* Web Academy Section */}
+              <motion.div
+                className="text-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+              >
+                <GlassCard className="p-8 rounded-xl inline-block">
                   <h3 className="text-2xl font-bold mb-4 text-gray-900">Web Academy</h3>
                   <p className="text-gray-700 mb-4">Learn, Create, and Certify with our AI-Powered Learning Tools</p>
                   <div className="bg-gray-100 p-4 rounded-lg">
                     <p className="text-yellow-600 font-semibold mb-2">Coming soon</p>
                   </div>
-                </motion.div>
-              </GlassCard>
+                </GlassCard>
+              </motion.div>
 
-              <GlassCard className="p-6 rounded-xl hover:scale-105 transition-transform duration-300">
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.8 }}
-                >
+              {/* Project-Based Learning Section */}
+              <motion.div
+                className="text-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 }}
+              >
+                <GlassCard className="p-8 rounded-xl inline-block">
                   <h3 className="text-2xl font-bold mb-4 text-gray-900">Project-Based Learning</h3>
                   <p className="text-gray-700">
                     Students learn by building real projects, from simple websites to complex applications, ensuring practical skills.
                   </p>
-                </motion.div>
-              </GlassCard>
-            </div>
+                </GlassCard>
+              </motion.div>
 
-            {/* AI Assistant Section */}
-            <motion.div
-              className="text-center mb-12"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1 }}
-            >
-              <GlassCard className="p-8 rounded-xl inline-block">
-                <h3 className="text-2xl font-bold mb-4 text-gray-900">AI-Powered Assistance</h3>
-                <p className="text-gray-700">
-                  Our intelligent tutoring system provides personalized help and instant feedback to accelerate learning.
-                </p>
-              </GlassCard>
-            </motion.div>
+              {/* AI Assistant Section */}
+              <motion.div
+                className="text-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1 }}
+              >
+                <GlassCard className="p-8 rounded-xl inline-block">
+                  <h3 className="text-2xl font-bold mb-4 text-gray-900">AI-Powered Assistance</h3>
+                  <p className="text-gray-700">
+                    Our intelligent tutoring system provides personalized help and instant feedback to accelerate learning.
+                  </p>
+                </GlassCard>
+              </motion.div>
+            </div>
           </GlassSection>
         </motion.div>
 
