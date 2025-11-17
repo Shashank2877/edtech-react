@@ -553,7 +553,7 @@ Once you have a basic chatbot working, you can enhance it with:
     tags: ["Chatbot", "NLP", "Python", "AI", "Tutorial"]
   }
 ];
-aga
+
 // Certification Programs Data
 export const certificationPrograms = [
   {

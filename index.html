@@ -26,6 +26,23 @@
   </head>
   <body>
     <div id="root"></div>
+    
+    <!-- Error handling for IIS deployment -->
+    <script>
+      // Global error handler for undefined variables
+      window.addEventListener('error', function(e) {
+        console.error('Global Error:', e.error, e.filename, e.lineno, e.colno);
+        if (e.error && e.error.message && e.error.message.includes('is not defined')) {
+          console.error('Undefined variable detected. This might be due to build configuration issues.');
+        }
+      });
+      
+      // Handle unhandled promise rejections
+      window.addEventListener('unhandledrejection', function(e) {
+        console.error('Unhandled Promise Rejection:', e.reason);
+      });
+    </script>
+    
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

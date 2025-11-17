@@ -11,14 +11,11 @@ export default defineConfig({
   build: {
     // Output directory
     outDir: 'dist',
-    // Enable code splitting
+    // Disable code splitting to prevent reference errors
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
-          motion: ['framer-motion'],
-          router: ['react-router-dom']
-        },
+        // Single chunk to avoid cross-chunk variable references
+        manualChunks: undefined,
         // Ensure consistent asset naming for IIS
         assetFileNames: 'assets/[name]-[hash][extname]',
         chunkFileNames: 'assets/[name]-[hash].js',
@@ -27,18 +24,16 @@ export default defineConfig({
     },
     // Optimize chunk size
     chunkSizeWarningLimit: 1000,
-    // Enable minification
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true
-      }
-    },
-    // Ensure source maps are generated for debugging
-    sourcemap: false,
+    // Use esbuild for faster builds and better compatibility
+    minify: 'esbuild',
+    // Enable source maps for debugging
+    sourcemap: true,
     // Target modern browsers but ensure compatibility
-    target: 'es2015'
+    target: 'es2018',
+    // Ensure all dependencies are bundled
+    commonjsOptions: {
+      include: [/node_modules/]
+    }
   },
   
   // Development server optimizations
