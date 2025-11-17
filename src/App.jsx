@@ -6,6 +6,9 @@ import About from './pages/About'
 import Contact from './pages/Contact'
 import Services from './pages/Services'
 import Courses from './pages/Courses'
+import Certificate from './pages/Certificate'
+import School from './pages/School'
+import ConsultantCharges from './pages/ConsultantCharges'
 import Career from './pages/Career'
 import Navbar from './components/Navbar'
 import DynamicGeometricBackground from './components/DynamicGeometricBackground'
@@ -48,6 +51,9 @@ export default function App(){
               <Route path="/contact" element={<Contact/>} />
               <Route path="/services" element={<Services/>} />
               <Route path="/courses" element={<Courses/>} />
+              <Route path="/certificate" element={<Certificate/>} />
+              <Route path="/school" element={<School/>} />
+              <Route path="/consultant" element={<ConsultantCharges/>} />
               <Route path="/career" element={<Career/>} />
             </Routes>
           </motion.div>

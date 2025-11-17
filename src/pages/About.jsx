@@ -635,6 +635,41 @@ export default function About() {
           </motion.section>
         </section>
       </div>
+      {/* Startup India Certificate Section - Styled as per screenshot */}
+      <section className="flex flex-col items-center justify-center py-16 px-4">
+        <div className="bg-white rounded-2xl shadow-2xl p-6 mb-8" style={{ maxWidth: 600 }}>
+          <img
+            src="/startup-cert.png"
+            alt="Startup India Certificate of Recognition"
+            className="w-full rounded-xl border border-blue-200 shadow-lg"
+            style={{ background: '#fff' }}
+          />
+        </div>
+        <div className="w-full max-w-2xl bg-blue-50 rounded-2xl shadow-lg p-6 mb-8 text-center border border-blue-200">
+          <h2 className="text-xl md:text-2xl font-bold text-blue-700 mb-2">Official Government Recognition</h2>
+          <p className="text-gray-800 mb-2">
+            <span className="font-bold">NAMMAWEB LLP</span> is officially recognized as a <span className="font-semibold text-blue-700">Limited Liability Partnership</span> and certified startup by the <br />
+            <span className="font-semibold text-blue-700">Government of India - Department for Promotion of Industry and Internal Trade</span>
+          </p>
+          <p className="text-gray-700 text-sm mb-2">
+            Working in 'Education' Industry and 'Skill Development' sector | Certificate No: <span className="font-semibold">DIPP199820</span>
+          </p>
+        </div>
+        <div className="flex flex-col md:flex-row gap-4 w-full max-w-2xl mb-12 justify-center">
+          <div className="flex-1 bg-blue-100 rounded-xl p-4 text-center border border-blue-200 shadow">
+            <div className="font-semibold text-blue-700 mb-1">Government Certified</div>
+            <div className="text-xs text-gray-700">Official Startup Recognition</div>
+          </div>
+          <div className="flex-1 bg-green-100 rounded-xl p-4 text-center border border-green-200 shadow">
+            <div className="font-semibold text-green-700 mb-1">Education Sector</div>
+            <div className="text-xs text-gray-700">Skill Development &amp; Training</div>
+          </div>
+          <div className="flex-1 bg-purple-100 rounded-xl p-4 text-center border border-purple-200 shadow">
+            <div className="font-semibold text-purple-700 mb-1">Defense Projects</div>
+            <div className="text-xs text-gray-700">BEL Collaboration &amp; Security</div>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   )

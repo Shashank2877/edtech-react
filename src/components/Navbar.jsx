@@ -52,27 +52,85 @@ export default function Navbar() {
   // Detect if current page is home
   const isHomePage = location.pathname === '/'
 
+  // Check if any modal is open by looking for modal backdrop elements
+  useEffect(() => {
+    const checkForModals = () => {
+      // Look for modal backdrop - check for fixed positioning with backdrop
+      const modals = document.querySelectorAll('.fixed.inset-0')
+      let hasModal = false
+      
+      modals.forEach(element => {
+        // Check if it has backdrop blur or z-50 (modal indicators)
+        if (element.classList.contains('backdrop-blur-sm') || 
+            element.classList.contains('z-50') ||
+            element.style.backgroundColor?.includes('rgba(0, 0, 0')) {
+          hasModal = true
+        }
+      })
+      
+      if (hasModal) {
+        setVisible(false)
+      } else if (!hasModal && isHomePage) {
+        // On home page, always show navbar when no modal
+        setVisible(true)
+      }
+    }
+
+    // Check immediately and set up observer
+    checkForModals()
+    
+    // Use MutationObserver to detect when modals are added/removed
+    const observer = new MutationObserver(checkForModals)
+    observer.observe(document.body, { 
+      childList: true, 
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['class', 'style']
+    })
+
+    return () => observer.disconnect()
+  }, [isHomePage])
+
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY
-      setScrolled(currentScrollY > 50)
       
-      // Different scroll behavior for home vs other pages
+      if (currentScrollY > 50) {
+        setScrolled(true)
+      } else {
+        setScrolled(false)
+      }
+
+      // Check if modal is open - if so, don't change visibility based on scroll
+      const modals = document.querySelectorAll('.fixed.inset-0')
+      let hasModal = false
+      
+      modals.forEach(element => {
+        if (element.classList.contains('backdrop-blur-sm') || 
+            element.classList.contains('z-50') ||
+            element.style.backgroundColor?.includes('rgba(0, 0, 0')) {
+          hasModal = true
+        }
+      })
+      
+      if (hasModal) {
+        setVisible(false)
+        return
+      }
+
+      // Only apply scroll-based hiding on non-home pages
       if (!isHomePage) {
-        // Other pages: hide navbar on scroll down
         if (currentScrollY > lastScrollY && currentScrollY > 100) {
           setVisible(false)
         } else {
           setVisible(true)
         }
-      } else {
-        // Home page: always keep navbar visible
-        setVisible(true)
       }
+
       setLastScrollY(currentScrollY)
     }
 
-    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [lastScrollY, isHomePage])
 
@@ -203,6 +261,9 @@ export default function Navbar() {
                 <NavItem to="/about" isHomePage={isHomePage}>ABOUT</NavItem>
                 <NavItem to="/services" isHomePage={isHomePage}>SERVICES</NavItem>
                 <NavItem to="/courses" isHomePage={isHomePage}>COURSES</NavItem>
+                <NavItem to="/certificate" isHomePage={isHomePage}>CERTIFICATE</NavItem>
+                <NavItem to="/school" isHomePage={isHomePage}>SCHOOL</NavItem>
+                <NavItem to="/consultant" isHomePage={isHomePage}>CONSULTANT</NavItem>
                 <NavItem to="/career" isHomePage={isHomePage}>CAREER</NavItem>
                 <NavItem to="/contact" isHomePage={isHomePage}>CONTACT</NavItem>
               </div>
@@ -245,6 +306,9 @@ export default function Navbar() {
                     { to: '/about', label: 'ABOUT' },
                     { to: '/services', label: 'SERVICES' },
                     { to: '/courses', label: 'COURSES' },
+                    { to: '/certificate', label: 'CERTIFICATE' },
+                    { to: '/school', label: 'SCHOOL' },
+                    { to: '/consultant', label: 'CONSULTANT' },
                     { to: '/career', label: 'CAREER' },
                     { to: '/contact', label: 'CONTACT' }
                   ].map((item, index) => (

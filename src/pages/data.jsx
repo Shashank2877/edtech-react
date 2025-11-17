@@ -553,3 +553,175 @@ Once you have a basic chatbot working, you can enhance it with:
     tags: ["Chatbot", "NLP", "Python", "AI", "Tutorial"]
   }
 ];
+aga
+// Certification Programs Data
+export const certificationPrograms = [
+  {
+    id: 1,
+    title: 'AI in Digital Marketing',
+    description: 'One-day intensive certification program in AI-powered digital marketing strategies.',
+    extendedDescription: 'Get certified in AI-driven digital marketing in just one day. Learn how to leverage AI tools for SEO, content creation, social media automation, and campaign optimization.',
+    duration: '1 Day',
+    price: 699,
+    bulkPrice: { count: 6, price: 999 },
+    icon: '📱',
+    image: '/digital-marketing-course.jpg',
+    students: '500+',
+    rating: '4.8',
+    features: [
+      'AI-powered SEO tools and techniques',
+      'Automated content generation',
+      'Social media marketing automation',
+      'AI analytics and insights',
+      'Campaign optimization with AI',
+      'Certificate of completion'
+    ],
+    syllabus: [
+      'Introduction to AI in Marketing',
+      'AI SEO Tools Workshop',
+      'Content Generation with AI',
+      'Social Media Automation',
+      'Analytics and Reporting'
+    ]
+  },
+  {
+    id: 2,
+    title: 'AI in Web Development',
+    description: 'One-day certification program for AI-enhanced web development.',
+    extendedDescription: 'Master AI integration in web development. Learn to build intelligent websites with AI-powered features, chatbots, and smart user experiences.',
+    duration: '1 Day',
+    price: 699,
+    bulkPrice: { count: 6, price: 999 },
+    icon: '💻',
+    image: 'https://images.unsplash.com/photo-1593720213428-28a5b9e94613?q=80&w=1200&auto=format&fit=crop',
+    students: '450+',
+    rating: '4.7',
+    features: [
+      'AI chatbot integration',
+      'Personalization algorithms',
+      'Smart recommendation systems',
+      'AI-powered search functionality',
+      'Automated testing with AI',
+      'Industry-recognized certificate'
+    ],
+    syllabus: [
+      'AI Integration Basics',
+      'Building AI Chatbots',
+      'Recommendation Engines',
+      'Smart Search Implementation',
+      'AI Testing Tools'
+    ]
+  },
+  {
+    id: 3,
+    title: 'AI in App Development',
+    description: 'One-day certification in building intelligent mobile applications.',
+    extendedDescription: 'Learn to develop AI-powered mobile applications. Create apps with machine learning capabilities, voice recognition, and intelligent features.',
+    duration: '1 Day',
+    price: 699,
+    bulkPrice: { count: 6, price: 999 },
+    icon: '📱',
+    image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?q=80&w=1200&auto=format&fit=crop',
+    students: '380+',
+    rating: '4.6',
+    features: [
+      'Mobile AI integration',
+      'Voice recognition features',
+      'Image processing with AI',
+      'Predictive user behavior',
+      'AI-powered notifications',
+      'Professional certification'
+    ],
+    syllabus: [
+      'Mobile AI Frameworks',
+      'Voice and Speech Recognition',
+      'Computer Vision Basics',
+      'ML Kit Integration',
+      'Deployment Strategies'
+    ]
+  },
+  {
+    id: 4,
+    title: 'AI for Business Analytics',
+    description: 'One-day certification in AI-driven business intelligence and analytics.',
+    extendedDescription: 'Transform your business analytics with AI. Learn predictive modeling, automated reporting, and data-driven decision making.',
+    duration: '1 Day',
+    price: 699,
+    bulkPrice: { count: 6, price: 999 },
+    icon: '📊',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop',
+    students: '420+',
+    rating: '4.8',
+    features: [
+      'Predictive analytics models',
+      'Automated reporting systems',
+      'Data visualization with AI',
+      'Business forecasting',
+      'Real-time insights dashboard',
+      'Certification included'
+    ],
+    syllabus: [
+      'AI Analytics Overview',
+      'Predictive Modeling',
+      'Automated Dashboards',
+      'Forecasting Techniques',
+      'Real-world Case Studies'
+    ]
+  },
+  {
+    id: 5,
+    title: 'AI Content Creation',
+    description: 'One-day certification in AI-powered content creation and copywriting.',
+    extendedDescription: 'Master AI tools for content creation. Learn to generate high-quality content, automate copywriting, and optimize content strategy with AI.',
+    duration: '1 Day',
+    price: 699,
+    bulkPrice: { count: 6, price: 999 },
+    icon: '✍️',
+    image: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1200&auto=format&fit=crop',
+    students: '550+',
+    rating: '4.9',
+    features: [
+      'AI writing tools mastery',
+      'Content optimization techniques',
+      'SEO-friendly content generation',
+      'Multi-platform content creation',
+      'Content strategy with AI',
+      'Official certificate'
+    ],
+    syllabus: [
+      'AI Content Tools Overview',
+      'Copywriting with AI',
+      'SEO Content Optimization',
+      'Content Calendar Automation',
+      'Quality Control & Editing'
+    ]
+  },
+  {
+    id: 6,
+    title: 'AI in Customer Service',
+    description: 'One-day certification in AI-powered customer service solutions.',
+    extendedDescription: 'Revolutionize customer service with AI. Learn to implement chatbots, automated support systems, and intelligent customer engagement tools.',
+    duration: '1 Day',
+    price: 699,
+    bulkPrice: { count: 6, price: 999 },
+    icon: '🤝',
+    image: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=1200&auto=format&fit=crop',
+    students: '400+',
+    rating: '4.7',
+    features: [
+      'AI chatbot development',
+      'Automated ticket systems',
+      'Sentiment analysis tools',
+      'Customer behavior prediction',
+      'Multi-channel support automation',
+      'Certificate of expertise'
+    ],
+    syllabus: [
+      'Customer Service AI Basics',
+      'Chatbot Implementation',
+      'Sentiment Analysis',
+      'Automation Workflows',
+      'Performance Metrics'
+    ]
+  }
+];

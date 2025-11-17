@@ -10,6 +10,7 @@ export default function CourseRegistrationModal({ course, onClose }) {
     selectedCourse: course?.title || '',
     selectedMode: '',
     selectedPricingTier: '',
+    certificateQuantity: '1', // For certification programs
   })
 
   const [selectedPrice, setSelectedPrice] = useState(0)
@@ -17,6 +18,9 @@ export default function CourseRegistrationModal({ course, onClose }) {
   const [selectedTierInfo, setSelectedTierInfo] = useState(null)
   const [isProcessingPayment, setIsProcessingPayment] = useState(false)
   const [paymentStep, setPaymentStep] = useState('form') // 'form', 'success'
+
+  // Check if this is a certification program
+  const isCertificationProgram = course?.bulkPrice !== undefined
 
   // Tier information data
   const tierDetails = {
@@ -89,6 +93,11 @@ export default function CourseRegistrationModal({ course, onClose }) {
         ...prev,
         selectedCourse: course.title
       }))
+      
+      // Set initial price for certification programs
+      if (course.bulkPrice !== undefined) {
+        setSelectedPrice(course.price) // Default to single certificate price
+      }
     }
   }, [course])
 
@@ -132,13 +141,26 @@ export default function CourseRegistrationModal({ course, onClose }) {
       }
       setSelectedPrice(tierPrices[value] || 0)
     }
+
+    // Update price for certification programs based on quantity
+    if (name === 'certificateQuantity' && isCertificationProgram) {
+      if (value === '6') {
+        setSelectedPrice(course.bulkPrice.price)
+      } else {
+        setSelectedPrice(course.price)
+      }
+    }
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    // Validate that pricing tier is selected
-    if (!formData.selectedPricingTier) {
+    // Validate that pricing tier or certificate quantity is selected
+    if (!isCertificationProgram && !formData.selectedPricingTier) {
       alert('Please select a pricing tier')
+      return
+    }
+    if (isCertificationProgram && !formData.certificateQuantity) {
+      alert('Please select a certificate package')
       return
     }
     
@@ -151,7 +173,15 @@ export default function CourseRegistrationModal({ course, onClose }) {
     
     try {
       // Redirect to WhatsApp for payment discussion
-      const courseDetails = `Course: ${course?.title}
+      const courseDetails = isCertificationProgram
+        ? `Certificate Program: ${course?.title}
+Package: ${formData.certificateQuantity === '6' ? '6 Certificates Bundle' : 'Single Certificate'}
+Price: ₹${selectedPrice}
+Name: ${formData.fullName}
+Phone: ${formData.phoneNumber}
+Email: ${formData.emailAddress}
+Mode: ${formData.selectedMode}`
+        : `Course: ${course?.title}
 Tier: ${formData.selectedPricingTier}
 Price: ₹${selectedPrice}
 Name: ${formData.fullName}
@@ -159,7 +189,7 @@ Phone: ${formData.phoneNumber}
 Email: ${formData.emailAddress}
 Mode: ${formData.selectedMode}`
       
-      const whatsappMessage = encodeURIComponent(`Hi! I'm interested in enrolling for the following course:
+      const whatsappMessage = encodeURIComponent(`Hi! I'm interested in enrolling for the following:
 
 ${courseDetails}
 
@@ -346,8 +376,119 @@ Please help me with the enrollment process and payment details.`)
               </select>
             </div>
 
+            {/* Pricing Tier Selection OR Certificate Quantity */}
+            {isCertificationProgram ? (
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Select Certificate Package*
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <motion.div
+                    className={`relative border-2 rounded-lg p-4 cursor-pointer transition-all duration-200 ${
+                      formData.certificateQuantity === '1'
+                        ? 'border-green-500 bg-gradient-to-br from-green-900/50 to-emerald-900/50'
+                        : 'border-gray-600 bg-gray-800/50 hover:border-gray-500'
+                    }`}
+                    onClick={() => {
+                      setFormData(prev => ({ ...prev, certificateQuantity: '1' }))
+                      setSelectedPrice(course.price)
+                    }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <div className="text-center">
+                      <h4 className="font-semibold text-white mb-1">Single Certificate</h4>
+                      <div className="text-2xl font-bold text-green-400 mb-2">
+                        ₹{course.price}
+                      </div>
+                      <p className="text-xs text-gray-400">Perfect for individual learners</p>
+                    </div>
+                  </motion.div>
+
+                  <motion.div
+                    className={`relative border-2 rounded-lg p-4 cursor-pointer transition-all duration-200 ${
+                      formData.certificateQuantity === '6'
+                        ? 'border-yellow-500 bg-gradient-to-br from-yellow-900/50 to-orange-900/50'
+                        : 'border-gray-600 bg-gray-800/50 hover:border-gray-500'
+                    }`}
+                    onClick={() => {
+                      setFormData(prev => ({ ...prev, certificateQuantity: '6' }))
+                      setSelectedPrice(course.bulkPrice.price)
+                    }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                      SAVE ₹{(course.price * 6) - course.bulkPrice.price}
+                    </div>
+                    <div className="text-center">
+                      <h4 className="font-semibold text-white mb-1">6 Certificates Bundle</h4>
+                      <div className="text-2xl font-bold text-yellow-400 mb-2">
+                        ₹{course.bulkPrice.price}
+                      </div>
+                      <p className="text-xs text-gray-400">Best value for groups/teams</p>
+                    </div>
+                  </motion.div>
+                </div>
+                <p className="text-xs text-gray-400 mt-2">
+                  <span className="text-green-400">✓</span> Industry-recognized certification
+                </p>
+              </div>
+            ) : (
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Select Pricing Tier*
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {Object.entries(course?.pricing || {}).map(([tierName, price]) => {
+                    const tierKey = tierName.charAt(0).toUpperCase() + tierName.slice(1)
+                    const tierInfo = tierDetails[tierKey]
+                    if (!tierInfo) return null
+
+                    return (
+                      <motion.div
+                        key={tierName}
+                        className={`relative border-2 rounded-lg p-3 cursor-pointer transition-all duration-200 ${
+                          formData.selectedPricingTier === tierKey
+                            ? 'border-indigo-500 bg-gradient-to-br from-indigo-900/50 to-purple-900/50'
+                            : 'border-gray-600 bg-gray-800/50 hover:border-gray-500'
+                        }`}
+                        onClick={() => {
+                          setFormData(prev => ({ ...prev, selectedPricingTier: tierKey }))
+                          setSelectedPrice(price)
+                        }}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        <div className="text-center">
+                          <h4 className="font-semibold text-white mb-1">{tierKey}</h4>
+                          <div className="text-2xl font-bold text-indigo-400 mb-2">
+                            ₹{price.toLocaleString()}
+                          </div>
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              setSelectedTierInfo(tierInfo)
+                              setShowTierModal(true)
+                            }}
+                            className="text-xs text-indigo-300 hover:text-indigo-200 underline"
+                          >
+                            View Details
+                          </button>
+                        </div>
+                      </motion.div>
+                    )
+                  })}
+                </div>
+                <p className="text-xs text-gray-400 mt-2">
+                  <span className="text-red-400">* Non-refundable</span>
+                </p>
+              </div>
+            )}
+
             {/* Pricing Tier Selection */}
-            <div>
+            <div style={{ display: 'none' }}>
               <label className="block text-sm font-medium text-gray-300 mb-2">
                 Select Pricing Tier*
               </label>
@@ -426,22 +567,27 @@ Please help me with the enrollment process and payment details.`)
             >
               <div className="space-y-2 text-sm text-green-300">
                 <div className="flex justify-between">
-                  <span>Course Fee:</span>
+                  <span>{isCertificationProgram ? 'Certificate Fee:' : 'Course Fee:'}</span>
                   <span>₹{selectedPrice > 0 ? selectedPrice.toLocaleString() : '0'}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span>Consultation Charge:</span>
-                  <span>₹499</span>
-                </div>
+                {!isCertificationProgram && (
+                  <div className="flex justify-between">
+                    <span>Consultation Charge:</span>
+                    <span>₹499</span>
+                  </div>
+                )}
                 <div className="border-t border-green-600/50 pt-2">
                   <div className="flex justify-between font-semibold text-lg text-green-300">
                     <span>Total Amount:</span>
-                    <span>₹{selectedPrice > 0 ? (selectedPrice + 499).toLocaleString() : '499'}</span>
+                    <span>₹{selectedPrice > 0 ? (isCertificationProgram ? selectedPrice : selectedPrice + 499).toLocaleString() : (isCertificationProgram ? '0' : '499')}</span>
                   </div>
                 </div>
               </div>
               <p className="text-xs text-green-400 mt-2 text-center">
-                {course?.offlineAvailable ? 'Offline classes available' : 'Online learning with lifetime access'}
+                {isCertificationProgram 
+                  ? 'One-day intensive certification program' 
+                  : (course?.offlineAvailable ? 'Offline classes available' : 'Online learning with lifetime access')
+                }
               </p>
             </motion.div>
 
