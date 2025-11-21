@@ -17,7 +17,7 @@ export default function CourseRegistrationModal({ course, onClose }) {
   const [showTierModal, setShowTierModal] = useState(false)
   const [selectedTierInfo, setSelectedTierInfo] = useState(null)
   const [isProcessingPayment, setIsProcessingPayment] = useState(false)
-  const [paymentStep, setPaymentStep] = useState('form') // 'form', 'success'
+  const [paymentStep, setPaymentStep] = useState('form') // 'form', 'qr-payment', 'success'
 
   // Check if this is a certification program
   const isCertificationProgram = course?.bulkPrice !== undefined
@@ -172,42 +172,47 @@ export default function CourseRegistrationModal({ course, onClose }) {
     setIsProcessingPayment(true)
     
     try {
-      // Redirect to WhatsApp for payment discussion
-      const courseDetails = isCertificationProgram
-        ? `Certificate Program: ${course?.title}
-Package: ${formData.certificateQuantity === '6' ? '6 Certificates Bundle' : 'Single Certificate'}
-Price: ₹${selectedPrice}
-Name: ${formData.fullName}
-Phone: ${formData.phoneNumber}
-Email: ${formData.emailAddress}
-Mode: ${formData.selectedMode}`
-        : `Course: ${course?.title}
-Tier: ${formData.selectedPricingTier}
-Price: ₹${selectedPrice}
-Name: ${formData.fullName}
-Phone: ${formData.phoneNumber}
-Email: ${formData.emailAddress}
-Mode: ${formData.selectedMode}`
-      
-      const whatsappMessage = encodeURIComponent(`Hi! I'm interested in enrolling for the following:
-
-${courseDetails}
-
-Please help me with the enrollment process and payment details.`)
-      
-      const whatsappURL = `https://wa.me/+919241527429?text=${whatsappMessage}`
-      
-      // Open WhatsApp in new tab
-      window.open(whatsappURL, '_blank')
-      
-      // Show success message
-      setPaymentStep('success')
+      // Show QR code payment screen
+      setPaymentStep('qr-payment')
     } catch (error) {
       console.error('Payment error:', error)
       alert(`Payment failed: ${error.message}. Please try again.`)
     } finally {
       setIsProcessingPayment(false)
     }
+  }
+
+  const handlePaymentConfirmation = () => {
+    // After user confirms payment, send details to WhatsApp
+    const courseDetails = isCertificationProgram
+      ? `Certificate Program: ${course?.title}
+Package: ${formData.certificateQuantity === '6' ? '6 Certificates Bundle' : 'Single Certificate'}
+Price: ₹${selectedPrice}
+Name: ${formData.fullName}
+Phone: ${formData.phoneNumber}
+Email: ${formData.emailAddress}
+Mode: ${formData.selectedMode}`
+      : `Course: ${course?.title}
+Tier: ${formData.selectedPricingTier}
+Price: ₹${selectedPrice}
+Name: ${formData.fullName}
+Phone: ${formData.phoneNumber}
+Email: ${formData.emailAddress}
+Mode: ${formData.selectedMode}`
+    
+    const whatsappMessage = encodeURIComponent(`Hi! I have completed the payment for:
+
+${courseDetails}
+
+Please confirm my enrollment.`)
+    
+    const whatsappURL = `https://wa.me/+919241527429?text=${whatsappMessage}`
+    
+    // Open WhatsApp in new tab
+    window.open(whatsappURL, '_blank')
+    
+    // Show success message
+    setPaymentStep('success')
   }
 
   const handleGoBack = () => {
@@ -253,8 +258,8 @@ Please help me with the enrollment process and payment details.`)
             transition={{ delay: 0.1, duration: 0.3 }}
           >
             {paymentStep === 'form' && 'Course Registration'}
-            {paymentStep === 'payment' && 'Payment Details'}
-            {paymentStep === 'success' && 'Registration Successful!'}
+            {paymentStep === 'qr-payment' && 'Payment'}
+            {paymentStep === 'success' && 'Enrollment Confirmed!'}
           </motion.h2>
         </div>
 
@@ -271,7 +276,7 @@ Please help me with the enrollment process and payment details.`)
             }`}></div>
             <div className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-semibold ${
               paymentStep === 'form' ? 'bg-gray-600 text-gray-400' : 
-              paymentStep === 'payment' ? 'bg-indigo-600 text-white' : 'bg-green-600 text-white'
+              paymentStep === 'qr-payment' ? 'bg-indigo-600 text-white' : 'bg-green-600 text-white'
             }`}>
               2
             </div>
@@ -570,17 +575,12 @@ Please help me with the enrollment process and payment details.`)
                   <span>{isCertificationProgram ? 'Certificate Fee:' : 'Course Fee:'}</span>
                   <span>₹{selectedPrice > 0 ? selectedPrice.toLocaleString() : '0'}</span>
                 </div>
-                {!isCertificationProgram && (
-                  <div className="flex justify-between">
-                    <span>Consultation Charge:</span>
-                    <span>₹499</span>
-                  </div>
-                )}
                 <div className="border-t border-green-600/50 pt-2">
                   <div className="flex justify-between font-semibold text-lg text-green-300">
                     <span>Total Amount:</span>
-                    <span>₹{selectedPrice > 0 ? (isCertificationProgram ? selectedPrice : selectedPrice + 499).toLocaleString() : (isCertificationProgram ? '0' : '499')}</span>
+                    <span>₹{selectedPrice > 0 ? selectedPrice.toLocaleString() : '0'}</span>
                   </div>
+                  <p className="text-xs text-green-400 mt-1 text-center">All inclusive</p>
                 </div>
               </div>
               <p className="text-xs text-green-400 mt-2 text-center">
@@ -610,22 +610,29 @@ Please help me with the enrollment process and payment details.`)
 
               <motion.button
                 type="submit"
-                disabled={!formData.selectedPricingTier}
+                disabled={
+                  !formData.fullName || 
+                  !formData.phoneNumber || 
+                  !formData.emailAddress || 
+                  !formData.highestQualification || 
+                  !formData.selectedMode || 
+                  (isCertificationProgram ? selectedPrice === 0 : !formData.selectedPricingTier)
+                }
                 className={`flex-1 px-6 py-3 rounded-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl ${
-                  formData.selectedPricingTier
+                  (formData.fullName && formData.phoneNumber && formData.emailAddress && formData.highestQualification && formData.selectedMode && (isCertificationProgram ? selectedPrice > 0 : formData.selectedPricingTier))
                     ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700'
                     : 'bg-gray-700 text-gray-400 cursor-not-allowed'
                 }`}
-                whileHover={formData.selectedPricingTier ? { scale: 1.02 } : {}}
-                whileTap={formData.selectedPricingTier ? { scale: 0.98 } : {}}
+                whileHover={(formData.fullName && formData.phoneNumber && formData.emailAddress && formData.highestQualification && formData.selectedMode && (isCertificationProgram ? selectedPrice > 0 : formData.selectedPricingTier)) ? { scale: 1.02 } : {}}
+                whileTap={(formData.fullName && formData.phoneNumber && formData.emailAddress && formData.highestQualification && formData.selectedMode && (isCertificationProgram ? selectedPrice > 0 : formData.selectedPricingTier)) ? { scale: 0.98 } : {}}
               >
                 <span className="flex items-center justify-center">
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>
                   {selectedPrice > 0 
-                    ? `Proceed to Payment - ₹${(selectedPrice + 499).toLocaleString()}`
-                    : 'Select Pricing Tier First'
+                    ? `Proceed to Payment - ₹${selectedPrice.toLocaleString()}`
+                    : isCertificationProgram ? 'Select Package' : 'Select Pricing Tier First'
                   }
                 </span>
               </motion.button>
@@ -633,7 +640,79 @@ Please help me with the enrollment process and payment details.`)
           </motion.form>
         )}
 
+        {/* QR Code Payment Step */}
+        {paymentStep === 'qr-payment' && (
+          <motion.div
+            className="space-y-6"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="text-center mb-6">
+              <h3 className="text-2xl font-bold text-white mb-2">Complete Payment</h3>
+              <p className="text-gray-300 mb-2">Scan the QR code to pay ₹{selectedPrice}</p>
+              <div className="bg-gradient-to-r from-indigo-900/30 to-purple-900/30 border border-indigo-600/50 rounded-lg p-4 mb-4">
+                <p className="text-sm text-indigo-300 font-semibold mb-2">Payment Details:</p>
+                <div className="text-left text-sm text-gray-300 space-y-1">
+                  <p><strong>Amount:</strong> ₹{selectedPrice}</p>
+                  <p><strong>Course:</strong> {course?.title}</p>
+                  {isCertificationProgram && (
+                    <p><strong>Package:</strong> {formData.certificateQuantity === '6' ? '6 Certificates Bundle' : 'Single Certificate'}</p>
+                  )}
+                  {!isCertificationProgram && (
+                    <p><strong>Tier:</strong> {formData.selectedPricingTier}</p>
+                  )}
+                </div>
+              </div>
+            </div>
 
+            {/* QR Code Display */}
+            <div className="bg-white rounded-xl p-6 flex flex-col items-center">
+              <img 
+                src="/QR_code.jpg" 
+                alt="Payment QR Code" 
+                className="w-64 h-64 object-contain mb-4"
+              />
+              <p className="text-gray-700 text-sm text-center mb-2">
+                Scan with any UPI app (Google Pay, PhonePe, Paytm, etc.)
+              </p>
+            </div>
+
+            {/* Payment Instructions */}
+            <div className="bg-gradient-to-r from-yellow-900/20 to-orange-900/20 border border-yellow-600/50 rounded-lg p-4">
+              <h4 className="font-semibold text-yellow-300 mb-2">📱 How to Pay:</h4>
+              <ul className="text-sm text-gray-300 space-y-1">
+                <li>1. Open any UPI app on your phone</li>
+                <li>2. Scan the QR code shown above</li>
+                <li>3. Enter amount: ₹{selectedPrice}</li>
+                <li>4. Complete the payment</li>
+                <li>5. Click "I've Paid" button below</li>
+              </ul>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex gap-3">
+              <motion.button
+                type="button"
+                onClick={handleGoBack}
+                className="flex-1 px-6 py-3 bg-gray-600 text-white rounded-lg font-semibold hover:bg-gray-700 transition-all duration-200"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Go Back
+              </motion.button>
+              <motion.button
+                type="button"
+                onClick={handlePaymentConfirmation}
+                className="flex-1 px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-lg font-semibold hover:from-green-700 hover:to-emerald-700 transition-all duration-200"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                I've Paid ✓
+              </motion.button>
+            </div>
+          </motion.div>
+        )}
 
         {/* Success Step */}
         {paymentStep === 'success' && (
@@ -656,9 +735,9 @@ Please help me with the enrollment process and payment details.`)
             </motion.div>
 
             <div>
-              <h3 className="text-2xl font-bold text-white mb-2">Enrollment Request Sent!</h3>
+              <h3 className="text-2xl font-bold text-white mb-2">Payment Confirmation Sent!</h3>
               <p className="text-gray-300 mb-4">
-                We've opened WhatsApp with your course details. Please complete your enrollment by chatting with our team.
+                We've received your payment notification. Our team will confirm your enrollment shortly via WhatsApp.
               </p>
               <div className="bg-gradient-to-r from-green-900/30 to-emerald-900/30 border border-green-600/50 rounded-lg p-4 text-left">
                 <h4 className="font-semibold text-green-300 mb-2">What's Next?</h4>

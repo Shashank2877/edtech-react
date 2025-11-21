@@ -88,6 +88,7 @@ export default function Certificate() {
               <div className="px-8 py-4 bg-gradient-to-r from-green-500 to-blue-500 rounded-xl shadow-lg text-white">
                 <p className="text-sm font-semibold mb-1">Single Certificate</p>
                 <p className="text-3xl font-bold">₹699</p>
+                <p className="text-xs mt-1 opacity-90">All inclusive</p>
               </div>
               <div className="text-2xl font-bold text-gray-400">OR</div>
               <div className="px-8 py-4 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-xl shadow-lg text-white relative">
@@ -96,7 +97,7 @@ export default function Certificate() {
                 </div>
                 <p className="text-sm font-semibold mb-1">Bundle of 6 Certificates</p>
                 <p className="text-3xl font-bold">₹999</p>
-                <p className="text-xs mt-1 opacity-90">Save ₹3,195!</p>
+                <p className="text-xs mt-1 opacity-90">All inclusive - Save ₹3,195!</p>
               </div>
             </div>
           </div>

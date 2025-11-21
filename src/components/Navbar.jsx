@@ -20,7 +20,7 @@ const NavItem = ({ to, children, onClick, isHomePage, isMobile = false }) => {
         }
         
         // Desktop styling with consistent light theme
-        return `relative px-3 py-2 rounded-lg transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white ${
+        return `relative px-3 py-2 rounded-lg transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white text-base lg:text-lg font-medium ${
           isActive 
             ? 'text-blue-600 font-semibold bg-blue-50/80 backdrop-blur-sm shadow-sm' 
             : 'text-gray-700 hover:text-blue-600 hover:bg-white/50 backdrop-blur-sm'
@@ -189,8 +189,8 @@ export default function Navbar() {
         role="banner"
         aria-label="Main navigation"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 lg:h-20 overflow-visible">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16 lg:h-20 overflow-visible max-w-7xl lg:max-w-none mx-auto lg:mx-0">
             <div className="flex items-center gap-4 flex-shrink-0">
               <motion.button
                 className="md:hidden p-3 rounded-xl backdrop-blur-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 hover:scale-105 active:scale-95 hover:bg-gray-100/50 text-gray-700 focus:bg-gray-100/70"
