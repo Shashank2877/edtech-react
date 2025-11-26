@@ -413,11 +413,14 @@ I have also uploaded my payment screenshot via Google Form.`)
                     whileTap={{ scale: 0.98 }}
                   >
                     <div className="text-center">
+                      <div className="inline-block px-2 py-1 bg-green-500 text-white text-xs font-semibold rounded-full mb-2">
+                        Advanced
+                      </div>
                       <h4 className="font-semibold text-white mb-1">Single Certificate</h4>
                       <div className="text-2xl font-bold text-green-400 mb-2">
                         ₹{course.price}
                       </div>
-                      <p className="text-xs text-gray-400">Perfect for individual learners</p>
+                      <p className="text-xs text-gray-400">All inclusive</p>
                     </div>
                   </motion.div>
 
@@ -435,14 +438,17 @@ I have also uploaded my payment screenshot via Google Form.`)
                     whileTap={{ scale: 0.98 }}
                   >
                     <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                      SAVE ₹{(course.price * 6) - course.bulkPrice.price}
+                      BEST VALUE
                     </div>
                     <div className="text-center">
-                      <h4 className="font-semibold text-white mb-1">6 Certificates Bundle</h4>
+                      <div className="inline-block px-2 py-1 bg-gradient-to-r from-orange-500 to-red-600 text-white text-xs font-semibold rounded-full mb-2">
+                        Pro
+                      </div>
+                      <h4 className="font-semibold text-white mb-1">Bundle of 6 Certificates</h4>
                       <div className="text-2xl font-bold text-yellow-400 mb-2">
                         ₹{course.bulkPrice.price}
                       </div>
-                      <p className="text-xs text-gray-400">Best value for groups/teams</p>
+                      <p className="text-xs text-gray-400">All Inclusive • Save ₹{(course.price * 6) - course.bulkPrice.price}!</p>
                     </div>
                   </motion.div>
                 </div>

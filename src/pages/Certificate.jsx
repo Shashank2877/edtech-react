@@ -85,8 +85,11 @@ export default function Certificate() {
 
             {/* Pricing Banner */}
             <div className="flex flex-col md:flex-row gap-4 justify-center items-center mb-8">
-              <div className="px-8 py-4 bg-gradient-to-r from-green-500 to-blue-500 rounded-xl shadow-lg text-white">
-                <p className="text-sm font-semibold mb-1">Single Certificate</p>
+              <div className="px-8 py-4 bg-gradient-to-r from-green-500 to-blue-500 rounded-xl shadow-lg text-white relative">
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full">
+                  Advanced
+                </div>
+                <p className="text-sm font-semibold mb-1 mt-2">Single Certificate</p>
                 <p className="text-3xl font-bold">₹699</p>
                 <p className="text-xs mt-1 opacity-90">All inclusive</p>
               </div>
@@ -95,7 +98,10 @@ export default function Certificate() {
                 <div className="absolute -top-3 -right-3 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full">
                   BEST VALUE
                 </div>
-                <p className="text-sm font-semibold mb-1">Bundle of 6 Certificates</p>
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-orange-600 to-red-600 text-white text-xs font-bold px-3 py-1 rounded-full">
+                  Pro
+                </div>
+                <p className="text-sm font-semibold mb-1 mt-2">Bundle of 6 Certificates</p>
                 <p className="text-3xl font-bold">₹999</p>
                 <p className="text-xs mt-1 opacity-90">All inclusive - Save ₹3,195!</p>
               </div>
