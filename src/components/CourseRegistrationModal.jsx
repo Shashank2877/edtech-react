@@ -197,7 +197,7 @@ export default function CourseRegistrationModal({ course, onClose }) {
     // Also prepare WhatsApp message for additional confirmation
     const courseDetails = isCertificationProgram
       ? `Certificate Program: ${course?.title}
-Package: ${formData.certificateQuantity === '6' ? '6 Certificates Bundle' : 'Single Certificate'}
+Tier: ${formData.certificateQuantity === '6' ? 'Pro' : 'Advanced'}
 Price: ₹${selectedPrice}
 Name: ${formData.fullName}
 Phone: ${formData.phoneNumber}
@@ -437,18 +437,15 @@ I have also uploaded my payment screenshot via Google Form.`)
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                      BEST VALUE
-                    </div>
                     <div className="text-center">
                       <div className="inline-block px-2 py-1 bg-gradient-to-r from-orange-500 to-red-600 text-white text-xs font-semibold rounded-full mb-2">
                         Pro
                       </div>
-                      <h4 className="font-semibold text-white mb-1">Bundle of 6 Certificates</h4>
+                      <h4 className="font-semibold text-white mb-1">Single Certificate</h4>
                       <div className="text-2xl font-bold text-yellow-400 mb-2">
                         ₹{course.bulkPrice.price}
                       </div>
-                      <p className="text-xs text-gray-400">All Inclusive • Save ₹{(course.price * 6) - course.bulkPrice.price}!</p>
+                      <p className="text-xs text-gray-400">All Inclusive</p>
                     </div>
                   </motion.div>
                 </div>
@@ -674,7 +671,7 @@ I have also uploaded my payment screenshot via Google Form.`)
                   <p><strong>Amount:</strong> ₹{selectedPrice}</p>
                   <p><strong>Course:</strong> {course?.title}</p>
                   {isCertificationProgram && (
-                    <p><strong>Package:</strong> {formData.certificateQuantity === '6' ? '6 Certificates Bundle' : 'Single Certificate'}</p>
+                    <p><strong>Tier:</strong> {formData.certificateQuantity === '6' ? 'Pro' : 'Advanced'} Certificate</p>
                   )}
                   {!isCertificationProgram && (
                     <p><strong>Tier:</strong> {formData.selectedPricingTier}</p>

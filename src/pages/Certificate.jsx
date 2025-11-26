@@ -24,7 +24,7 @@ const CertificateCard = ({ program, onViewDetails }) => (
     </div>
     <div className="mb-4 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
       <p className="text-sm text-yellow-800 font-semibold text-center">
-        Special Offer: Get 6 certificates for just ₹999!
+        Choose Advanced (₹699) or Pro (₹999) tier!
       </p>
     </div>
     <div className="flex justify-center items-center">
@@ -95,15 +95,12 @@ export default function Certificate() {
               </div>
               <div className="text-2xl font-bold text-gray-400">OR</div>
               <div className="px-8 py-4 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-xl shadow-lg text-white relative">
-                <div className="absolute -top-3 -right-3 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-                  BEST VALUE
-                </div>
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-orange-600 to-red-600 text-white text-xs font-bold px-3 py-1 rounded-full">
                   Pro
                 </div>
-                <p className="text-sm font-semibold mb-1 mt-2">Bundle of 6 Certificates</p>
+                <p className="text-sm font-semibold mb-1 mt-2">Single Certificate</p>
                 <p className="text-3xl font-bold">₹999</p>
-                <p className="text-xs mt-1 opacity-90">All inclusive - Save ₹3,195!</p>
+                <p className="text-xs mt-1 opacity-90">All inclusive</p>
               </div>
             </div>
           </div>
