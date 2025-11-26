@@ -73,7 +73,9 @@ export const paymentConfig = {
     redirectAfterFailure: '/payment-failed',
     redirectAfterCancel: '/courses',
     timeoutDuration: 300000, // 5 minutes
-    retryAttempts: 3
+    retryAttempts: 3,
+    // Google Form for payment screenshot upload (no backend needed)
+    googleFormUrl: import.meta.env.VITE_GOOGLE_FORM_URL || 'https://docs.google.com/forms/d/e/1FAIpQLSfxAGtAE7WBt1xM61TAEdP5Zete7kJEL3iy2IBDVWwSI9Vuzw/viewform'
   },
 
   // Security settings

@@ -183,7 +183,18 @@ export default function CourseRegistrationModal({ course, onClose }) {
   }
 
   const handlePaymentConfirmation = () => {
-    // After user confirms payment, send details to WhatsApp
+    // After user confirms payment, redirect to Google Form for screenshot upload
+    const googleFormUrl = import.meta.env.VITE_GOOGLE_FORM_URL || 'https://docs.google.com/forms/d/e/1FAIpQLSfxAGtAE7WBt1xM61TAEdP5Zete7kJEL3iy2IBDVWwSI9Vuzw/viewform'
+    
+    // Pre-fill user details in the form URL if needed (optional)
+    const formUrlWithParams = new URL(googleFormUrl)
+    // You can add pre-fill parameters if your Google Form supports it
+    // Example: formUrlWithParams.searchParams.append('entry.123456', formData.fullName)
+    
+    // Open Google Form in new tab for screenshot upload
+    window.open(formUrlWithParams.toString(), '_blank')
+    
+    // Also prepare WhatsApp message for additional confirmation
     const courseDetails = isCertificationProgram
       ? `Certificate Program: ${course?.title}
 Package: ${formData.certificateQuantity === '6' ? '6 Certificates Bundle' : 'Single Certificate'}
@@ -204,7 +215,7 @@ Mode: ${formData.selectedMode}`
 
 ${courseDetails}
 
-Please confirm my enrollment.`)
+I have also uploaded my payment screenshot via Google Form.`)
     
     const whatsappURL = `https://wa.me/+919241527429?text=${whatsappMessage}`
     
@@ -737,13 +748,14 @@ Please confirm my enrollment.`)
             <div>
               <h3 className="text-2xl font-bold text-white mb-2">Payment Confirmation Sent!</h3>
               <p className="text-gray-300 mb-4">
-                We've received your payment notification. Our team will confirm your enrollment shortly via WhatsApp.
+                Please upload your payment screenshot via the Google Form that just opened. Our team will confirm your enrollment shortly.
               </p>
               <div className="bg-gradient-to-r from-green-900/30 to-emerald-900/30 border border-green-600/50 rounded-lg p-4 text-left">
                 <h4 className="font-semibold text-green-300 mb-2">What's Next?</h4>
                 <ul className="text-sm text-gray-300 space-y-1">
+                  <li>✓ Upload payment screenshot in Google Form</li>
                   <li>• Continue the conversation on WhatsApp</li>
-                  <li>• Complete payment with our team</li>
+                  <li>• Our team will verify your payment</li>
                   <li>• Join our student community</li>
                   <li>• Download course materials</li>
                   <li>• Schedule your first mentoring session</li>

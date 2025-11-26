@@ -216,6 +216,31 @@ class PaymentService {
       throw new Error('Failed to save enrollment data')
     }
   }
+
+  // Redirect to Google Form for payment screenshot upload
+  redirectToPaymentScreenshotForm = (studentData = {}) => {
+    const googleFormUrl = import.meta.env.VITE_GOOGLE_FORM_URL || 'https://docs.google.com/forms/d/e/1FAIpQLSfxAGtAE7WBt1xM61TAEdP5Zete7kJEL3iy2IBDVWwSI9Vuzw/viewform'
+    
+    try {
+      // Open Google Form in new tab
+      // You can add pre-fill parameters if your Google Form supports it
+      // Example: https://docs.google.com/forms/d/e/FORM_ID/viewform?entry.123456=Name&entry.789012=Email
+      const formUrl = new URL(googleFormUrl)
+      
+      // Log for debugging
+      console.log('Redirecting to payment screenshot form:', formUrl.toString())
+      
+      // Open in new tab
+      window.open(formUrl.toString(), '_blank')
+      
+      return { success: true, message: 'Redirected to Google Form' }
+    } catch (error) {
+      console.error('Failed to redirect to Google Form:', error)
+      // Fallback: still try to open the form
+      window.open(googleFormUrl, '_blank')
+      return { success: false, message: 'Partial redirect completed' }
+    }
+  }
 }
 
 // Export singleton instance
